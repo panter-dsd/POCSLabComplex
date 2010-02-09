@@ -29,13 +29,7 @@ Factor::Factor()
 
 }
 
-void Factor::setA(const QByteArray& a)
+void Factor::calculate()
 {
 
 }
-
-void Factor::setB(const QByteArray& b)
-{
-
-}
-

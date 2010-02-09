@@ -29,12 +29,7 @@ Adder::Adder()
 
 }
 
-void Adder::setA(const QByteArray& a)
-{
-
-}
-
-void Adder::setB(const QByteArray& b)
+void Adder::calculate()
 {
 
 }

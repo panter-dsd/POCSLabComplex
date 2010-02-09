@@ -42,8 +42,17 @@ public:
 	QByteArray value()
 	{ return m_value;}
 
-	void setA(const QByteArray& a);
-	void setB(const QByteArray& b);
+	QByteArray aValue()
+	{ return m_a;}
+	void setAValue(const QByteArray& a)
+	{ m_a = a;}
+
+	QByteArray bValue()
+	{ return m_b;}
+	void setBValue(const QByteArray& b)
+	{ m_b = b;}
+
+	void calculate();
 };
 
 #endif //ADDER_H
