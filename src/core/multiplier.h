@@ -22,37 +22,19 @@
 * Contact:		panter.dsd@gmail.com
 *******************************************************************/
 
-#include <QtCore/QTextCodec>
-#include <QtCore/QSettings>
-#include <QtCore/QLocale>
-#include <QtCore/QSettings>
-#include <QtCore/QTranslator>
+#ifndef MULTIPLIER_H
+#define MULTIPLIER_H
 
-#include <QtGui/QApplication>
+#include "abstractcomputerunit.h"
 
-#define ApplicationVersion "0.0.0.0"
+class Multiplier : public AbstractComputerUnit {
 
-#include "mainwindow.h"
+public:
+	Multiplier();
+	virtual ~Multiplier()
+	{}
 
-int main(int argc, char ** argv)
-{
-	QTextCodec::setCodecForCStrings(QTextCodec::codecForName("System"));
+	bool calculate();
+};
 
-	QApplication app(argc, argv);
-	app.setOrganizationDomain("panter.org");
-	app.setOrganizationName("PanteR");
-	app.setApplicationName(QApplication::tr("POCSLabComplex"));
-	app.setApplicationVersion(ApplicationVersion);
-//	app.setWindowIcon(QIcon(":share/images/main.ico"));
-
-	QSettings::setDefaultFormat(QSettings::IniFormat);
-
-	app.connect(&app, SIGNAL(lastWindowClosed()), &app, SLOT(quit()));
-
-	MainWindow win;
-	win.setWindowTitle(app.applicationName() + " " + app.applicationVersion());
-
-	win.show();
-
-	return app.exec();
-}
+#endif //MULTIPLIER_H

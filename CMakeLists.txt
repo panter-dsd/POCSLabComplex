@@ -33,12 +33,13 @@ set (src_HEADERS
 
 set (core_SRC
 	src/core/adder.cpp
-	src/core/factor.cpp
+	src/core/multiplier.cpp
 )
 
 set (core_HEADERS
+	src/core/abstractcomputerunit.h
 	src/core/adder.h
-	src/core/factor.h
+	src/core/multiplier.h
 )
 
 ################################################################

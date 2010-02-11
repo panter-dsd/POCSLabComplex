@@ -13,7 +13,7 @@
 * See the GNU General Public License for more details.
 *
 * You should have received a copy of the GNU General Public License
-* along with Panther Commander; if not, write to the Free Software
+* along with POCSLabComplex if not, write to the Free Software
 * Foundation, Inc., 51 Franklin St, Fifth Floor,
 * Boston, MA 02110-1301 USA
 *-------------------------------------------------------------------
@@ -25,34 +25,16 @@
 #ifndef ADDER_H
 #define ADDER_H
 
-#include <QtCore/QByteArray>
+#include "abstractcomputerunit.h"
 
-class Adder {
-
-private:
-	QByteArray m_value;
-	QByteArray m_a;
-	QByteArray m_b;
+class Adder : public AbstractComputerUnit {
 
 public:
 	Adder();
 	virtual ~Adder()
 	{}
 
-	QByteArray value()
-	{ return m_value;}
-
-	QByteArray aValue()
-	{ return m_a;}
-	void setAValue(const QByteArray& a)
-	{ m_a = a;}
-
-	QByteArray bValue()
-	{ return m_b;}
-	void setBValue(const QByteArray& b)
-	{ m_b = b;}
-
-	void calculate();
+	bool calculate();
 };
 
 #endif //ADDER_H
