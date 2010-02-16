@@ -22,15 +22,29 @@
 * Contact:		panter.dsd@gmail.com
 *******************************************************************/
 
-#include "adder.h"
+#include <QtGui/QLabel>
+#include <QtGui/QVBoxLayout>
 
-Adder::Adder()
-	: AbstractComputerUnit()
+#include "adderwidget.h"
+
+AdderWidget::AdderWidget(QWidget *parent)
+	:QWidget(parent)
 {
+	label = new QLabel(this);
+	label->setFrameShape(QFrame::Box);
+	label->setAlignment(Qt::AlignTop);
 
+
+	QVBoxLayout *mainLayout = new QVBoxLayout();
+	mainLayout->addWidget(label);
+	setLayout(mainLayout);
 }
 
-bool Adder::calculate()
+void AdderWidget::updateText()
 {
-	m_a.clear();
+	QStringList text;
+	text << "<p align=center><span style=\" font-weight:600; text-decoration: underline;\">" + m_caption + "</span></p>";
+	text << "<p> a + b </p>";
+
+	label->setText(text.join("\n"));
 }

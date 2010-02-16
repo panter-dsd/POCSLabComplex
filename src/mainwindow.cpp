@@ -25,13 +25,27 @@
 #include <QtCore/QDebug>
 
 #include <QtGui/QtEvents>
+#include <QtGui/QVBoxLayout>
 
 #include "mainwindow.h"
-
+#include "microprocessorwidget.h"
+MicroprocessorWidget *w;
 MainWindow::MainWindow(QWidget* parent, Qt::WFlags f)
 		: QMainWindow(parent, f)
 {
+	resize(800, 600);
 
+	w = new MicroprocessorWidget(this);
+
+	w->move(100, 100);
+	w->resize(400, 300);
+
+	QWidget *centralWidget = new QWidget(this);
+	setCentralWidget(centralWidget);
+
+	QVBoxLayout *mainLayout = new QVBoxLayout();
+	mainLayout->addWidget(w);
+	centralWidget->setLayout(mainLayout);
 }
 
 MainWindow::~MainWindow()
@@ -49,7 +63,8 @@ bool MainWindow::event(QEvent *ev)
 	if (ev->type() == QEvent::LanguageChange) {
 		retranslateStrings();
 	}
-
+	if (ev->type() == QEvent::Resize)
+		setWindowTitle(QString("%1_%2").arg(w->width()).arg(w->height()));
 	return QMainWindow::event(ev);
 }
 

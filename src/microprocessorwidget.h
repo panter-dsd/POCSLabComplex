@@ -22,15 +22,36 @@
 * Contact:		panter.dsd@gmail.com
 *******************************************************************/
 
-#include "adder.h"
+#ifndef MICROPROCESSORWIDGET_H
+#define MICROPROCESSORWIDGET_H
 
-Adder::Adder()
-	: AbstractComputerUnit()
-{
+class QPainter;
+class QLabel;
 
-}
+#include <QtGui/QWidget>
 
-bool Adder::calculate()
-{
-	m_a.clear();
-}
+class MicroprocessorWidget : public QWidget {
+
+	Q_OBJECT
+
+private:
+	QLabel *alb1;
+	QLabel *alb2;
+	QLabel *alb3;
+	QLabel *mb1;
+	QLabel *mb2;
+
+public:
+	MicroprocessorWidget(QWidget *parent);
+	virtual ~MicroprocessorWidget()
+	{}
+
+protected:
+	void paintEvent(QPaintEvent *ev);
+
+private:
+	void paint_1(QPaintEvent *ev, QPainter *painter);
+
+};
+
+#endif //MICROPROCESSORWIDGET_H

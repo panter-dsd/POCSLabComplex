@@ -22,15 +22,37 @@
 * Contact:		panter.dsd@gmail.com
 *******************************************************************/
 
-#include "adder.h"
+#ifndef ADDERWIDGET_H
+#define ADDERWIDGET_H
 
-Adder::Adder()
-	: AbstractComputerUnit()
-{
+class QLabel;
 
-}
+#include <QtGui/QWidget>
 
-bool Adder::calculate()
-{
-	m_a.clear();
-}
+class AdderWidget : public QWidget {
+
+	Q_OBJECT
+
+private:
+	QLabel *label;
+	QString m_caption;
+
+public:
+	AdderWidget(QWidget *parent);
+	virtual ~AdderWidget()
+	{}
+
+	void setCaption(const QString& caption)
+	{ 
+		m_caption = caption; 
+		updateText(); 
+	}
+	QString caption()
+	{ return m_caption; }
+
+	void updateText();
+
+
+};
+
+#endif //ADDERWIDGET_H

@@ -25,6 +25,7 @@
 #include "multiplier.h"
 
 Multiplier::Multiplier()
+	: AbstractComputerUnit()
 {
 
 }

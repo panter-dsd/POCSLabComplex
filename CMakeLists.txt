@@ -21,10 +21,14 @@ include_directories(
 set (src_SRC
 	src/main.cpp
 	src/mainwindow.cpp
+	src/adderwidget.cpp
+	src/microprocessorwidget.cpp
 )
 
 set (src_HEADERS
 	src/mainwindow.h
+	src/adderwidget.h
+	src/microprocessorwidget.h
 )
 
 ################################################################
@@ -32,6 +36,7 @@ set (src_HEADERS
 ################################################################
 
 set (core_SRC
+	src/core/abstractcomputerunit.cpp
 	src/core/adder.cpp
 	src/core/multiplier.cpp
 )

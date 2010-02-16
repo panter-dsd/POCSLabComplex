@@ -22,15 +22,30 @@
 * Contact:		panter.dsd@gmail.com
 *******************************************************************/
 
-#include "adder.h"
+#include "abstractcomputerunit.h"
 
-Adder::Adder()
-	: AbstractComputerUnit()
+AbstractComputerUnit::AbstractComputerUnit()
 {
 
 }
 
-bool Adder::calculate()
+void AbstractComputerUnit::prepareNumbers(QByteArray *a, QByteArray *b)
 {
-	m_a.clear();
+	int indexA = a->indexOf('.');
+	int indexB = b->indexOf('.');
+
+	if ((indexA == indexB) && (a->size() != b->size())) {
+		while (a->size() < b->size())
+			a->append((char)0);
+		while (a->size() > b->size())
+			b->append((char)0);
+	}
+
+}
+
+QByteArray AbstractComputerUnit::add()
+{
+	QByteArray a(m_a);
+	QByteArray b(m_b);
+	prepareNumbers(&a, &b);
 }

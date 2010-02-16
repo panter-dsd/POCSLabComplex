@@ -22,15 +22,40 @@
 * Contact:		panter.dsd@gmail.com
 *******************************************************************/
 
-#include "adder.h"
+#ifndef ABSTRACTCOMPUTERUNIT_H
+#define ABSTRACTCOMPUTERUNIT_H
 
-Adder::Adder()
-	: AbstractComputerUnit()
-{
+#include <QtCore/QByteArray>
 
-}
+class AbstractComputerUnit {
 
-bool Adder::calculate()
-{
-	m_a.clear();
-}
+protected:
+	QByteArray m_value;
+	QByteArray m_a;
+	QByteArray m_b;
+
+public:
+	AbstractComputerUnit();
+	virtual ~AbstractComputerUnit()
+	{}
+
+	QByteArray value()
+	{ return m_value;}
+
+	QByteArray aValue()
+	{ return m_a;}
+	void setAValue(const QByteArray& a)
+	{ m_a = a;}
+
+	QByteArray bValue()
+	{ return m_b;}
+	void setBValue(const QByteArray& b)
+	{ m_b = b;}
+
+	QByteArray add();
+
+private:
+	void prepareNumbers(QByteArray *a, QByteArray *b);
+};
+
+#endif //ABSTRACTCOMPUTERUNIT_H
