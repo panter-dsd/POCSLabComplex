@@ -32,6 +32,7 @@
 AdderWidget::AdderWidget(const QString& caption, QWidget *parent)
 	:QWidget(parent), m_caption(caption)
 {
+	updateToolTip();
 }
 
 void AdderWidget::paintEvent(QPaintEvent *ev)
@@ -64,4 +65,19 @@ void AdderWidget::paintEvent(QPaintEvent *ev)
 	painter.setFont(m_font);
 
 	painter.drawText(m_rect.width() / 2 - fontMetrics().width(m_caption) / 2, 15, m_caption);
+}
+
+void AdderWidget::setFirstValue(const QByteArray& value)
+{
+	m_firstValue = value;
+}
+
+void AdderWidget::setSecondValue(const QByteArray& value)
+{
+	m_secondValue = value;
+}
+
+void AdderWidget::updateToolTip()
+{
+	setToolTip("<h1>" + m_caption + "</h1>");
 }

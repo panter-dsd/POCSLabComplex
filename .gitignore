@@ -8,7 +8,7 @@ Makefile*
 object_script.*.*
 *~
 qtcreator-build*
-CMakeLists.txt.user
+CMakeLists.txt.user*
 qdevelop-settings.db
 archives/*
 updates/*

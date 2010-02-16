@@ -36,6 +36,8 @@ class AdderWidget : public QWidget {
 private:
 	QLabel *label;
 	QString m_caption;
+	QByteArray m_firstValue;
+	QByteArray m_secondValue;
 
 public:
 	AdderWidget(const QString& caption = 0, QWidget *parent = 0);
@@ -45,6 +47,7 @@ public:
 	void setCaption(const QString& caption)
 	{
 		m_caption = caption;
+		updateToolTip();
 	}
 	QString caption()
 	{ return m_caption; }
@@ -52,6 +55,16 @@ public:
 protected:
 	void paintEvent(QPaintEvent *ev);
 
+
+private:
+	void updateToolTip();
+
+public Q_SLOTS:
+	void setFirstValue(const QByteArray& value);
+	void setSecondValue(const QByteArray& value);
+
+Q_SIGNALS:
+	void valueChanged(const QByteArray& newValue);
 };
 
 #endif //ADDERWIDGET_H
