@@ -25,25 +25,23 @@
 #include <QtGui/QPainter>
 #include <QtGui/QPaintEvent>
 #include <QtGui/QPen>
-#include <QtGui/QLabel>
 
 #include "microprocessorwidget.h"
+#include "adderwidget.h"
 
 MicroprocessorWidget::MicroprocessorWidget(QWidget *parent)
 	:QWidget(parent)
 {
-	setFixedSize(500, 300);
+	setFixedSize(600, 300);
 
-	alb1 = new QLabel(this);
-	alb2 = new QLabel(this);
-	alb3 = new QLabel(this);
-	mb1 = new QLabel(this);
-	mb2 = new QLabel(this);
+	alb1 = new AdderWidget(tr("ALB1"), this);
+	alb2 = new AdderWidget(tr("ALB2"), this);
+	alb3 = new AdderWidget(tr("ALB3"), this);
+	mb1 = new AdderWidget(tr("MB1"), this);
+	mb2 = new AdderWidget(tr("MB2"), this);
 
-	foreach(QLabel *label, findChildren<QLabel*> ()) {
-		label->setFixedSize(100, 40);
-		label->setFrameShape(QFrame::Box);
-		label->setAlignment(Qt::AlignTop);
+	foreach(AdderWidget *label, findChildren<AdderWidget*> ()) {
+		label->setFixedSize(width() / 5, height() / 5);
 	}
 }
 
@@ -57,13 +55,13 @@ void MicroprocessorWidget::paintEvent(QPaintEvent *ev)
 	pen.setWidth(7);
 	painter.setPen(pen);
 
-	QRect m_rect(rect());
-	m_rect.setX(m_rect.x() + 20);
-	m_rect.setWidth(m_rect.width() - 20);
+	QRect m_rect(rect().x() + 20, rect().top(), rect().width() - 20, rect().height());
 
+	//Shadow
 	painter.drawLine(m_rect.x() + pen.width(), m_rect.y() + m_rect.height() - pen.width(), m_rect.x() + m_rect.width() - pen.width(), m_rect.y() + m_rect.height() - pen.width());
 	painter.drawLine(m_rect.x() + m_rect.width() - pen.width(), m_rect.y() + pen.width(), m_rect.x() + m_rect.width() - pen.width(), m_rect.y() + m_rect.height() - pen.width());
 
+	//Rect
 	pen.setBrush(Qt::black);
 	painter.setPen(pen);
 	m_rect.setWidth(m_rect.width() - pen.width() * 2);
@@ -74,20 +72,13 @@ void MicroprocessorWidget::paintEvent(QPaintEvent *ev)
 	paint_1(ev, &painter);
 }
 
-void MicroprocessorWidget::paint_1(QPaintEvent *ev, QPainter *painter)
+void MicroprocessorWidget::paint_1(QPaintEvent */*ev*/, QPainter *painter)
 {
-	alb1->move(width() / 2 - alb1->width() / 2, 40);
+	alb1->move(width() / 2 - alb1->width() / 2, 20);
 	alb2->move(width() / 2 - alb1->width() / 2, height() / 2 + alb2->height() / 2);
-	alb3->move(width() - alb3->width() - 60, 20 + alb1->height());
+	alb3->move(width() - alb3->width() - 60, alb1->y() + alb1->height());
 	mb1->move(60, height() / 2 - mb1->height() / 2);
 	mb2->move(60, height() / 2 + mb1->height() / 2 + 40);
-
-	alb1->setText("<p align=center><span style=\" text-decoration: underline;\">" + tr("ALB1") + "</span style></p>");
-	alb2->setText("<p align=center><span style=\" text-decoration: underline;\">" + tr("ALB2") + "</span style></p>");
-	alb3->setText("<p align=center><span style=\" text-decoration: underline;\">" + tr("ALB3") + "</span style></p>");
-	mb1->setText("<p align=center><span style=\" text-decoration: underline;\">" + tr("MB1") + "</span style></p>");
-	mb2->setText("<p align=center><span style=\" text-decoration: underline;\">" + tr("MB2") + "</span style></p>");
-
 
 	QPen pen;
 	pen.setStyle(Qt::SolidLine);

@@ -38,20 +38,19 @@ private:
 	QString m_caption;
 
 public:
-	AdderWidget(QWidget *parent);
+	AdderWidget(const QString& caption = 0, QWidget *parent = 0);
 	virtual ~AdderWidget()
 	{}
 
 	void setCaption(const QString& caption)
-	{ 
-		m_caption = caption; 
-		updateText(); 
+	{
+		m_caption = caption;
 	}
 	QString caption()
 	{ return m_caption; }
 
-	void updateText();
-
+protected:
+	void paintEvent(QPaintEvent *ev);
 
 };
 

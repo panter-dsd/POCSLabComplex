@@ -26,7 +26,7 @@
 #define MICROPROCESSORWIDGET_H
 
 class QPainter;
-class QLabel;
+class AdderWidget;
 
 #include <QtGui/QWidget>
 
@@ -35,11 +35,11 @@ class MicroprocessorWidget : public QWidget {
 	Q_OBJECT
 
 private:
-	QLabel *alb1;
-	QLabel *alb2;
-	QLabel *alb3;
-	QLabel *mb1;
-	QLabel *mb2;
+	AdderWidget *alb1;
+	AdderWidget *alb2;
+	AdderWidget *alb3;
+	AdderWidget *mb1;
+	AdderWidget *mb2;
 
 public:
 	MicroprocessorWidget(QWidget *parent);

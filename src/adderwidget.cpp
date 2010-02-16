@@ -22,29 +22,46 @@
 * Contact:		panter.dsd@gmail.com
 *******************************************************************/
 
-#include <QtGui/QLabel>
-#include <QtGui/QVBoxLayout>
+#include <QtGui/QPainter>
+#include <QtGui/QPaintEvent>
+#include <QtGui/QPen>
+#include <QtGui/QFont>
 
 #include "adderwidget.h"
 
-AdderWidget::AdderWidget(QWidget *parent)
-	:QWidget(parent)
+AdderWidget::AdderWidget(const QString& caption, QWidget *parent)
+	:QWidget(parent), m_caption(caption)
 {
-	label = new QLabel(this);
-	label->setFrameShape(QFrame::Box);
-	label->setAlignment(Qt::AlignTop);
-
-
-	QVBoxLayout *mainLayout = new QVBoxLayout();
-	mainLayout->addWidget(label);
-	setLayout(mainLayout);
 }
 
-void AdderWidget::updateText()
+void AdderWidget::paintEvent(QPaintEvent *ev)
 {
-	QStringList text;
-	text << "<p align=center><span style=\" font-weight:600; text-decoration: underline;\">" + m_caption + "</span></p>";
-	text << "<p> a + b </p>";
+	QPainter painter(this);
 
-	label->setText(text.join("\n"));
+	QPen pen;
+	pen.setStyle(Qt::SolidLine);
+	pen.setBrush(Qt::darkGray);
+	pen.setWidth(4);
+	painter.setPen(pen);
+
+	QRect m_rect(rect().x(), rect().top(), rect().width(), rect().height());
+
+	//Shadow
+	painter.drawLine(m_rect.x() + pen.width(), m_rect.y() + m_rect.height() - pen.width(), m_rect.x() + m_rect.width() - pen.width(), m_rect.y() + m_rect.height() - pen.width());
+	painter.drawLine(m_rect.x() + m_rect.width() - pen.width(), m_rect.y() + pen.width(), m_rect.x() + m_rect.width() - pen.width(), m_rect.y() + m_rect.height() - pen.width());
+
+	//Rect
+	pen.setBrush(Qt::black);
+	painter.setPen(pen);
+	m_rect.setWidth(m_rect.width() - pen.width() * 2);
+	m_rect.setHeight(m_rect.height() - pen.width() * 2);
+	painter.drawRect(m_rect);
+
+	//Caption
+	QFont m_font(font());
+	m_font.setBold(true);
+	m_font.setUnderline(true);
+	painter.setFont(m_font);
+
+	painter.drawText(m_rect.width() / 2 - fontMetrics().width(m_caption) / 2, 15, m_caption);
 }
