@@ -28,6 +28,7 @@
 #include <QtGui/QFont>
 
 #include "adderwidget.h"
+#include "operationdialog.h"
 
 AdderWidget::AdderWidget(const QString& caption, QWidget *parent)
 	:QWidget(parent), m_caption(caption)
@@ -80,4 +81,13 @@ void AdderWidget::setSecondValue(const QByteArray& value)
 void AdderWidget::updateToolTip()
 {
 	setToolTip("<h1>" + m_caption + "</h1>");
+}
+
+void AdderWidget::mouseDoubleClickEvent(QMouseEvent *ev)
+{
+	if (ev->button() != Qt::LeftButton)
+		return;
+
+	OperationDialog d(this);
+	d.exec();
 }

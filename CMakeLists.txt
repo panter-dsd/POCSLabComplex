@@ -12,6 +12,7 @@ add_definitions(-DUNICODE)
 include_directories(
 	src
 	src/core
+	src/dialogs
 )
 
 ################################################################
@@ -48,17 +49,32 @@ set (core_HEADERS
 )
 
 ################################################################
+# dialogs
+################################################################
+
+set (dialogs_SRC
+	src/dialogs/operationdialog.cpp
+)
+
+set (dialogs_HEADERS
+	src/dialogs/operationdialog.h
+)
+
+
+################################################################
 # all
 ################################################################
 
 set (SOURCES
 	${src_SRC}
 	${core_SRC}
+	${dialogs_SRC}
 )
 
 set (HEADERS
 	${src_HEADERS}
 	${core_HEADERS}
+	${dialogs_HEADERS}
 )
 
 qt4_wrap_cpp( MOC_SOURCES ${HEADERS} )

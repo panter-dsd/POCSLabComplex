@@ -22,50 +22,24 @@
 * Contact:		panter.dsd@gmail.com
 *******************************************************************/
 
-#ifndef ADDERWIDGET_H
-#define ADDERWIDGET_H
+#ifndef OPERATIONDIALOG_H
+#define OPERATIONDIALOG_H
 
-class QLabel;
+class QGroupBox;
 
-#include <QtGui/QWidget>
+#include <QtGui/QDialog>
 
-class AdderWidget : public QWidget {
+class OperationDialog : public QDialog {
 
 	Q_OBJECT
 
 private:
-	QLabel *label;
-	QString m_caption;
-	QByteArray m_firstValue;
-	QByteArray m_secondValue;
+	QGroupBox *groupBox;
 
 public:
-	AdderWidget(const QString& caption = 0, QWidget *parent = 0);
-	virtual ~AdderWidget()
+	OperationDialog(QWidget *parent = 0);
+	virtual ~OperationDialog()
 	{}
-
-	void setCaption(const QString& caption)
-	{
-		m_caption = caption;
-		updateToolTip();
-	}
-	QString caption()
-	{ return m_caption; }
-
-protected:
-	void paintEvent(QPaintEvent *ev);
-	void mouseDoubleClickEvent(QMouseEvent *ev);
-
-
-private:
-	void updateToolTip();
-
-public Q_SLOTS:
-	void setFirstValue(const QByteArray& value);
-	void setSecondValue(const QByteArray& value);
-
-Q_SIGNALS:
-	void valueChanged(const QByteArray& newValue);
 };
 
-#endif //ADDERWIDGET_H
+#endif //OPERATIONDIALOG_H
