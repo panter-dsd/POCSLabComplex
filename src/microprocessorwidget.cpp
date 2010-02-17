@@ -126,4 +126,18 @@ void MicroprocessorWidget::paint_1(QPaintEvent */*ev*/, QPainter *painter)
 	painter->drawLine(alb2->x() + alb2->width(), alb2->y() + alb2->height() / 3 * 2, alb3->x() + alb3->width(), alb2->y() + alb2->height() / 3 * 2);
 	//ALB3 -> Q2
 	painter->drawLine(alb3->x() + alb3->width(), alb3->y() + alb3->height() / 3, width(), alb3->y() + alb3->height() / 3);
+
+	//A0 text
+	painter->drawText(0, alb1->y() + alb1->height() / 3 - fontMetrics().height() / 2, "A0");
+	//A1 text
+	painter->drawText(0, alb1->y() + alb1->height() / 3 * 2 - fontMetrics().height() / 2, "A1");
+	//A2 text
+	painter->drawText(0, mb1->y() + mb1->height() / 3 - fontMetrics().height() / 2, "A2");
+	//A3 text
+	painter->drawText(0, mb1->y() + mb1->height() / 3 * 2 - fontMetrics().height() / 2, "A3");
+	//A4 text
+	painter->drawText(0, mb2->y() + mb2->height() / 3 - fontMetrics().height() / 2, "A4");
+	//A5 text
+	painter->drawText(0, mb2->y() + mb2->height() / 3 * 2 - fontMetrics().height() / 2, "A5");
+
 }
