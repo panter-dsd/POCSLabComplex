@@ -59,6 +59,11 @@ void AdderWidget::paintEvent(QPaintEvent *ev)
 	m_rect.setHeight(m_rect.height() - pen.width() * 2);
 	painter.drawRect(m_rect);
 
+	//Fill rect
+	m_rect.setX(m_rect.x() + pen.width() / 2);
+	m_rect.setY(m_rect.y() + pen.width() / 2);
+	painter.fillRect(m_rect, Qt::red);
+
 	//Caption
 	QFont m_font(font());
 	m_font.setBold(true);
