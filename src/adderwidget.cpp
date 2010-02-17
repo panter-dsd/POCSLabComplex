@@ -43,26 +43,33 @@ void AdderWidget::paintEvent(QPaintEvent *ev)
 	QPen pen;
 	pen.setStyle(Qt::SolidLine);
 	pen.setBrush(Qt::darkGray);
-	pen.setWidth(4);
+	pen.setWidth(9);
 	painter.setPen(pen);
 
 	QRect m_rect(rect().x(), rect().top(), rect().width(), rect().height());
 
 	//Shadow
-	painter.drawLine(m_rect.x() + pen.width(), m_rect.y() + m_rect.height() - pen.width(), m_rect.x() + m_rect.width() - pen.width(), m_rect.y() + m_rect.height() - pen.width());
-	painter.drawLine(m_rect.x() + m_rect.width() - pen.width(), m_rect.y() + pen.width(), m_rect.x() + m_rect.width() - pen.width(), m_rect.y() + m_rect.height() - pen.width());
+	painter.drawLine(m_rect.x() + pen.width(), m_rect.y() + m_rect.height(), m_rect.x() + m_rect.width(), m_rect.y() + m_rect.height());
+	painter.drawLine(m_rect.x() + m_rect.width(), m_rect.y() + pen.width(), m_rect.x() + m_rect.width(), m_rect.y() + m_rect.height() - pen.width());
 
 	//Rect
 	pen.setBrush(Qt::black);
 	painter.setPen(pen);
-	m_rect.setWidth(m_rect.width() - pen.width() * 2);
-	m_rect.setHeight(m_rect.height() - pen.width() * 2);
+	m_rect.setWidth(m_rect.width() - pen.width());
+	m_rect.setHeight(m_rect.height() - pen.width());
 	painter.drawRect(m_rect);
 
 	//Fill rect
 	m_rect.setX(m_rect.x() + pen.width() / 2);
 	m_rect.setY(m_rect.y() + pen.width() / 2);
 	painter.fillRect(m_rect, Qt::red);
+
+	//
+	QPen smallPen(pen);
+	smallPen.setWidth(1);
+	painter.setPen(smallPen);
+	painter.drawLine(rect().x() + rect().width() - pen.width(), rect().y() + rect().height() / 3, rect().x() + rect().width(), rect().y() + rect().height() / 3);
+	painter.drawLine(rect().x() + rect().width() - pen.width(), rect().y() + rect().height() / 3 * 2, rect().x() + rect().width(), rect().y() + rect().height() / 3 * 2);
 
 	//Caption
 	QFont m_font(font());

@@ -24,12 +24,14 @@ set (src_SRC
 	src/mainwindow.cpp
 	src/adderwidget.cpp
 	src/microprocessorwidget.cpp
+	src/operations.cpp
 )
 
 set (src_HEADERS
 	src/mainwindow.h
 	src/adderwidget.h
 	src/microprocessorwidget.h
+	src/operations.h
 )
 
 ################################################################

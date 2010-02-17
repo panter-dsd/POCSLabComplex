@@ -32,7 +32,7 @@
 MicroprocessorWidget::MicroprocessorWidget(QWidget *parent)
 	:QWidget(parent)
 {
-	setFixedSize(600, 300);
+	setFixedSize(500, 300);
 
 	alb1 = new AdderWidget(tr("ALB1"), this);
 	alb2 = new AdderWidget(tr("ALB2"), this);
@@ -86,14 +86,44 @@ void MicroprocessorWidget::paint_1(QPaintEvent */*ev*/, QPainter *painter)
 	pen.setWidth(1);
 	painter->setPen(pen);
 
-
+	//A0 -> ALB1
 	painter->drawLine(0, alb1->y() + alb1->height() / 3, alb1->x(), alb1->y() + alb1->height() / 3);
+	//A1 -> ALB1
 	painter->drawLine(0, alb1->y() + alb1->height() / 3 * 2, alb1->x(), alb1->y() + alb1->height() / 3 * 2);
-
+	//A2 -> MB1
 	painter->drawLine(0, mb1->y() + mb1->height() / 3, mb1->x(), mb1->y() + mb1->height() / 3);
+	//A3 -> MB1
 	painter->drawLine(0, mb1->y() + mb1->height() / 3 * 2, mb1->x(), mb1->y() + mb1->height() / 3 * 2);
-
+	//A4 -> MB2
 	painter->drawLine(0, mb2->y() + mb2->height() / 3, mb2->x(), mb2->y() + mb2->height() / 3);
+	//A5 -> MB2
 	painter->drawLine(0, mb2->y() + mb2->height() / 3 * 2, mb2->x(), mb2->y() + mb2->height() / 3 * 2);
-
+	//ALB1 -> Q1
+	painter->drawLine(alb1->x() + alb1->width(), alb1->y() + alb1->height() / 3, width(), alb1->y() + alb1->height() / 3);
+	//ALB1 -> ALB3
+	painter->drawLine(alb1->x() + alb1->width() + 20, alb1->y() + alb1->height() / 3, alb1->x() + alb1->width() + 20, alb3->y() + alb3->height() / 3 * 2);
+	painter->drawLine(alb1->x() + alb1->width() + 20, alb3->y() + alb3->height() / 3 * 2, alb3->x(), alb3->y() + alb3->height() / 3 * 2);
+	//MB1 -> Q5
+	painter->drawLine(mb1->x() + mb1->width(), mb1->y() + mb1->height() / 3, alb2->x(), mb1->y() + mb1->height() / 3);
+	painter->drawLine(alb2->x(), mb1->y() + mb1->height() / 3, alb2->x(), mb1->y() + mb1->height() / 3 * 2);
+	painter->drawLine(alb2->x(), mb1->y() + mb1->height() / 3 * 2, width(), mb1->y() + mb1->height() / 3 * 2);
+	//MB1 -> ALB2
+	painter->drawLine(mb1->x() + mb1->width(), mb1->y() + mb1->height() / 3 * 2, mb1->x() + mb1->width() + 20, mb1->y() + mb1->height() / 3 * 2);
+	painter->drawLine(mb1->x() + mb1->width() + 20, mb1->y() + mb1->height() / 3 * 2, mb1->x() + mb1->width() + 20, alb2->y() + alb2->height() / 3);
+	painter->drawLine(mb1->x() + mb1->width() + 20, alb2->y() + alb2->height() / 3, alb2->x(), alb2->y() + alb2->height() / 3);
+	//MB2 -> ALB2
+	painter->drawLine(mb2->x() + mb2->width(), mb2->y() + mb2->height() / 3, mb2->x() + mb2->width() + 20, mb2->y() + mb2->height() / 3);
+	painter->drawLine(mb2->x() + mb2->width() + 20, mb2->y() + mb2->height() / 3, mb2->x() + mb2->width() + 20, alb2->y() + alb2->height() / 3 * 2);
+	painter->drawLine(mb2->x() + mb2->width() + 20, alb2->y() + alb2->height() / 3 * 2, alb2->x(), alb2->y() + alb2->height() / 3 * 2);
+	//MB2 -> Q4
+	painter->drawLine(mb2->x() + mb2->width(), mb2->y() + mb2->height() / 3 * 2, width(), mb2->y() + mb2->height() / 3 * 2);
+	//ALB2 -> Q6
+	painter->drawLine(alb2->x() + alb2->width(), alb2->y() + alb2->height() / 3, width(), alb2->y() + alb2->height() / 3);
+	//ALB2 -> ALB3
+	painter->drawLine(alb2->x() + alb2->width() + 10, alb2->y() + alb2->height() / 3, alb2->x() + alb2->width() + 10, alb3->y() + alb3->height() / 3);
+	painter->drawLine(alb2->x() + alb2->width() + 10, alb3->y() + alb3->height() / 3, alb3->x(), alb3->y() + alb3->height() / 3);
+	//ALB2 -> Qsign
+	painter->drawLine(alb2->x() + alb2->width(), alb2->y() + alb2->height() / 3 * 2, alb3->x() + alb3->width(), alb2->y() + alb2->height() / 3 * 2);
+	//ALB3 -> Q2
+	painter->drawLine(alb3->x() + alb3->width(), alb3->y() + alb3->height() / 3, width(), alb3->y() + alb3->height() / 3);
 }
