@@ -30,6 +30,7 @@
 #include "abstractblock.h"
 #include "alb1block.h"
 #include "alb2block.h"
+#include "alb3block.h"
 
 MicroprocessorWidget::MicroprocessorWidget(QWidget *parent)
 	:QWidget(parent)
@@ -38,7 +39,7 @@ MicroprocessorWidget::MicroprocessorWidget(QWidget *parent)
 
 	alb1 = new Alb1Block(tr("ALB1"), this);
 	alb2 = new Alb2Block(tr("ALB2"), this);
-	alb3 = new AbstractBlock(tr("ALB3"), this);
+	alb3 = new Alb3Block(tr("ALB3"), this);
 	mb1 = new AbstractBlock(tr("MB1"), this);
 	mb2 = new AbstractBlock(tr("MB2"), this);
 

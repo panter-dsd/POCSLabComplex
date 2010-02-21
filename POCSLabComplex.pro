@@ -20,7 +20,8 @@ HEADERS += src/abstractblock.h \
 		   src/operations.h \
 		   src/dialogs/operationdialog.h \
 		   src/alb1block.h \
-		   src/alb2block.h
+		   src/alb2block.h \
+		   src/alb3block.h
 SOURCES += src/abstractblock.cpp \
 		   src/main.cpp \
 		   src/mainwindow.cpp \
@@ -28,4 +29,5 @@ SOURCES += src/abstractblock.cpp \
 		   src/operations.cpp \
 		   src/dialogs/operationdialog.cpp \
 		   src/alb1block.cpp \
-		   src/alb2block.cpp
+		   src/alb2block.cpp \
+		   src/alb3block.cpp
