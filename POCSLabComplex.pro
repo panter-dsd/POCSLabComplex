@@ -3,7 +3,7 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = 
+TARGET =
 INCLUDEPATH += . src src/dialogs
 
 DESTDIR = bin
@@ -15,15 +15,17 @@ OBJECTS_DIR = build
 
 # Input
 HEADERS += src/abstractblock.h \
-           src/mainwindow.h \
-           src/microprocessorwidget.h \
-           src/operations.h \
-           src/dialogs/operationdialog.h \
-    src/alb1block.h
+		   src/mainwindow.h \
+		   src/microprocessorwidget.h \
+		   src/operations.h \
+		   src/dialogs/operationdialog.h \
+		   src/alb1block.h \
+		   src/alb2block.h
 SOURCES += src/abstractblock.cpp \
-           src/main.cpp \
-           src/mainwindow.cpp \
-           src/microprocessorwidget.cpp \
-           src/operations.cpp \
-           src/dialogs/operationdialog.cpp \
-    src/alb1block.cpp
+		   src/main.cpp \
+		   src/mainwindow.cpp \
+		   src/microprocessorwidget.cpp \
+		   src/operations.cpp \
+		   src/dialogs/operationdialog.cpp \
+		   src/alb1block.cpp \
+		   src/alb2block.cpp

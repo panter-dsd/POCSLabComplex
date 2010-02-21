@@ -28,6 +28,7 @@
 class QPainter;
 class AbstractBlock;
 class Alb1Block;
+class Alb2Block;
 
 #include <QtGui/QWidget>
 
@@ -37,7 +38,7 @@ class MicroprocessorWidget : public QWidget {
 
 private:
 	Alb1Block *alb1;
-	AbstractBlock *alb2;
+	Alb2Block *alb2;
 	AbstractBlock *alb3;
 	AbstractBlock *mb1;
 	AbstractBlock *mb2;

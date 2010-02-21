@@ -26,20 +26,20 @@
 
 #include <QtGui/QInputDialog>
 
-#include "alb1block.h"
+#include "alb2block.h"
 #include "operationdialog.h"
 
-Alb1Block::Alb1Block(const QString& caption, QWidget *parent)
+Alb2Block::Alb2Block(const QString& caption, QWidget *parent)
 	: AbstractBlock(caption, parent)
 {
 	operations.insert(0, "a + b");
 	operations.insert(1, "a - b");
-	operations.insert(2, "a + 0");
-	operations.insert(3, "max(a, b)");
+	operations.insert(2, "0 + b");
+	operations.insert(3, "a + (b > 0/0)");
 	operations.insert(4, "(a + b)/2");
 	operations.insert(5, "(a - b)/2");
-	operations.insert(6, "(a + 0)/2");
-	operations.insert(7, "a");
+	operations.insert(6, "(0 + b)/2");
+	operations.insert(7, "a - (b > 0/0)");
 
 	moduleOperations.insert(0, "|a + b|");
 	moduleOperations.insert(1, "|a - b|");
@@ -47,10 +47,9 @@ Alb1Block::Alb1Block(const QString& caption, QWidget *parent)
 	moduleOperations.insert(4, "|(a + b)/2|");
 	moduleOperations.insert(5, "|(a - b)/2|");
 	moduleOperations.insert(6, "|(a + 0)/2|");
-	moduleOperations.insert(7, "|a|");
 }
 
-void Alb1Block::chooseOperation()
+void Alb2Block::chooseOperation()
 {
 	const QMap<int, QString> &m = m_isModule ? moduleOperations : operations;
 
@@ -64,7 +63,7 @@ void Alb1Block::chooseOperation()
 	}
 }
 
-void Alb1Block::updateToolTip()
+void Alb2Block::updateToolTip()
 {
 	QString m_toolTip = "<h2 align=center><u>" + m_caption + "</u></h2>";
 

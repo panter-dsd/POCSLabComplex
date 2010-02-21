@@ -101,5 +101,5 @@ void AbstractBlock::mouseDoubleClickEvent(QMouseEvent */*ev*/)
 
 void AbstractBlock::updateToolTip()
 {
-	setToolTip("<h2 align=center>" + m_caption + "</h2>");
+	setToolTip("<h2 align=center><u>" + m_caption + "</u></h2>");
 }
