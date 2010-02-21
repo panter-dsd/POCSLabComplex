@@ -29,7 +29,7 @@
 
 #include "operationdialog.h"
 
-OperationDialog::OperationDialog(QWidget *parent)
+OperationDialog::OperationDialog(QMap<int, QString> operations, QWidget *parent)
 	:QDialog(parent)
 {
 	groupBox = new QGroupBox(this);
@@ -38,14 +38,17 @@ OperationDialog::OperationDialog(QWidget *parent)
 	QVBoxLayout *layout = new QVBoxLayout();
 
 	QRadioButton *radioButton;
-	radioButton = new QRadioButton("a + b", this);
-	layout->addWidget(radioButton);
-	radioButton = new QRadioButton("a - b", this);
-	layout->addWidget(radioButton);
-	radioButton = new QRadioButton("a * b", this);
-	layout->addWidget(radioButton);
-	radioButton = new QRadioButton("a / b", this);
-	layout->addWidget(radioButton);
+
+	QMapIterator<int, QString> it(operations);
+
+	while(it.hasNext()) {
+		it.next();
+
+		radioButton = new QRadioButton(it.value(), this);
+		radioButton->setObjectName(QString::number(it.key()));
+
+		layout->addWidget(radioButton);
+	}
 
 	groupBox->setLayout(layout);
 
@@ -59,4 +62,24 @@ OperationDialog::OperationDialog(QWidget *parent)
 	mainLayout->addWidget(groupBox);
 	mainLayout->addWidget(buttons);
 	setLayout(mainLayout);
+}
+
+int OperationDialog::operation()
+{
+	foreach(QRadioButton *rb, findChildren<QRadioButton*> ()) {
+		if (rb->isChecked()) {
+			return rb->objectName().toInt();
+		}
+	}
+	return -1;
+}
+
+void OperationDialog::setOperation(int operation)
+{
+	foreach(QRadioButton *rb, findChildren<QRadioButton*> ()) {
+		if (rb->objectName().toInt() == operation) {
+			rb->setChecked(true);
+			break;
+		}
+	}
 }

@@ -13,28 +13,32 @@
 * See the GNU General Public License for more details.
 *
 * You should have received a copy of the GNU General Public License
-* along with POCSLabComplex if not, write to the Free Software
+* along with Panther Commander; if not, write to the Free Software
 * Foundation, Inc., 51 Franklin St, Fifth Floor,
 * Boston, MA 02110-1301 USA
 *-------------------------------------------------------------------
-* Project:		POCSLabComplex
-* Author:		PanteR
-* Contact:		panter.dsd@gmail.com
+* Project:POCSLabComplex
+* Author:PanteR
+* Contact:panter.dsd@gmail.com
 *******************************************************************/
 
-#ifndef MULTIPLIER_H
-#define MULTIPLIER_H
+#ifndef ALB1BLOCK_H
+#define ALB1BLOCK_H
 
-#include "abstractcomputerunit.h"
+#include "abstractblock.h"
 
-class Multiplier : public AbstractComputerUnit {
+class Alb1Block : public AbstractBlock
+{
+	Q_OBJECT
 
 public:
-	Multiplier();
-	virtual ~Multiplier()
-	{}
+	Alb1Block(const QString& caption = 0, QWidget *parent = 0);
 
-	bool calculate();
+private:
+	void updateToolTip();
+
+public Q_SLOTS:
+	void chooseOperation();
 };
 
-#endif //MULTIPLIER_H
+#endif // ALB1BLOCK_H

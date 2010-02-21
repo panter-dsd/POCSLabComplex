@@ -26,7 +26,8 @@
 #define MICROPROCESSORWIDGET_H
 
 class QPainter;
-class AdderWidget;
+class AbstractBlock;
+class Alb1Block;
 
 #include <QtGui/QWidget>
 
@@ -35,11 +36,11 @@ class MicroprocessorWidget : public QWidget {
 	Q_OBJECT
 
 private:
-	AdderWidget *alb1;
-	AdderWidget *alb2;
-	AdderWidget *alb3;
-	AdderWidget *mb1;
-	AdderWidget *mb2;
+	Alb1Block *alb1;
+	AbstractBlock *alb2;
+	AbstractBlock *alb3;
+	AbstractBlock *mb1;
+	AbstractBlock *mb2;
 
 public:
 	MicroprocessorWidget(QWidget *parent);

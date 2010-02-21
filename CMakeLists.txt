@@ -11,7 +11,6 @@ add_definitions(-DUNICODE)
 
 include_directories(
 	src
-	src/core
 	src/dialogs
 )
 
@@ -22,32 +21,18 @@ include_directories(
 set (src_SRC
 	src/main.cpp
 	src/mainwindow.cpp
-	src/adderwidget.cpp
+	src/abstractblock.cpp
 	src/microprocessorwidget.cpp
 	src/operations.cpp
+	src/alb1block.cpp
 )
 
 set (src_HEADERS
 	src/mainwindow.h
-	src/adderwidget.h
+	src/abstractblock.h
 	src/microprocessorwidget.h
 	src/operations.h
-)
-
-################################################################
-# core
-################################################################
-
-set (core_SRC
-	src/core/abstractcomputerunit.cpp
-	src/core/adder.cpp
-	src/core/multiplier.cpp
-)
-
-set (core_HEADERS
-	src/core/abstractcomputerunit.h
-	src/core/adder.h
-	src/core/multiplier.h
+	src/alb1block.h
 )
 
 ################################################################
@@ -69,13 +54,11 @@ set (dialogs_HEADERS
 
 set (SOURCES
 	${src_SRC}
-	${core_SRC}
 	${dialogs_SRC}
 )
 
 set (HEADERS
 	${src_HEADERS}
-	${core_HEADERS}
 	${dialogs_HEADERS}
 )
 

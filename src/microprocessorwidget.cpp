@@ -27,20 +27,21 @@
 #include <QtGui/QPen>
 
 #include "microprocessorwidget.h"
-#include "adderwidget.h"
+#include "abstractblock.h"
+#include "alb1block.h"
 
 MicroprocessorWidget::MicroprocessorWidget(QWidget *parent)
 	:QWidget(parent)
 {
 	setFixedSize(500, 300);
 
-	alb1 = new AdderWidget(tr("ALB1"), this);
-	alb2 = new AdderWidget(tr("ALB2"), this);
-	alb3 = new AdderWidget(tr("ALB3"), this);
-	mb1 = new AdderWidget(tr("MB1"), this);
-	mb2 = new AdderWidget(tr("MB2"), this);
+	alb1 = new Alb1Block(tr("ALB1"), this);
+	alb2 = new AbstractBlock(tr("ALB2"), this);
+	alb3 = new AbstractBlock(tr("ALB3"), this);
+	mb1 = new AbstractBlock(tr("MB1"), this);
+	mb2 = new AbstractBlock(tr("MB2"), this);
 
-	foreach(AdderWidget *label, findChildren<AdderWidget*> ()) {
+	foreach(AbstractBlock *label, findChildren<AbstractBlock*> ()) {
 		label->setFixedSize(width() / 5, height() / 5);
 	}
 }

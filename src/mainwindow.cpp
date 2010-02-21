@@ -63,8 +63,6 @@ bool MainWindow::event(QEvent *ev)
 	if (ev->type() == QEvent::LanguageChange) {
 		retranslateStrings();
 	}
-	if (ev->type() == QEvent::Resize)
-		setWindowTitle(QString("%1_%2").arg(w->width()).arg(w->height()));
 	return QMainWindow::event(ev);
 }
 

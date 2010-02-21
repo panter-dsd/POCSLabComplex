@@ -22,40 +22,65 @@
 * Contact:		panter.dsd@gmail.com
 *******************************************************************/
 
-#ifndef ABSTRACTCOMPUTERUNIT_H
-#define ABSTRACTCOMPUTERUNIT_H
+#ifndef ABSTRACTBLOCK_H
+#define ABSTRACTBLOCK_H
 
-#include <QtCore/QByteArray>
+#include <QtCore/QMap>
 
-class AbstractComputerUnit {
+#include <QtGui/QWidget>
+
+class AbstractBlock : public QWidget {
+
+	Q_OBJECT
 
 protected:
-	QByteArray m_value;
-	QByteArray m_a;
-	QByteArray m_b;
+	QString m_caption;
+	QByteArray m_firstValue;
+	QByteArray m_secondValue;
+	bool m_isModule;
+	int m_operation;
+	QMap<int, QString> operations;
+	QMap<int, QString> moduleOperations;
 
 public:
-	AbstractComputerUnit();
-	virtual ~AbstractComputerUnit()
+	AbstractBlock(const QString& caption = 0, QWidget *parent = 0);
+	virtual ~AbstractBlock()
 	{}
 
-	QByteArray value()
-	{ return m_value;}
+	QString caption()
+	{ return m_caption; }
+	void setCaption(const QString& caption)
+	{
+		m_caption = caption;
+		updateToolTip();
+	}
 
-	QByteArray aValue()
-	{ return m_a;}
-	void setAValue(const QByteArray& a)
-	{ m_a = a;}
+	bool isModule()
+	{ return m_isModule; }
+	void setIsModule(bool b)
+	{ m_isModule = b; }
 
-	QByteArray bValue()
-	{ return m_b;}
-	void setBValue(const QByteArray& b)
-	{ m_b = b;}
+	int operation()
+	{ return m_operation; }
+	void setOperation(int operation)
+	{
+		m_operation = operation;
+		updateToolTip();
+	}
 
-	QByteArray add();
+protected:
+	void paintEvent(QPaintEvent *ev);
+	void mouseDoubleClickEvent(QMouseEvent *ev);
+	void updateToolTip();
 
-private:
-	void prepareNumbers(QByteArray *a, QByteArray *b);
+public Q_SLOTS:
+	void setFirstValue(const QByteArray& value);
+	void setSecondValue(const QByteArray& value);
+	virtual void chooseOperation()
+	{}
+
+Q_SIGNALS:
+	void valueChanged(const QByteArray& newValue);
 };
 
-#endif //ABSTRACTCOMPUTERUNIT_H
+#endif //ABSTRACTBLOCK_H

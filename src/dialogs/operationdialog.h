@@ -27,6 +27,7 @@
 
 class QGroupBox;
 
+#include <QtCore/QMap>
 #include <QtGui/QDialog>
 
 class OperationDialog : public QDialog {
@@ -37,9 +38,12 @@ private:
 	QGroupBox *groupBox;
 
 public:
-	OperationDialog(QWidget *parent = 0);
+	OperationDialog(QMap<int, QString> operations, QWidget *parent = 0);
 	virtual ~OperationDialog()
 	{}
+
+	int operation();
+	void setOperation(int operation);
 };
 
 #endif //OPERATIONDIALOG_H
