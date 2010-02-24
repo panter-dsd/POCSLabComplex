@@ -66,11 +66,10 @@ OperationDialog::OperationDialog(QMap<int, QString> operations, QWidget *parent)
 
 int OperationDialog::operation()
 {
-	foreach(QRadioButton *rb, findChildren<QRadioButton*> ()) {
-		if (rb->isChecked()) {
+	foreach(QRadioButton *rb, findChildren<QRadioButton*> ())
+		if (rb->isChecked())
 			return rb->objectName().toInt();
-		}
-	}
+
 	return -1;
 }
 

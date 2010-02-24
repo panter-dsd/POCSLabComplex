@@ -26,6 +26,7 @@
 #define MICROPROCESSORWIDGET_H
 
 class QPainter;
+class QAction;
 class AbstractBlock;
 class Alb1Block;
 class Alb2Block;
@@ -44,6 +45,10 @@ private:
 	AbstractBlock *mb1;
 	AbstractBlock *mb2;
 
+	QAction *actionChooseScheme;
+
+	int m_scheme;
+
 public:
 	MicroprocessorWidget(QWidget *parent);
 	virtual ~MicroprocessorWidget()
@@ -51,9 +56,16 @@ public:
 
 protected:
 	void paintEvent(QPaintEvent *ev);
+	void resizeEvent(QResizeEvent *ev);
+	void updateWidgets();
 
 private:
-	void paint_1(QPaintEvent *ev, QPainter *painter);
+	void paint_0(QPaintEvent *ev, QPainter *painter);
+	void resize_1();
+
+private Q_SLOTS:
+	void chooseScheme();
+
 
 };
 

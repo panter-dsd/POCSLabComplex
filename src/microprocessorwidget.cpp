@@ -25,6 +25,8 @@
 #include <QtGui/QPainter>
 #include <QtGui/QPaintEvent>
 #include <QtGui/QPen>
+#include <QtGui/QInputDialog>
+#include <QtGui/QAction>
 
 #include "microprocessorwidget.h"
 #include "abstractblock.h"
@@ -33,9 +35,15 @@
 #include "alb3block.h"
 
 MicroprocessorWidget::MicroprocessorWidget(QWidget *parent)
-	:QWidget(parent)
+	:QWidget(parent), m_scheme(-1)
 {
-	setFixedSize(500, 300);
+//	setFixedSize(500, 300);
+
+	actionChooseScheme = new QAction(tr("Choose scheme"), this);
+	connect(actionChooseScheme, SIGNAL(triggered()), this, SLOT(chooseScheme()));
+	addAction(actionChooseScheme);
+
+	setContextMenuPolicy(Qt::ActionsContextMenu);
 
 	alb1 = new Alb1Block(tr("ALB1"), this);
 	alb2 = new Alb2Block(tr("ALB2"), this);
@@ -43,9 +51,25 @@ MicroprocessorWidget::MicroprocessorWidget(QWidget *parent)
 	mb1 = new AbstractBlock(tr("MB1"), this);
 	mb2 = new AbstractBlock(tr("MB2"), this);
 
-	foreach(AbstractBlock *label, findChildren<AbstractBlock*> ()) {
-		label->setFixedSize(width() / 5, height() / 5);
+	updateWidgets();
+}
+
+void MicroprocessorWidget::resizeEvent(QResizeEvent */*ev*/)
+{
+	foreach(AbstractBlock *ab, findChildren<AbstractBlock*> ()) {
+		ab->setFixedSize(width() / 5, height() / 5);
 	}
+
+	resize_1();
+}
+
+void MicroprocessorWidget::resize_1()
+{
+	alb1->move(width() / 2 - alb1->width() / 2, 20);
+	alb2->move(width() / 2 - alb1->width() / 2, height() / 2 + alb2->height() / 2);
+	alb3->move(width() - alb3->width() - 60, alb1->y() + alb1->height());
+	mb1->move(60, height() / 2 - mb1->height() / 2);
+	mb2->move(60, height() / 2 + mb1->height() / 2 + 40);
 }
 
 void MicroprocessorWidget::paintEvent(QPaintEvent *ev)
@@ -71,18 +95,16 @@ void MicroprocessorWidget::paintEvent(QPaintEvent *ev)
 	m_rect.setHeight(m_rect.height() - pen.width() * 2);
 	painter.drawRect(m_rect);
 
+	switch (m_scheme) {
+	case 0:
+		paint_0(ev, &painter);
+		break;
+	}
 
-	paint_1(ev, &painter);
 }
 
-void MicroprocessorWidget::paint_1(QPaintEvent */*ev*/, QPainter *painter)
+void MicroprocessorWidget::paint_0(QPaintEvent */*ev*/, QPainter *painter)
 {
-	alb1->move(width() / 2 - alb1->width() / 2, 20);
-	alb2->move(width() / 2 - alb1->width() / 2, height() / 2 + alb2->height() / 2);
-	alb3->move(width() - alb3->width() - 60, alb1->y() + alb1->height());
-	mb1->move(60, height() / 2 - mb1->height() / 2);
-	mb2->move(60, height() / 2 + mb1->height() / 2 + 40);
-
 	QPen pen;
 	pen.setStyle(Qt::SolidLine);
 	pen.setBrush(Qt::black);
@@ -143,4 +165,30 @@ void MicroprocessorWidget::paint_1(QPaintEvent */*ev*/, QPainter *painter)
 	//A5 text
 	painter->drawText(0, mb2->y() + mb2->height() / 3 * 2 - fontMetrics().height() / 2, "A5");
 
+}
+
+void MicroprocessorWidget::chooseScheme()
+{
+	QStringList schemes;
+	schemes << "0" << "1" << "2" << "4" << "5" << "6" << "8";
+
+	const int currentScheme = schemes.indexOf(QString::number(m_scheme));
+
+	bool ok = false;
+
+	const QString& scheme = QInputDialog::getItem(this, tr("Choose scheme"), tr("Scheme"), schemes, currentScheme, false, &ok);
+
+	if (ok && !scheme.isEmpty()) {
+		m_scheme = scheme.toInt();
+		updateWidgets();
+	}
+}
+
+void MicroprocessorWidget::updateWidgets()
+{
+	alb1->setVisible(m_scheme >= 0);
+	alb2->setVisible(m_scheme >= 0);
+	alb3->setVisible(m_scheme >= 0);
+	mb1->setVisible(m_scheme >= 0);
+	mb2->setVisible(m_scheme >= 0);
 }
