@@ -62,6 +62,11 @@ protected:
 private:
 	void paint_0(QPaintEvent *ev, QPainter *painter);
 	void resize_0();
+	void paint_1(QPaintEvent *ev, QPainter *painter);
+	void resize_1();
+	void paint_2(QPaintEvent *ev, QPainter *painter);
+	void resize_2();
+
 
 private Q_SLOTS:
 	void chooseScheme();
