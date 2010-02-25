@@ -61,6 +61,7 @@ void Alb1Block::chooseOperation()
 	if (d.exec()) {
 		m_operation = d.operation();
 		updateToolTip();
+		emit operationChanged(m_operation);
 	}
 }
 

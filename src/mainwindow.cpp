@@ -35,16 +35,14 @@ MainWindow::MainWindow(QWidget* parent, Qt::WFlags f)
 {
 	resize(800, 600);
 
-	w = new MicroprocessorWidget(this);
-
-	w->move(100, 100);
-	w->resize(400, 300);
-
 	QWidget *centralWidget = new QWidget(this);
 	setCentralWidget(centralWidget);
 
 	QVBoxLayout *mainLayout = new QVBoxLayout();
-	mainLayout->addWidget(w);
+	mainLayout->addWidget(new MicroprocessorWidget(this));
+	mainLayout->addWidget(new MicroprocessorWidget(this));
+	mainLayout->addWidget(new MicroprocessorWidget(this));
+	mainLayout->addWidget(new MicroprocessorWidget(this));
 	centralWidget->setLayout(mainLayout);
 }
 

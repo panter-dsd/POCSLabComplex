@@ -42,7 +42,7 @@ void AbstractBlock::paintEvent(QPaintEvent */*ev*/)
 	QPen pen;
 	pen.setStyle(Qt::SolidLine);
 	pen.setBrush(Qt::darkGray);
-	pen.setWidth(9);
+	pen.setWidth(5);
 	painter.setPen(pen);
 
 	QRect m_rect(rect().x(), rect().top(), rect().width(), rect().height());

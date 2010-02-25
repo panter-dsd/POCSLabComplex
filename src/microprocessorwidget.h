@@ -47,12 +47,18 @@ private:
 
 	QAction *actionChooseScheme;
 
+	QRect m_workRect;
 	int m_scheme;
+	qint16 m_adjustingWord;
 
 public:
 	MicroprocessorWidget(QWidget *parent);
 	virtual ~MicroprocessorWidget()
 	{}
+
+	qint64 adjustingWord()
+	{ return m_adjustingWord; }
+	void setAdjustingWord(qint16 m_adjustingWord);
 
 protected:
 	void paintEvent(QPaintEvent *ev);
@@ -70,7 +76,7 @@ private:
 
 private Q_SLOTS:
 	void chooseScheme();
-
+	void updateAdjustingWorld();
 
 };
 

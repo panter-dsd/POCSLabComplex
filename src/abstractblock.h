@@ -81,6 +81,7 @@ public Q_SLOTS:
 
 Q_SIGNALS:
 	void valueChanged(const QByteArray& newValue);
+	void operationChanged(int newOperation);
 };
 
 #endif //ABSTRACTBLOCK_H
