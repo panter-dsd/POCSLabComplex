@@ -38,9 +38,9 @@ protected:
 	QByteArray m_firstValue;
 	QByteArray m_secondValue;
 	bool m_isModule;
-	int m_operation;
-	QMap<int, QString> operations;
-	QMap<int, QString> moduleOperations;
+	char m_operation;
+	QMap<char, QString> operations;
+	QMap<char, QString> moduleOperations;
 
 public:
 	AbstractBlock(const QString& caption = 0, QWidget *parent = 0);
@@ -60,13 +60,16 @@ public:
 	void setIsModule(bool b)
 	{ m_isModule = b; }
 
-	int operation()
+	char operation()
 	{ return m_operation; }
-	void setOperation(int operation)
+	void setOperation(char operation)
 	{
 		m_operation = operation;
 		updateToolTip();
 	}
+
+	bool isValid()
+	{ return m_operation >= 0; }
 
 protected:
 	void paintEvent(QPaintEvent *ev);
@@ -81,7 +84,7 @@ public Q_SLOTS:
 
 Q_SIGNALS:
 	void valueChanged(const QByteArray& newValue);
-	void operationChanged(int newOperation);
+	void operationChanged(char newOperation);
 };
 
 #endif //ABSTRACTBLOCK_H

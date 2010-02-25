@@ -48,7 +48,7 @@ private:
 	QAction *actionChooseScheme;
 
 	QRect m_workRect;
-	int m_scheme;
+	char m_scheme;
 	qint16 m_adjustingWord;
 
 public:
@@ -72,7 +72,6 @@ private:
 	void resize_1();
 	void paint_2(QPaintEvent *ev, QPainter *painter);
 	void resize_2();
-
 
 private Q_SLOTS:
 	void chooseScheme();

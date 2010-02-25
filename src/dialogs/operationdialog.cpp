@@ -29,7 +29,7 @@
 
 #include "operationdialog.h"
 
-OperationDialog::OperationDialog(QMap<int, QString> operations, QWidget *parent)
+OperationDialog::OperationDialog(QMap<char, QString> operations, QWidget *parent)
 	:QDialog(parent)
 {
 	groupBox = new QGroupBox(this);
@@ -39,7 +39,7 @@ OperationDialog::OperationDialog(QMap<int, QString> operations, QWidget *parent)
 
 	QRadioButton *radioButton;
 
-	QMapIterator<int, QString> it(operations);
+	QMapIterator<char, QString> it(operations);
 
 	while(it.hasNext()) {
 		it.next();
@@ -64,7 +64,7 @@ OperationDialog::OperationDialog(QMap<int, QString> operations, QWidget *parent)
 	setLayout(mainLayout);
 }
 
-int OperationDialog::operation()
+char OperationDialog::operation()
 {
 	foreach(QRadioButton *rb, findChildren<QRadioButton*> ())
 		if (rb->isChecked())
@@ -73,7 +73,7 @@ int OperationDialog::operation()
 	return -1;
 }
 
-void OperationDialog::setOperation(int operation)
+void OperationDialog::setOperation(char operation)
 {
 	foreach(QRadioButton *rb, findChildren<QRadioButton*> ()) {
 		if (rb->objectName().toInt() == operation) {

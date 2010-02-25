@@ -40,7 +40,7 @@ Mb1Block::Mb1Block(const QString& caption, QWidget *parent)
 
 void Mb1Block::chooseOperation()
 {
-	const QMap<int, QString> &m = m_isModule ? moduleOperations : operations;
+	const QMap<char, QString> &m = m_isModule ? moduleOperations : operations;
 
 	OperationDialog d(m, this);
 

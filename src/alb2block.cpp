@@ -51,7 +51,7 @@ Alb2Block::Alb2Block(const QString& caption, QWidget *parent)
 
 void Alb2Block::chooseOperation()
 {
-	const QMap<int, QString> &m = m_isModule ? moduleOperations : operations;
+	const QMap<char, QString> &m = m_isModule ? moduleOperations : operations;
 
 	OperationDialog d(m, this);
 

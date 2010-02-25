@@ -38,12 +38,12 @@ private:
 	QGroupBox *groupBox;
 
 public:
-	OperationDialog(QMap<int, QString> operations, QWidget *parent = 0);
+	OperationDialog(QMap<char, QString> operations, QWidget *parent = 0);
 	virtual ~OperationDialog()
 	{}
 
-	int operation();
-	void setOperation(int operation);
+	char operation();
+	void setOperation(char operation);
 };
 
 #endif //OPERATIONDIALOG_H

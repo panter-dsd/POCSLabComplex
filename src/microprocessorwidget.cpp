@@ -56,7 +56,7 @@ MicroprocessorWidget::MicroprocessorWidget(QWidget *parent)
 	mb2 = new Mb2Block(tr("MB2"), this);
 
 	foreach(AbstractBlock *ab, findChildren<AbstractBlock*> ()) {
-		connect(ab, SIGNAL(operationChanged(int)), this, SLOT(updateAdjustingWorld()));
+		connect(ab, SIGNAL(operationChanged(char)), this, SLOT(updateAdjustingWorld()));
 	}
 
 	updateWidgets();
@@ -349,7 +349,7 @@ void MicroprocessorWidget::chooseScheme()
 	QStringList schemes;
 	schemes << "0" << "1" << "2" << "4" << "5" << "6";
 
-	const int currentScheme = schemes.indexOf(QString::number(m_scheme));
+	const char currentScheme = schemes.indexOf(QString::number(m_scheme));
 
 	bool ok = false;
 
@@ -374,7 +374,13 @@ void MicroprocessorWidget::updateWidgets()
 
 void MicroprocessorWidget::updateAdjustingWorld()
 {
+	m_adjustingWord = -1;
+
+	if (m_scheme < 0 || !alb1->isValid() || !alb2->isValid() || !alb3->isValid() || !mb1->isValid() || !mb2->isValid())
+		return;
+
 	m_adjustingWord = 0;
+
 	m_adjustingWord |= m_scheme;
 	m_adjustingWord = m_adjustingWord << 2;
 	m_adjustingWord |= mb1->operation();
@@ -390,14 +396,17 @@ void MicroprocessorWidget::updateAdjustingWorld()
 
 void MicroprocessorWidget::setAdjustingWord(qint16 adjustingWord)
 {
+	if (adjustingWord < -1)
+		return;
+
 	m_adjustingWord = adjustingWord;
 
-	m_scheme = int((m_adjustingWord & 0b1110000000000000) >> 13);
-	mb1->setOperation(int((m_adjustingWord & 0b0001100000000000) >> 11));
-	mb2->setOperation(int((m_adjustingWord & 0b0000011000000000) >> 9));
-	alb2->setOperation(int((m_adjustingWord & 0b0000000111000000) >> 6));
-	alb3->setOperation(int((m_adjustingWord & 0b0000000000111000) >> 3));
-	alb1->setOperation(int(m_adjustingWord & 0b0000000000000111));
+	m_scheme = char((m_adjustingWord & 0b1110000000000000) >> 13);
+	mb1->setOperation(char((m_adjustingWord & 0b0001100000000000) >> 11));
+	mb2->setOperation(char((m_adjustingWord & 0b0000011000000000) >> 9));
+	alb2->setOperation(char((m_adjustingWord & 0b0000000111000000) >> 6));
+	alb3->setOperation(char((m_adjustingWord & 0b0000000000111000) >> 3));
+	alb1->setOperation(char(m_adjustingWord & 0b0000000000000111));
 
 	updateWidgets();
 	resizeEvent(0);
