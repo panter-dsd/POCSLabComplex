@@ -27,6 +27,8 @@ set (src_SRC
 	src/alb1block.cpp
 	src/alb2block.cpp
 	src/alb3block.cpp
+	src/mb1block.cpp
+	src/mb2block.cpp
 )
 
 set (src_HEADERS
@@ -37,6 +39,8 @@ set (src_HEADERS
 	src/alb1block.h
 	src/alb2block.h
 	src/alb3block.h
+	src/mb1block.h
+	src/mb2block.h
 )
 
 ################################################################

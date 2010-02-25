@@ -33,6 +33,8 @@
 #include "alb1block.h"
 #include "alb2block.h"
 #include "alb3block.h"
+#include "mb1block.h"
+#include "mb2block.h"
 
 MicroprocessorWidget::MicroprocessorWidget(QWidget *parent)
 	:QWidget(parent), m_scheme(-1)
@@ -48,8 +50,8 @@ MicroprocessorWidget::MicroprocessorWidget(QWidget *parent)
 	alb1 = new Alb1Block(tr("ALB1"), this);
 	alb2 = new Alb2Block(tr("ALB2"), this);
 	alb3 = new Alb3Block(tr("ALB3"), this);
-	mb1 = new AbstractBlock(tr("MB1"), this);
-	mb2 = new AbstractBlock(tr("MB2"), this);
+	mb1 = new Mb1Block(tr("MB1"), this);
+	mb2 = new Mb2Block(tr("MB2"), this);
 
 	updateWidgets();
 }
@@ -60,10 +62,14 @@ void MicroprocessorWidget::resizeEvent(QResizeEvent */*ev*/)
 		ab->setFixedSize(width() / 5, height() / 5);
 	}
 
-	resize_1();
+	switch (m_scheme) {
+	case 0:
+		resize_0();
+		break;
+	}
 }
 
-void MicroprocessorWidget::resize_1()
+void MicroprocessorWidget::resize_0()
 {
 	alb1->move(width() / 2 - alb1->width() / 2, 20);
 	alb2->move(width() / 2 - alb1->width() / 2, height() / 2 + alb2->height() / 2);
@@ -100,7 +106,6 @@ void MicroprocessorWidget::paintEvent(QPaintEvent *ev)
 		paint_0(ev, &painter);
 		break;
 	}
-
 }
 
 void MicroprocessorWidget::paint_0(QPaintEvent */*ev*/, QPainter *painter)
@@ -164,7 +169,6 @@ void MicroprocessorWidget::paint_0(QPaintEvent */*ev*/, QPainter *painter)
 	painter->drawText(0, mb2->y() + mb2->height() / 3 - fontMetrics().height() / 2, "A4");
 	//A5 text
 	painter->drawText(0, mb2->y() + mb2->height() / 3 * 2 - fontMetrics().height() / 2, "A5");
-
 }
 
 void MicroprocessorWidget::chooseScheme()
@@ -181,6 +185,7 @@ void MicroprocessorWidget::chooseScheme()
 	if (ok && !scheme.isEmpty()) {
 		m_scheme = scheme.toInt();
 		updateWidgets();
+		resizeEvent(0);
 	}
 }
 
