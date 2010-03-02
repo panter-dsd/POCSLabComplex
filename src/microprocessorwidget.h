@@ -31,19 +31,21 @@ class AbstractBlock;
 class Alb1Block;
 class Alb2Block;
 class Alb3Block;
+class Mb1Block;
+class Mb2Block;
 
 #include <QtGui/QWidget>
 
-class MicroprocessorWidget : public QWidget {
-
+class MicroprocessorWidget : public QWidget
+{
 	Q_OBJECT
 
 private:
 	Alb1Block *alb1;
 	Alb2Block *alb2;
 	Alb3Block *alb3;
-	AbstractBlock *mb1;
-	AbstractBlock *mb2;
+	Mb1Block *mb1;
+	Mb2Block *mb2;
 
 	QAction *actionChooseScheme;
 
@@ -56,7 +58,7 @@ public:
 	virtual ~MicroprocessorWidget()
 	{}
 
-	qint64 adjustingWord()
+	qint64 adjustingWord() const
 	{ return m_adjustingWord; }
 	void setAdjustingWord(qint16 m_adjustingWord);
 

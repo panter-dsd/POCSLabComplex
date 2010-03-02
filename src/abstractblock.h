@@ -47,7 +47,7 @@ public:
 	virtual ~AbstractBlock()
 	{}
 
-	QString caption()
+	QString caption() const
 	{ return m_caption; }
 	void setCaption(const QString& caption)
 	{
@@ -55,12 +55,12 @@ public:
 		updateToolTip();
 	}
 
-	bool isModule()
+	bool isModule() const
 	{ return m_isModule; }
 	void setIsModule(bool b)
 	{ m_isModule = b; }
 
-	char operation()
+	char operation() const
 	{ return m_operation; }
 	void setOperation(char operation)
 	{
@@ -68,13 +68,13 @@ public:
 		updateToolTip();
 	}
 
-	bool isValid()
+	bool isValid() const
 	{ return m_operation >= 0; }
 
 protected:
 	void paintEvent(QPaintEvent *ev);
 	void mouseDoubleClickEvent(QMouseEvent *ev);
-	void updateToolTip();
+	virtual void updateToolTip();
 
 public Q_SLOTS:
 	void setFirstValue(const QByteArray& value);
