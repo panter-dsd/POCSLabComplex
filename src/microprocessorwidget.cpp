@@ -203,18 +203,25 @@ void MicroprocessorWidget::paint_0(QPaintEvent */*ev*/, QPainter *painter)
 	//ALB3 -> Q2
 	painter->drawLine(alb3->x() + alb3->width(), alb3->y() + alb3->height() / 3, width(), alb3->y() + alb3->height() / 3);
 
+	pen.setBrush(Qt::red);
+	pen.setWidth(1);
+	painter->setPen(pen);
+
+	QFont font (painter->font());
+	font.setPointSize(alb1->height() / 3 - 2 < font.pointSize() ? alb1->height() / 3 - 2 : font.pointSize());
+	painter->setFont(font);
 	//A0 text
-	painter->drawText(0, alb1->y() + alb1->height() / 3 - fontMetrics().height() / 2, "A0");
+	painter->drawText(0, alb1->y() + alb1->height() / 3 - 1, "A0");
 	//A1 text
-	painter->drawText(0, alb1->y() + alb1->height() / 3 * 2 - fontMetrics().height() / 2, "A1");
+	painter->drawText(0, alb1->y() + alb1->height() / 3 * 2 - 1, "A1");
 	//A2 text
-	painter->drawText(0, mb1->y() + mb1->height() / 3 - fontMetrics().height() / 2, "A2");
+	painter->drawText(0, mb1->y() + mb1->height() / 3 - 1, "A2");
 	//A3 text
-	painter->drawText(0, mb1->y() + mb1->height() / 3 * 2 - fontMetrics().height() / 2, "A3");
+	painter->drawText(0, mb1->y() + mb1->height() / 3 * 2 - 1, "A3");
 	//A4 text
-	painter->drawText(0, mb2->y() + mb2->height() / 3 - fontMetrics().height() / 2, "A4");
+	painter->drawText(0, mb2->y() + mb2->height() / 3 - 1, "A4");
 	//A5 text
-	painter->drawText(0, mb2->y() + mb2->height() / 3 * 2 - fontMetrics().height() / 2, "A5");
+	painter->drawText(0, mb2->y() + mb2->height() / 3 * 2 - 1, "A5");
 }
 
 void MicroprocessorWidget::paint_1(QPaintEvent */*ev*/, QPainter *painter)
@@ -267,16 +274,24 @@ void MicroprocessorWidget::paint_1(QPaintEvent */*ev*/, QPainter *painter)
 	//ALB3 -> Q2
 	painter->drawLine(alb3->x() + alb3->width(), alb3->y() + alb3->height() / 3, width(), alb3->y() + alb3->height() / 3);
 
+	pen.setBrush(Qt::red);
+	pen.setWidth(1);
+	painter->setPen(pen);
+
+	QFont font (painter->font());
+	font.setPointSize(alb1->height() / 3 - 2 < font.pointSize() ? alb1->height() / 3 - 2 : font.pointSize());
+	painter->setFont(font);
+
 	//A0 text
-	painter->drawText(0, alb1->y() + alb1->height() / 3 - fontMetrics().height() / 2, "A0");
+	painter->drawText(0, alb1->y() + alb1->height() / 3 - 1, "A0");
 	//A1 text
-	painter->drawText(0, alb1->y() + alb1->height() / 3 * 2 - fontMetrics().height() / 2, "A1");
+	painter->drawText(0, alb1->y() + alb1->height() / 3 * 2 - 1, "A1");
 	//A2 text
-	painter->drawText(0, mb1->y() + mb1->height() / 3 - fontMetrics().height() / 2, "A2");
+	painter->drawText(0, mb1->y() + mb1->height() / 3 - 1, "A2");
 	//A3 text
-	painter->drawText(0, mb1->y() + mb1->height() / 3 * 2 - fontMetrics().height() / 2, "A3");
+	painter->drawText(0, mb1->y() + mb1->height() / 3 * 2 - 1, "A3");
 	//A4 text
-	painter->drawText(0, mb2->y() + mb2->height() / 3 - fontMetrics().height() / 2, "A4");
+	painter->drawText(0, mb2->y() + mb2->height() / 3 - 1, "A4");
 }
 
 void MicroprocessorWidget::paint_2(QPaintEvent */*ev*/, QPainter *painter)
@@ -330,18 +345,26 @@ void MicroprocessorWidget::paint_2(QPaintEvent */*ev*/, QPainter *painter)
 	painter->drawLine(alb3->x() + alb3->width(), mb1->y() + mb1->height() / 3 * 2, alb3->x() + alb3->width(), mb1->y() + mb1->height() / 3);
 	painter->drawLine(alb3->x() + alb3->width(), mb1->y() + mb1->height() / 3, width(), mb1->y() + mb1->height() / 3);
 
+	pen.setBrush(Qt::red);
+	pen.setWidth(1);
+	painter->setPen(pen);
+
+	QFont font (painter->font());
+	font.setPointSize(alb1->height() / 3 - 2 < font.pointSize() ? alb1->height() / 3 - 2 : font.pointSize());
+	painter->setFont(font);
+
 	//A0 text
-	painter->drawText(0, alb1->y() + alb1->height() / 3 - fontMetrics().height() / 2, "A0");
+	painter->drawText(0, alb1->y() + alb1->height() / 3 - 1, "A0");
 	//A1 text
-	painter->drawText(0, alb1->y() + alb1->height() / 3 * 2 - fontMetrics().height() / 2, "A1");
+	painter->drawText(0, alb1->y() + alb1->height() / 3 * 2 - 1, "A1");
 	//A2 text
-	painter->drawText(0, mb1->y() + mb1->height() / 3 - fontMetrics().height() / 2, "A2");
+	painter->drawText(0, mb1->y() + mb1->height() / 3 - 1, "A2");
 	//A3 text
-	painter->drawText(0, mb1->y() + mb1->height() / 3 * 2 - fontMetrics().height() / 2, "A3");
+	painter->drawText(0, mb1->y() + mb1->height() / 3 * 2 - 1, "A3");
 	//A4 text
-	painter->drawText(0, mb2->y() + mb2->height() / 3 - fontMetrics().height() / 2, "A4");
+	painter->drawText(0, mb2->y() + mb2->height() / 3 - 1, "A4");
 	//A5 text
-	painter->drawText(0, mb2->y() + mb2->height() / 3 * 2 - fontMetrics().height() / 2, "A5");
+	painter->drawText(0, mb2->y() + mb2->height() / 3 * 2 - 1, "A5");
 }
 
 void MicroprocessorWidget::chooseScheme()
