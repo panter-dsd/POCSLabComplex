@@ -25,6 +25,11 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+class MicroprocessorWidget;
+class QAction;
+class QMenu;
+class QVBoxLayout;
+
 #include <QtGui/QMainWindow>
 
 class MainWindow : public QMainWindow
@@ -32,6 +37,12 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 
 private:
+	QList<MicroprocessorWidget*> microprocessorsList;
+	QVBoxLayout *microprocessorsLayout;
+
+	QMenu *fileMenu;
+
+	QAction *actionAddMicroprocessor;
 
 public:
 	MainWindow(QWidget* parent = 0, Qt::WFlags f = 0);
@@ -42,6 +53,9 @@ private:
 
 protected:
 	bool event(QEvent *ev);
+
+private Q_SLOTS:
+	void addMicroprocessor();
 };
 
 #endif // MAINWINDOW_H

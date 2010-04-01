@@ -26,10 +26,14 @@
 
 #include <QtGui/QtEvents>
 #include <QtGui/QVBoxLayout>
+#include <QtGui/QAction>
+#include <QtGui/QMenuBar>
+#include <QtGui/QMenu>
+#include <QtGui/QApplication>
 
 #include "mainwindow.h"
 #include "microprocessorwidget.h"
-MicroprocessorWidget *w;
+
 MainWindow::MainWindow(QWidget* parent, Qt::WFlags f)
 		: QMainWindow(parent, f)
 {
@@ -38,12 +42,29 @@ MainWindow::MainWindow(QWidget* parent, Qt::WFlags f)
 	QWidget *centralWidget = new QWidget(this);
 	setCentralWidget(centralWidget);
 
+	//Set font for centralWidget
+	QFont m_font(centralWidget->font());
+	m_font.setFamily("Courier");
+	m_font.setPointSize(8);
+	centralWidget->setFont(m_font);
+
+	microprocessorsLayout = new QVBoxLayout();
+
 	QVBoxLayout *mainLayout = new QVBoxLayout();
-	mainLayout->addWidget(new MicroprocessorWidget(this));
-	mainLayout->addWidget(new MicroprocessorWidget(this));
-	mainLayout->addWidget(new MicroprocessorWidget(this));
-	mainLayout->addWidget(new MicroprocessorWidget(this));
+	mainLayout->addLayout(microprocessorsLayout);
 	centralWidget->setLayout(mainLayout);
+
+	actionAddMicroprocessor = new QAction(this);
+	connect(actionAddMicroprocessor, SIGNAL(triggered()), this, SLOT(addMicroprocessor()));
+
+	QMenuBar *mainMenu = new QMenuBar(this);
+	setMenuBar(mainMenu);
+
+	fileMenu = new QMenu(this);
+	fileMenu->addAction(actionAddMicroprocessor);
+	mainMenu->addMenu(fileMenu);
+
+	retranslateStrings();
 }
 
 MainWindow::~MainWindow()
@@ -53,7 +74,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::retranslateStrings()
 {
+	fileMenu->setTitle(tr("File"));
 
+	actionAddMicroprocessor->setText(tr("Add microprocessor"));
 }
 
 bool MainWindow::event(QEvent *ev)
@@ -61,6 +84,21 @@ bool MainWindow::event(QEvent *ev)
 	if (ev->type() == QEvent::LanguageChange) {
 		retranslateStrings();
 	}
+
 	return QMainWindow::event(ev);
 }
 
+void MainWindow::addMicroprocessor()
+{
+	if (microprocessorsList.size() >= 4)
+		return;
+
+	MicroprocessorWidget *w = new MicroprocessorWidget(centralWidget());
+	w->setAdjustingWord(0b0010001001010001);
+
+	microprocessorsLayout->addWidget(w);
+	microprocessorsList.append(w);
+
+	QApplication::processEvents();
+	w->adjustSize();
+}
