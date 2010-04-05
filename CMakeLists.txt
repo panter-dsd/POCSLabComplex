@@ -14,6 +14,7 @@ add_definitions(-DUNICODE)
 include_directories(
 	src
 	src/dialogs
+	src/blocks
 )
 
 ################################################################
@@ -23,26 +24,14 @@ include_directories(
 set (src_SRC
 	src/main.cpp
 	src/mainwindow.cpp
-	src/abstractblock.cpp
 	src/microprocessorwidget.cpp
 	src/operations.cpp
-	src/alb1block.cpp
-	src/alb2block.cpp
-	src/alb3block.cpp
-	src/mb1block.cpp
-	src/mb2block.cpp
 )
 
 set (src_HEADERS
 	src/mainwindow.h
-	src/abstractblock.h
 	src/microprocessorwidget.h
 	src/operations.h
-	src/alb1block.h
-	src/alb2block.h
-	src/alb3block.h
-	src/mb1block.h
-	src/mb2block.h
 )
 
 ################################################################
@@ -57,6 +46,28 @@ set (dialogs_HEADERS
 	src/dialogs/operationdialog.h
 )
 
+################################################################
+# blocks
+################################################################
+
+set (blocks_SRC
+	src/blocks/abstractblock.cpp
+	src/blocks/alb1block.cpp
+	src/blocks/alb2block.cpp
+	src/blocks/alb3block.cpp
+	src/blocks/mb1block.cpp
+	src/blocks/mb2block.cpp
+)
+
+set (blocks_HEADERS
+	src/blocks/abstractblock.h
+	src/blocks/alb1block.h
+	src/blocks/alb2block.h
+	src/blocks/alb3block.h
+	src/blocks/mb1block.h
+	src/blocks/mb2block.h
+)
+
 
 ################################################################
 # all
@@ -65,11 +76,13 @@ set (dialogs_HEADERS
 set (SOURCES
 	${src_SRC}
 	${dialogs_SRC}
+	${blocks_SRC}
 )
 
 set (HEADERS
 	${src_HEADERS}
 	${dialogs_HEADERS}
+	${blocks_HEADERS}
 )
 
 qt4_wrap_cpp( MOC_SOURCES ${HEADERS} )
