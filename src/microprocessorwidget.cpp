@@ -118,7 +118,6 @@ void MicroprocessorWidget::paintEvent(QPaintEvent *ev)
 	pen.setWidth(7);
 	painter.setPen(pen);
 
-
 	QRect m_rect(rect().x() + fontMetrics().width("WWWW"), rect().top(), rect().width() - fontMetrics().width("WWWW"), rect().height());
 
 	m_workRect = m_rect;
@@ -203,13 +202,10 @@ void MicroprocessorWidget::paint_0(QPaintEvent */*ev*/, QPainter *painter)
 	//ALB3 -> Q2
 	painter->drawLine(alb3->x() + alb3->width(), alb3->y() + alb3->height() / 3, width(), alb3->y() + alb3->height() / 3);
 
-	pen.setBrush(Qt::red);
-	pen.setWidth(1);
-	painter->setPen(pen);
-
 	QFont font (painter->font());
 	font.setPointSize(alb1->height() / 3 - 2 < font.pointSize() ? alb1->height() / 3 - 2 : font.pointSize());
 	painter->setFont(font);
+
 	//A0 text
 	painter->drawText(0, alb1->y() + alb1->height() / 3 - 1, "A0");
 	//A1 text
@@ -273,10 +269,6 @@ void MicroprocessorWidget::paint_1(QPaintEvent */*ev*/, QPainter *painter)
 	painter->drawLine(alb2->x() + alb2->width(), alb2->y() + alb2->height() / 3 * 2, alb3->x() + alb3->width(), alb2->y() + alb2->height() / 3 * 2);
 	//ALB3 -> Q2
 	painter->drawLine(alb3->x() + alb3->width(), alb3->y() + alb3->height() / 3, width(), alb3->y() + alb3->height() / 3);
-
-	pen.setBrush(Qt::red);
-	pen.setWidth(1);
-	painter->setPen(pen);
 
 	QFont font (painter->font());
 	font.setPointSize(alb1->height() / 3 - 2 < font.pointSize() ? alb1->height() / 3 - 2 : font.pointSize());
@@ -344,10 +336,6 @@ void MicroprocessorWidget::paint_2(QPaintEvent */*ev*/, QPainter *painter)
 	//MB1 -> Q1
 	painter->drawLine(alb3->x() + alb3->width(), mb1->y() + mb1->height() / 3 * 2, alb3->x() + alb3->width(), mb1->y() + mb1->height() / 3);
 	painter->drawLine(alb3->x() + alb3->width(), mb1->y() + mb1->height() / 3, width(), mb1->y() + mb1->height() / 3);
-
-	pen.setBrush(Qt::red);
-	pen.setWidth(1);
-	painter->setPen(pen);
 
 	QFont font (painter->font());
 	font.setPointSize(alb1->height() / 3 - 2 < font.pointSize() ? alb1->height() / 3 - 2 : font.pointSize());

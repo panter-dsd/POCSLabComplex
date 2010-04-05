@@ -58,7 +58,7 @@ public:
 	virtual ~MicroprocessorWidget()
 	{}
 
-	qint64 adjustingWord() const
+	qint16 adjustingWord() const
 	{ return m_adjustingWord; }
 	void setAdjustingWord(qint16 m_adjustingWord);
 
@@ -78,7 +78,6 @@ private:
 private Q_SLOTS:
 	void chooseScheme();
 	void updateAdjustingWorld();
-
 };
 
 #endif //MICROPROCESSORWIDGET_H

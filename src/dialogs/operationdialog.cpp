@@ -34,7 +34,6 @@ OperationDialog::OperationDialog(QMap<char, QString> operations, QWidget *parent
 {
 	groupBox = new QGroupBox(this);
 
-
 	QVBoxLayout *layout = new QVBoxLayout();
 
 	QRadioButton *radioButton;
@@ -64,7 +63,7 @@ OperationDialog::OperationDialog(QMap<char, QString> operations, QWidget *parent
 	setLayout(mainLayout);
 }
 
-char OperationDialog::operation()
+int OperationDialog::operation()
 {
 	foreach(QRadioButton *rb, findChildren<QRadioButton*> ())
 		if (rb->isChecked())
@@ -73,7 +72,7 @@ char OperationDialog::operation()
 	return -1;
 }
 
-void OperationDialog::setOperation(char operation)
+void OperationDialog::setOperation(int operation)
 {
 	foreach(QRadioButton *rb, findChildren<QRadioButton*> ()) {
 		if (rb->objectName().toInt() == operation) {

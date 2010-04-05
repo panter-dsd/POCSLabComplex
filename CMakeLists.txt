@@ -1,4 +1,6 @@
 project(POCSLabComplex)
+set (PROJECT_FILE_NAME POCSLabComplex)
+
 cmake_minimum_required( VERSION 2.6 )
 
 #SET (CMAKE_BUILD_TYPE Release)
@@ -76,9 +78,9 @@ qt4_wrap_cpp( MOC_SOURCES ${HEADERS} )
 
 qt4_add_resources (QRC_SOURCES ${RESOURCES})
 
-#add_executable( POCSLabComplex WIN32 ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES})
-add_executable( POCSLabComplex ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES})
+#add_executable( ${PROJECT_FILE_NAME} WIN32 ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES})
+add_executable( ${PROJECT_FILE_NAME} ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES})
 
-target_link_libraries( POCSLabComplex ${QT_LIBRARIES} )
+target_link_libraries( ${PROJECT_FILE_NAME} ${QT_LIBRARIES} )
 
 

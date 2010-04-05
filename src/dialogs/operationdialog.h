@@ -42,8 +42,8 @@ public:
 	virtual ~OperationDialog()
 	{}
 
-	char operation();
-	void setOperation(char operation);
+	int operation();
+	void setOperation(int operation);
 };
 
 #endif //OPERATIONDIALOG_H
