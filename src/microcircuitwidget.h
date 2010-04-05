@@ -22,38 +22,29 @@
 * Contact:		panter.dsd@gmail.com
 *******************************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef MICROCIRCUITWIDGET_H
+#define MICROCIRCUITWIDGET_H
 
-class MicrocircuitWidget;
-class QAction;
-class QMenu;
+class InOutWidget;
+class SwitchboardWidget;
+class MicroprocessorWidget;
 
-#include <QtGui/QMainWindow>
+#include <QtGui/QWidget>
 
-class MainWindow : public QMainWindow
-{
+class MicrocircuitWidget : public QWidget {
 	Q_OBJECT
 
 private:
-	QList<MicrocircuitWidget*> microciruits;
-
-	QMenu *fileMenu;
-
-	QAction *actionAddMicrocircuit;
+	InOutWidget *inputInOut;
+	SwitchboardWidget *inputSwitchboard;
+	MicroprocessorWidget *microprocessor;
+	SwitchboardWidget *outputSwitchboard;
+	InOutWidget *outputInOut;
 
 public:
-	MainWindow(QWidget* parent = 0, Qt::WFlags f = 0);
-	~MainWindow();
-
-private:
-	void retranslateStrings();
-
-protected:
-	bool event(QEvent *ev);
-
-private Q_SLOTS:
-	void addMicrocircuit();
+	MicrocircuitWidget (QWidget *parent = 0);
+	virtual ~MicrocircuitWidget ()
+	{}
 };
 
-#endif // MAINWINDOW_H
+#endif //MICROCIRCUITWIDGET_H

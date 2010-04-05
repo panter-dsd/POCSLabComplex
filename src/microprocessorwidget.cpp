@@ -41,7 +41,7 @@
 MicroprocessorWidget::MicroprocessorWidget(QWidget *parent)
 	:QWidget(parent), m_scheme(-1)
 {
-//	setFixedSize(500, 300);
+	setFixedSize(400, 200);
 
 	actionChooseScheme = new QAction(tr("Choose scheme"), this);
 	connect(actionChooseScheme, SIGNAL(triggered()), this, SLOT(chooseScheme()));

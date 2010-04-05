@@ -22,38 +22,33 @@
 * Contact:		panter.dsd@gmail.com
 *******************************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#include <QtGui/QHBoxLayout>
 
-class MicrocircuitWidget;
-class QAction;
-class QMenu;
+#include "microcircuitwidget.h"
+#include "inoutwidget.h"
+#include "switchboardwidget.h"
+#include "microprocessorwidget.h"
 
-#include <QtGui/QMainWindow>
-
-class MainWindow : public QMainWindow
+MicrocircuitWidget::MicrocircuitWidget (QWidget *parent)
+	: QWidget (parent)
 {
-	Q_OBJECT
+	inputInOut = new InOutWidget (this);
 
-private:
-	QList<MicrocircuitWidget*> microciruits;
+	inputSwitchboard = new SwitchboardWidget (this);
 
-	QMenu *fileMenu;
+	microprocessor = new MicroprocessorWidget (this);
 
-	QAction *actionAddMicrocircuit;
+	outputSwitchboard = new SwitchboardWidget (this);
 
-public:
-	MainWindow(QWidget* parent = 0, Qt::WFlags f = 0);
-	~MainWindow();
+	outputInOut = new InOutWidget (this);
 
-private:
-	void retranslateStrings();
-
-protected:
-	bool event(QEvent *ev);
-
-private Q_SLOTS:
-	void addMicrocircuit();
-};
-
-#endif // MAINWINDOW_H
+	QHBoxLayout *mainLayout = new QHBoxLayout ();
+	mainLayout->setContentsMargins(0, 0, 0, 0);
+	mainLayout->setSpacing(0);
+	mainLayout->addWidget(inputInOut);
+	mainLayout->addWidget(inputSwitchboard);
+	mainLayout->addWidget(microprocessor);
+	mainLayout->addWidget(outputSwitchboard);
+	mainLayout->addWidget(outputInOut);
+	setLayout (mainLayout);
+}

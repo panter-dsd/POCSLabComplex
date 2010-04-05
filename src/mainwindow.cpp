@@ -32,7 +32,7 @@
 #include <QtGui/QApplication>
 
 #include "mainwindow.h"
-#include "microprocessorwidget.h"
+#include "microcircuitwidget.h"
 
 MainWindow::MainWindow(QWidget* parent, Qt::WFlags f)
 		: QMainWindow(parent, f)
@@ -48,20 +48,17 @@ MainWindow::MainWindow(QWidget* parent, Qt::WFlags f)
 	m_font.setPointSize(8);
 	centralWidget->setFont(m_font);
 
-	microprocessorsLayout = new QVBoxLayout();
-
 	QVBoxLayout *mainLayout = new QVBoxLayout();
-	mainLayout->addLayout(microprocessorsLayout);
 	centralWidget->setLayout(mainLayout);
 
-	actionAddMicroprocessor = new QAction(this);
-	connect(actionAddMicroprocessor, SIGNAL(triggered()), this, SLOT(addMicroprocessor()));
+	actionAddMicrocircuit = new QAction(this);
+	connect(actionAddMicrocircuit, SIGNAL(triggered()), this, SLOT(addMicrocircuit()));
 
 	QMenuBar *mainMenu = new QMenuBar(this);
 	setMenuBar(mainMenu);
 
 	fileMenu = new QMenu(this);
-	fileMenu->addAction(actionAddMicroprocessor);
+	fileMenu->addAction(actionAddMicrocircuit);
 	mainMenu->addMenu(fileMenu);
 
 	retranslateStrings();
@@ -76,7 +73,7 @@ void MainWindow::retranslateStrings()
 {
 	fileMenu->setTitle(tr("File"));
 
-	actionAddMicroprocessor->setText(tr("Add microprocessor"));
+	actionAddMicrocircuit->setText(tr("Add microprocessor"));
 }
 
 bool MainWindow::event(QEvent *ev)
@@ -88,16 +85,20 @@ bool MainWindow::event(QEvent *ev)
 	return QMainWindow::event(ev);
 }
 
-void MainWindow::addMicroprocessor()
+void MainWindow::addMicrocircuit()
 {
-	if (microprocessorsList.size() >= 4)
+	if (microciruits.size() >= 4)
 		return;
 
-	MicroprocessorWidget *w = new MicroprocessorWidget(centralWidget());
-	w->setAdjustingWord(0b0010001001010001);
+	QVBoxLayout *layout = qobject_cast<QVBoxLayout*> (centralWidget()->layout());
 
-	microprocessorsLayout->addWidget(w);
-	microprocessorsList.append(w);
+	Q_ASSERT (layout != 0);
+
+	MicrocircuitWidget *w = new MicrocircuitWidget (this);
+	//w->setAdjustingWord(0b0000001001010001);
+
+	layout->addWidget(w);
+	microciruits.append(w);
 
 	QApplication::processEvents();
 	w->adjustSize();
