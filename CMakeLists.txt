@@ -27,6 +27,7 @@ set (src_SRC
 	src/microprocessorwidget.cpp
 	src/operations.cpp
 	src/switchboardwidget.cpp
+	src/inoutwidget.cpp
 )
 
 set (src_HEADERS
@@ -34,6 +35,7 @@ set (src_HEADERS
 	src/microprocessorwidget.h
 	src/operations.h
 	src/switchboardwidget.h
+	src/inoutwidget.h
 )
 
 ################################################################
