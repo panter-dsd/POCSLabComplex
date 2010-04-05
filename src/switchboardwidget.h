@@ -34,6 +34,9 @@ public:
 	SwitchboardWidget (QWidget *parent = 0);
 	virtual ~SwitchboardWidget ()
 	{}
+
+protected:
+	void paintEvent(QPaintEvent *ev);
 };
 
 #endif //SWITCHBOARDWIDGET_H

@@ -22,10 +22,36 @@
 * Contact:		panter.dsd@gmail.com
 *******************************************************************/
 
+#include <QtGui/QPainter>
+
 #include "switchboardwidget.h"
 
 SwitchboardWidget::SwitchboardWidget (QWidget *parent)
 	: QWidget (parent)
 {
 
+}
+
+void SwitchboardWidget::paintEvent(QPaintEvent *ev)
+{
+	QPainter painter(this);
+
+	QPen pen;
+	pen.setStyle(Qt::SolidLine);
+	pen.setBrush(Qt::darkGray);
+	pen.setWidth(7);
+	painter.setPen(pen);
+
+	QRect m_rect(rect().x(), rect().top(), rect().width(), rect().height());
+
+	//Shadow
+	painter.drawLine(m_rect.x() + pen.width(), m_rect.y() + m_rect.height() - pen.width(), m_rect.x() + m_rect.width() - pen.width(), m_rect.y() + m_rect.height() - pen.width());
+	painter.drawLine(m_rect.x() + m_rect.width() - pen.width(), m_rect.y() + pen.width(), m_rect.x() + m_rect.width() - pen.width(), m_rect.y() + m_rect.height() - pen.width());
+
+	//Rect
+	pen.setBrush(Qt::black);
+	painter.setPen(pen);
+	m_rect.setWidth(m_rect.width() - pen.width() * 2);
+	m_rect.setHeight(m_rect.height() - pen.width() * 2);
+	painter.drawRect(m_rect);
 }

@@ -32,7 +32,7 @@
 MicrocircuitWidget::MicrocircuitWidget (QWidget *parent)
 	: QWidget (parent)
 {
-	inputInOut = new InOutWidget (this);
+	inputInOut = new InOutWidget (InOutWidget::In, this);
 
 	inputSwitchboard = new SwitchboardWidget (this);
 
@@ -40,7 +40,7 @@ MicrocircuitWidget::MicrocircuitWidget (QWidget *parent)
 
 	outputSwitchboard = new SwitchboardWidget (this);
 
-	outputInOut = new InOutWidget (this);
+	outputInOut = new InOutWidget (InOutWidget::Out, this);
 
 	QHBoxLayout *mainLayout = new QHBoxLayout ();
 	mainLayout->setContentsMargins(0, 0, 0, 0);

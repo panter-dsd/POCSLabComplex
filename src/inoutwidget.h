@@ -31,9 +31,24 @@ class InOutWidget : public QWidget {
 	Q_OBJECT
 
 public:
-	InOutWidget (QWidget *parent = 0);
+	enum Type {
+		In = 0,
+		Out
+	};
+
+private:
+	int m_type;
+	qint16 m_values[6];
+	QRect workRect;
+
+public:
+	InOutWidget (Type type, QWidget *parent = 0);
 	virtual ~InOutWidget ()
 	{}
+
+protected:
+	void paintEvent(QPaintEvent *ev);
+	void mouseDoubleClickEvent (QMouseEvent *ev);
 };
 
 #endif //INOUTWIDGET_H

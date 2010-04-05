@@ -22,10 +22,76 @@
 * Contact:		panter.dsd@gmail.com
 *******************************************************************/
 
+#include <QtGui/QPainter>
+#include <QtGui/QMouseEvent>
+
 #include "inoutwidget.h"
 
-InOutWidget::InOutWidget (QWidget *parent)
-	: QWidget (parent)
+const int penWidth = 7;
+
+InOutWidget::InOutWidget (Type type, QWidget *parent)
+	: QWidget (parent), m_type (type)
 {
 
+}
+
+void InOutWidget::paintEvent(QPaintEvent *ev)
+{
+	QPainter painter(this);
+
+	QPen pen;
+	pen.setStyle(Qt::SolidLine);
+	pen.setBrush(Qt::darkGray);
+	pen.setWidth(penWidth);
+	painter.setPen(pen);
+
+	QRect m_rect(rect().x(), rect().top(), rect().width(), rect().height());
+
+	//Shadow
+	painter.drawLine(m_rect.x() + pen.width(), m_rect.y() + m_rect.height() - pen.width(), m_rect.x() + m_rect.width() - pen.width(), m_rect.y() + m_rect.height() - pen.width());
+	painter.drawLine(m_rect.x() + m_rect.width() - pen.width(), m_rect.y() + pen.width(), m_rect.x() + m_rect.width() - pen.width(), m_rect.y() + m_rect.height() - pen.width());
+
+	//Rect
+	pen.setBrush(Qt::black);
+	painter.setPen(pen);
+	m_rect.setWidth(m_rect.width() - pen.width() * 2);
+	m_rect.setHeight(m_rect.height() - pen.width() * 2);
+	painter.drawRect(m_rect);
+
+	workRect.setRect (rect().x() + pen.width(), rect().top() + pen.width(),
+					rect().width() - pen.width() * 2, rect().height() - pen.width() * 2);
+
+	QPen smallPen;
+	smallPen.setStyle(Qt::SolidLine);
+	smallPen.setBrush(Qt::black);
+	smallPen.setWidth(1);
+	painter.setPen(smallPen);
+
+	for (int i = 1; i < 6; i++) {
+		painter.drawLine(workRect.x(), workRect.height() / 6 * i, workRect.width(), workRect.height() / 6 * i);
+		if (m_type == In) {
+			painter.drawLine(workRect.width(), workRect.height() / 6 * i - workRect.height() / 6 / 2, rect ().width(), workRect.height() / 6 * i - workRect.height() / 6 / 2);
+		}
+	}
+	if (m_type == In) {
+		painter.drawLine(workRect.width(), workRect.height() - workRect.height() / 6 / 2, rect ().width(), workRect.height() - workRect.height() / 6 / 2);
+	}
+}
+
+void InOutWidget::mouseDoubleClickEvent (QMouseEvent *ev)
+{
+	int index = -1;
+	for (int i = 0; i < 6; i++) {
+		QRect rect (workRect.x(), workRect.height() / 6 * i, workRect.width(), workRect.height() / 6 * (i + 1));
+
+		if (ev->pos().y() > rect.top() && ev->pos().y() < rect.height()) {
+			index = i;
+			break;
+		}
+	}
+
+	if (index < 0)
+		return;
+
+	qDebug (QString::number(m_values[index]).toLocal8Bit());
 }

@@ -49,6 +49,7 @@ MainWindow::MainWindow(QWidget* parent, Qt::WFlags f)
 	centralWidget->setFont(m_font);
 
 	QVBoxLayout *mainLayout = new QVBoxLayout();
+	mainLayout->addSpacerItem(new QSpacerItem (0, 0, QSizePolicy::Preferred, QSizePolicy::Expanding));
 	centralWidget->setLayout(mainLayout);
 
 	actionAddMicrocircuit = new QAction(this);
@@ -97,7 +98,7 @@ void MainWindow::addMicrocircuit()
 	MicrocircuitWidget *w = new MicrocircuitWidget (this);
 	//w->setAdjustingWord(0b0000001001010001);
 
-	layout->addWidget(w);
+	layout->insertWidget(microciruits.size(), w);
 	microciruits.append(w);
 
 	QApplication::processEvents();
