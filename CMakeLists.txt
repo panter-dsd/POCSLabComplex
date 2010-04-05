@@ -26,12 +26,14 @@ set (src_SRC
 	src/mainwindow.cpp
 	src/microprocessorwidget.cpp
 	src/operations.cpp
+	src/switchboardwidget.cpp
 )
 
 set (src_HEADERS
 	src/mainwindow.h
 	src/microprocessorwidget.h
 	src/operations.h
+	src/switchboardwidget.h
 )
 
 ################################################################
