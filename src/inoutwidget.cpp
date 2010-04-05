@@ -30,9 +30,9 @@
 const int penWidth = 7;
 
 InOutWidget::InOutWidget (Type type, QWidget *parent)
-	: QWidget (parent), m_type (type)
+	: QWidget (parent), m_type (type), m_lastIndex (-1)
 {
-
+	setMouseTracking(true);
 }
 
 void InOutWidget::paintEvent(QPaintEvent *ev)
@@ -80,18 +80,35 @@ void InOutWidget::paintEvent(QPaintEvent *ev)
 
 void InOutWidget::mouseDoubleClickEvent (QMouseEvent *ev)
 {
+	int index = indexFromPos (ev->pos());
+	if (index < 0)
+		return;
+}
+
+void InOutWidget::mouseMoveEvent(QMouseEvent *ev)
+{
+	int index = indexFromPos (ev->pos());
+
+	if (index >= 0 && m_lastIndex != index) {
+		m_lastIndex = index;
+		updateToolTip ();
+	}
+}
+
+inline int InOutWidget::indexFromPos (const QPoint& pos) const
+{
 	int index = -1;
 	for (int i = 0; i < 6; i++) {
-		QRect rect (workRect.x(), workRect.height() / 6 * i, workRect.width(), workRect.height() / 6 * (i + 1));
-
-		if (ev->pos().y() > rect.top() && ev->pos().y() < rect.height()) {
+		if (pos.y() > workRect.height() / 6 * i && pos.y() < workRect.height() / 6 * (i + 1)) {
 			index = i;
 			break;
 		}
 	}
+	return index;
+}
 
-	if (index < 0)
-		return;
-
-	qDebug (QString::number(m_values[index]).toLocal8Bit());
+void InOutWidget::updateToolTip ()
+{
+	static const QString m_toolTip = "<b>Dec:</b> %1 \n<b>Hex:</b> %2\n<b>Bin:</b> %3";
+	setToolTip(m_toolTip.arg(m_values[m_lastIndex]));
 }

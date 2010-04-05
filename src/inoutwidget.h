@@ -40,6 +40,7 @@ private:
 	int m_type;
 	qint16 m_values[6];
 	QRect workRect;
+	int m_lastIndex;
 
 public:
 	InOutWidget (Type type, QWidget *parent = 0);
@@ -49,6 +50,11 @@ public:
 protected:
 	void paintEvent(QPaintEvent *ev);
 	void mouseDoubleClickEvent (QMouseEvent *ev);
+	void mouseMoveEvent(QMouseEvent *ev);
+
+private:
+	inline int indexFromPos (const QPoint& pos) const;
+	void updateToolTip ();
 };
 
 #endif //INOUTWIDGET_H
