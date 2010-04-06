@@ -98,7 +98,7 @@ void InputDialog::indexChanged (int index)
 
 QByteArray InputDialog::value ()
 {
-
+	return outputValueEdit->text().toAscii();
 }
 
 void InputDialog::valueChanged (const QString& /*text*/)

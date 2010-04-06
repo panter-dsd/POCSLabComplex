@@ -25,6 +25,8 @@
 #ifndef INOUTWIDGET_H
 #define INOUTWIDGET_H
 
+class QLabel;
+
 #include <QtGui/QWidget>
 
 class InOutWidget : public QWidget {
@@ -39,7 +41,7 @@ public:
 private:
 	int m_type;
 	QByteArray m_values[6];
-	QRect workRect;
+	QList<QLabel*> labels;
 	int m_lastIndex;
 
 public:
@@ -49,12 +51,7 @@ public:
 
 protected:
 	void paintEvent(QPaintEvent *ev);
-	void mouseDoubleClickEvent (QMouseEvent *ev);
-	void mouseMoveEvent(QMouseEvent *ev);
-
-private:
-	inline int indexFromPos (const QPoint& pos) const;
-	void updateToolTip ();
+	bool eventFilter(QObject *o, QEvent *ev);
 };
 
 #endif //INOUTWIDGET_H

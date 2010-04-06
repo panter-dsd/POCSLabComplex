@@ -23,7 +23,9 @@
 *******************************************************************/
 
 #include <QtGui/QPainter>
-#include <QtGui/QMouseEvent>
+#include <QtGui/QVBoxLayout>
+#include <QtGui/QLabel>
+#include <QtGui/QtEvents>
 
 #include "inoutwidget.h"
 #include "inputdialog.h"
@@ -34,6 +36,20 @@ InOutWidget::InOutWidget (Type type, QWidget *parent)
 	: QWidget (parent), m_type (type), m_lastIndex (-1)
 {
 	setMouseTracking(true);
+
+	QVBoxLayout *mainLayout = new QVBoxLayout ();
+	mainLayout->setContentsMargins(penWidth / 2, penWidth / 2, penWidth * 2, penWidth * 2);
+	mainLayout->setSpacing(0);
+
+	for (int i = 0; i < 6; i++) {
+		QLabel *label = new QLabel (m_values [i], this);
+		label->setObjectName(QString::number(i));
+		label->setFrameShape(QFrame::Box);
+		label->installEventFilter(this);
+		mainLayout->addWidget(label);
+		labels.append(label);
+	}
+	setLayout(mainLayout);
 }
 
 void InOutWidget::paintEvent(QPaintEvent *ev)
@@ -46,7 +62,7 @@ void InOutWidget::paintEvent(QPaintEvent *ev)
 	pen.setWidth(penWidth);
 	painter.setPen(pen);
 
-	QRect m_rect(rect().x(), rect().top(), rect().width(), rect().height());
+	QRect m_rect(rect().x(), rect().y(), rect().width(), rect().height());
 
 	//Shadow
 	painter.drawLine(m_rect.x() + pen.width(), m_rect.y() + m_rect.height() - pen.width(), m_rect.x() + m_rect.width() - pen.width(), m_rect.y() + m_rect.height() - pen.width());
@@ -59,67 +75,28 @@ void InOutWidget::paintEvent(QPaintEvent *ev)
 	m_rect.setHeight(m_rect.height() - pen.width() * 2);
 	painter.drawRect(m_rect);
 
-	workRect.setRect (rect().x() + pen.width(), rect().top() + pen.width(),
-					rect().width() - pen.width() * 2, rect().height() - pen.width() * 2);
+	pen.setWidth(1);
+	painter.setPen(pen);
 
-	QPen smallPen;
-	smallPen.setStyle(Qt::SolidLine);
-	smallPen.setBrush(Qt::black);
-	smallPen.setWidth(1);
-	painter.setPen(smallPen);
-
-	for (int i = 1; i < 6; i++) {
-		painter.drawLine(workRect.x(), workRect.height() / 6 * i, workRect.width(), workRect.height() / 6 * i);
-		if (m_type == In) {
-			painter.drawLine(workRect.width(), workRect.height() / 6 * i - workRect.height() / 6 / 2, rect ().width(), workRect.height() / 6 * i - workRect.height() / 6 / 2);
-		}
-	}
-	if (m_type == In) {
-		painter.drawLine(workRect.width(), workRect.height() - workRect.height() / 6 / 2, rect ().width(), workRect.height() - workRect.height() / 6 / 2);
-	}
-}
-
-void InOutWidget::mouseDoubleClickEvent (QMouseEvent *ev)
-{
-	if (m_type != In)
-		return;
-
-	int index = indexFromPos (ev->pos());
-	if (index < 0)
-		return;
-
-	InputDialog d (this);
-	d.move(mapToGlobal(QPoint(ev->pos().x() + 10, ev->pos().y() + 10)));
-
-	if (d.exec()) {
-//		m_values[index] = d.value();
-	}
-}
-
-void InOutWidget::mouseMoveEvent(QMouseEvent *ev)
-{
-	int index = indexFromPos (ev->pos());
-
-	if (index >= 0 && m_lastIndex != index) {
-		m_lastIndex = index;
-		updateToolTip ();
-	}
-}
-
-inline int InOutWidget::indexFromPos (const QPoint& pos) const
-{
-	int index = -1;
 	for (int i = 0; i < 6; i++) {
-		if (pos.y() > workRect.height() / 6 * i && pos.y() < workRect.height() / 6 * (i + 1)) {
-			index = i;
-			break;
+		if (m_type == In) {
+			painter.drawLine(labels [i]->x() + labels [i]->width(), labels [i]->y() + labels [i]->height() / 2,
+							 width (), labels [i]->y() + labels [i]->height() / 2);
 		}
 	}
-	return index;
 }
 
-void InOutWidget::updateToolTip ()
+bool InOutWidget::eventFilter(QObject *o, QEvent *ev)
 {
-	static const QString m_toolTip = "<b>Dec:</b> %1 \n<b>Hex:</b> %2\n<b>Bin:</b> %3";
-	setToolTip(m_toolTip.arg(QString(m_values[m_lastIndex])));
+	if (ev->type() == QEvent::MouseButtonDblClick) {
+		QLabel *label = qobject_cast<QLabel*> (o);
+		if (label) {
+			InputDialog d (this);
+
+			if (d.exec()) {
+				m_values [label->objectName().toInt()] = d.value();
+				label->setText(d.value());
+			}
+		}
+	}
 }
