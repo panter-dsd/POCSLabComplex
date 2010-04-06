@@ -46,10 +46,12 @@ set (src_HEADERS
 
 set (dialogs_SRC
 	src/dialogs/operationdialog.cpp
+	src/dialogs/inputdialog.cpp
 )
 
 set (dialogs_HEADERS
 	src/dialogs/operationdialog.h
+	src/dialogs/inputdialog.h
 )
 
 ################################################################

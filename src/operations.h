@@ -51,6 +51,8 @@ public:
 	{ return m_secondValue; }
 	void setsecondValue(const QByteArray& value);
 
+	static QByteArray decToBin (double dec, int decimals);
+
 };
 
 #endif //OPERATIONS_H

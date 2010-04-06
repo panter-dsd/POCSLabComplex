@@ -22,6 +22,8 @@
 * Contact:		panter.dsd@gmail.com
 *******************************************************************/
 
+#include <QtCore/QDebug>
+
 #include "operations.h"
 
 void Operations::setFirstValue(const QByteArray& value)
@@ -34,3 +36,19 @@ void Operations::setsecondValue(const QByteArray& value)
 	m_secondValue = value;
 }
 
+QByteArray Operations::decToBin (double dec, int decimals)
+{
+	QByteArray value;
+
+	for (int i = 0; i < decimals && dec != 0; i++) {
+		dec *= 2;
+
+		if (dec >= 1) {
+			value.append('1');
+			dec -= 1;
+		} else {
+			value.append('0');
+		}
+	}
+	return value;
+}

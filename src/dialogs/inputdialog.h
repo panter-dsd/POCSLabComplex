@@ -22,39 +22,52 @@
 * Contact:		panter.dsd@gmail.com
 *******************************************************************/
 
-#ifndef INOUTWIDGET_H
-#define INOUTWIDGET_H
+#ifndef INPUTDIALOG_H
+#define INPUTDIALOG_H
 
-#include <QtGui/QWidget>
+class QComboBox;
+class QLabel;
+class QLineEdit;
+class QSpinBox;
 
-class InOutWidget : public QWidget {
+#include <QtGui/QDialog>
+
+class InputDialog : public QDialog {
 	Q_OBJECT
 
 public:
-	enum Type {
-		In = 0,
-		Out
+	enum InputType {
+		Hex,
+		Dec
 	};
 
 private:
-	int m_type;
-	QByteArray m_values[6];
-	QRect workRect;
-	int m_lastIndex;
+	QLabel *typeLabel;
+	QComboBox *typeEdit;
+	QLabel *numbersCountLabel;
+	QSpinBox *numbersCountEdit;
+	QLabel *valueLabel;
+	QLineEdit *valueEdit;
+	QLabel *outputValueLabel;
+	QLineEdit *outputValueEdit;
 
 public:
-	InOutWidget (Type type, QWidget *parent = 0);
-	virtual ~InOutWidget ()
+	InputDialog (QWidget *parent = 0);
+	virtual ~InputDialog ()
 	{}
 
-protected:
-	void paintEvent(QPaintEvent *ev);
-	void mouseDoubleClickEvent (QMouseEvent *ev);
-	void mouseMoveEvent(QMouseEvent *ev);
+	QByteArray value ();
 
 private:
-	inline int indexFromPos (const QPoint& pos) const;
-	void updateToolTip ();
+	void retranslateStrings();
+
+protected:
+	bool event(QEvent *ev);
+
+private Q_SLOTS:
+	void indexChanged (int index);
+	void valueChanged (const QString& text);
 };
 
-#endif //INOUTWIDGET_H
+
+#endif //INPUTDIALOG_H

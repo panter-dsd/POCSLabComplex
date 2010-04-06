@@ -26,6 +26,7 @@
 #include <QtGui/QMouseEvent>
 
 #include "inoutwidget.h"
+#include "inputdialog.h"
 
 const int penWidth = 7;
 
@@ -80,9 +81,19 @@ void InOutWidget::paintEvent(QPaintEvent *ev)
 
 void InOutWidget::mouseDoubleClickEvent (QMouseEvent *ev)
 {
+	if (m_type != In)
+		return;
+
 	int index = indexFromPos (ev->pos());
 	if (index < 0)
 		return;
+
+	InputDialog d (this);
+	d.move(mapToGlobal(QPoint(ev->pos().x() + 10, ev->pos().y() + 10)));
+
+	if (d.exec()) {
+//		m_values[index] = d.value();
+	}
 }
 
 void InOutWidget::mouseMoveEvent(QMouseEvent *ev)
@@ -110,5 +121,5 @@ inline int InOutWidget::indexFromPos (const QPoint& pos) const
 void InOutWidget::updateToolTip ()
 {
 	static const QString m_toolTip = "<b>Dec:</b> %1 \n<b>Hex:</b> %2\n<b>Bin:</b> %3";
-	setToolTip(m_toolTip.arg(m_values[m_lastIndex]));
+	setToolTip(m_toolTip.arg(QString(m_values[m_lastIndex])));
 }
