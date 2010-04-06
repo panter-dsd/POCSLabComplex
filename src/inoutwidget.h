@@ -26,6 +26,7 @@
 #define INOUTWIDGET_H
 
 class QLabel;
+class QAction;
 
 #include <QtGui/QWidget>
 
@@ -44,14 +45,22 @@ private:
 	QList<QLabel*> labels;
 	int m_lastIndex;
 
+	QAction *actionChangeValue;
+
 public:
 	InOutWidget (Type type, QWidget *parent = 0);
 	virtual ~InOutWidget ()
 	{}
+private:
+	void retranslateStrings();
 
 protected:
 	void paintEvent(QPaintEvent *ev);
 	bool eventFilter(QObject *o, QEvent *ev);
+	bool event(QEvent *ev);
+
+private Q_SLOTS:
+	void changeValue ();
 };
 
 #endif //INOUTWIDGET_H

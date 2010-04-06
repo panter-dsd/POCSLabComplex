@@ -26,6 +26,8 @@
 #include <QtGui/QVBoxLayout>
 #include <QtGui/QLabel>
 #include <QtGui/QtEvents>
+#include <QtGui/QMenu>
+#include <QtGui/QAction>
 
 #include "inoutwidget.h"
 #include "inputdialog.h"
@@ -33,23 +35,47 @@
 const int penWidth = 7;
 
 InOutWidget::InOutWidget (Type type, QWidget *parent)
-	: QWidget (parent), m_type (type), m_lastIndex (-1)
+	: QWidget (parent), m_type (type), m_lastIndex (-1), actionChangeValue (0)
 {
 	setMouseTracking(true);
+
+	if (m_type == In) {
+		actionChangeValue = new QAction (this);
+		connect (actionChangeValue, SIGNAL(triggered()), this, SLOT(changeValue()));
+	}
 
 	QVBoxLayout *mainLayout = new QVBoxLayout ();
 	mainLayout->setContentsMargins(penWidth / 2, penWidth / 2, penWidth * 2, penWidth * 2);
 	mainLayout->setSpacing(0);
 
 	for (int i = 0; i < 6; i++) {
-		QLabel *label = new QLabel (m_values [i], this);
+		QLabel *label = new QLabel (this);
 		label->setObjectName(QString::number(i));
 		label->setFrameShape(QFrame::Box);
 		label->installEventFilter(this);
+		label->setContextMenuPolicy(Qt::CustomContextMenu);
+
 		mainLayout->addWidget(label);
 		labels.append(label);
 	}
 	setLayout(mainLayout);
+
+	retranslateStrings();
+}
+
+void InOutWidget::retranslateStrings()
+{
+	if (actionChangeValue)
+		actionChangeValue->setText(tr ("Change value"));
+}
+
+bool InOutWidget::event(QEvent *ev)
+{
+	if (ev->type() == QEvent::LanguageChange) {
+		retranslateStrings();
+	}
+
+	return QWidget::event(ev);
 }
 
 void InOutWidget::paintEvent(QPaintEvent *ev)
@@ -88,15 +114,39 @@ void InOutWidget::paintEvent(QPaintEvent *ev)
 
 bool InOutWidget::eventFilter(QObject *o, QEvent *ev)
 {
-	if (ev->type() == QEvent::MouseButtonDblClick) {
-		QLabel *label = qobject_cast<QLabel*> (o);
-		if (label) {
-			InputDialog d (this);
+	if (m_type == In) {
+		if (ev->type() == QEvent::MouseButtonDblClick) {
+			QLabel *label = qobject_cast<QLabel*> (o);
+			actionChangeValue->setParent(label);
+			actionChangeValue->trigger();
+		}
 
-			if (d.exec()) {
-				m_values [label->objectName().toInt()] = d.value();
-				label->setText(d.value());
-			}
+		if (ev->type() == QEvent::ContextMenu) {
+			QContextMenuEvent *contextEvent = static_cast<QContextMenuEvent*> (ev);
+			QLabel *label = qobject_cast<QLabel*> (o);
+			QMenu menu;
+			actionChangeValue->setParent(label);
+			menu.addAction(actionChangeValue);
+			menu.exec(label->mapToGlobal(contextEvent->pos()));
+		}
+	}
+
+	return QWidget::eventFilter(0, ev);
+}
+
+void InOutWidget::changeValue ()
+{
+	QAction *action = qobject_cast<QAction*> (sender ());
+	if (!action)
+		return;
+
+	QLabel *label = qobject_cast<QLabel*> (action->parent());
+	if (label) {
+		InputDialog d (this);
+
+		if (d.exec()) {
+			m_values [label->objectName().toInt()] = d.value();
+			label->setText(d.value());
 		}
 	}
 }
