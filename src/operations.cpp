@@ -52,3 +52,70 @@ QByteArray Operations::decToBin (double dec, int decimals)
 	}
 	return value;
 }
+
+QByteArray Operations::dizssFromChanels (const QByteArray& positiveChanel, const QByteArray& negativeChanel)
+{
+	QByteArray value;
+
+	{
+		int size = positiveChanel.size() > negativeChanel.size() ? positiveChanel.size() : negativeChanel.size();
+		value.fill((char) 0, size);
+	}
+
+	for (int i = 0, size = positiveChanel.size(); i < size; i++) {
+		value [i] = positiveChanel [i];
+	}
+
+	for (int i = 0, size = negativeChanel.size(); i < size; i++) {
+		if (negativeChanel [i] == (char) 1) {
+			if (value [i] == (char) 1)
+				return QByteArray ();
+			else
+				value [i] = (char) -1;
+		}
+	}
+	return value;
+}
+
+QString Operations::binToString (const QByteArray& bin)
+{
+	QString out;
+
+	for (int i = 0, size = bin.size(); i < size; i++) {
+		switch (bin [i]) {
+			case -1: out += "-1"; break;
+			case 0: out += "0"; break;
+			case 1: out += "1"; break;
+			default: out += bin [i];
+		}
+	}
+	return out;
+}
+
+QByteArray Operations::stringToBin (const QString& string)
+{
+	QByteArray out;
+
+	bool isMinus = false;
+	for (int i = 0, size = string.size(); i < size; i++) {
+		if (string [i] == '-') {
+			isMinus = true;
+			continue;
+		}
+
+		if (string [i] == '0') {
+			if (isMinus) {
+				return QByteArray ();
+			}
+			out += (char) 0;
+		} else {
+			if (string [i] == '1') {
+				out += isMinus ? (char) -1 : (char) 1;
+			} else {
+				out += string [i];
+			}
+		}
+		isMinus = false;
+	}
+	return out;
+}

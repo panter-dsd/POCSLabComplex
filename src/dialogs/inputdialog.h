@@ -42,21 +42,20 @@ public:
 	};
 
 private:
-	QLabel *typeLabel;
-	QComboBox *typeEdit;
-	QLabel *numbersCountLabel;
-	QSpinBox *numbersCountEdit;
-	QLabel *valueLabel;
-	QLineEdit *valueEdit;
-	QLabel *outputValueLabel;
-	QLineEdit *outputValueEdit;
+	QLabel *positiveChanelLabel;
+	QLineEdit *positiveChanelEdit;
+	QLabel *negativeChanelLabel;
+	QLineEdit *negativeChanelEdit;
+	QLabel *dizssLabel;
 
+	QByteArray m_value;
 public:
 	InputDialog (QWidget *parent = 0);
 	virtual ~InputDialog ()
 	{}
 
 	QByteArray value ();
+	void setValue (const QByteArray& value);
 
 private:
 	void retranslateStrings();
@@ -65,8 +64,7 @@ protected:
 	bool event(QEvent *ev);
 
 private Q_SLOTS:
-	void indexChanged (int index);
-	void valueChanged (const QString& text);
+	void valueChanged ();
 };
 
 

@@ -52,6 +52,9 @@ public:
 	void setsecondValue(const QByteArray& value);
 
 	static QByteArray decToBin (double dec, int decimals);
+	static QByteArray dizssFromChanels (const QByteArray& positiveChanel, const QByteArray& negativeChanel);
+	static QString binToString (const QByteArray& bin);
+	static QByteArray stringToBin (const QString& string);
 
 };
 

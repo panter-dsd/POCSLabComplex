@@ -12,31 +12,19 @@
 InputDialog::InputDialog (QWidget *parent)
 	: QDialog (parent)
 {
-	typeLabel = new QLabel (this);
+	positiveChanelLabel = new QLabel (this);
 
-	typeEdit = new QComboBox (this);
-	typeEdit->setEditable(false);
-	typeEdit->addItem("Hex", Hex);
-	typeEdit->addItem("Dec", Dec);
-	typeEdit->setCurrentIndex(-1);
-	connect (typeEdit, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
+	positiveChanelEdit = new QLineEdit (this);
+	positiveChanelEdit->setInputMask("b\\.bbbbbbbbbbbbbbbb");
+	connect (positiveChanelEdit, SIGNAL(textEdited(QString)), this, SLOT(valueChanged()));
 
-	numbersCountLabel = new QLabel (this);
+	negativeChanelLabel = new QLabel (this);
 
-	numbersCountEdit = new QSpinBox (this);
-	numbersCountEdit->setRange(1, 16);
-	numbersCountEdit->setValue(16);
+	negativeChanelEdit = new QLineEdit (this);
+	negativeChanelEdit->setInputMask("b\\.bbbbbbbbbbbbbbbb");
+	connect (negativeChanelEdit, SIGNAL(textEdited(QString)), this, SLOT(valueChanged()));
 
-	valueLabel = new QLabel (this);
-
-	valueEdit = new QLineEdit (this);
-	valueEdit->setAlignment(Qt::AlignRight);
-	connect (valueEdit, SIGNAL(textChanged(QString)), this, SLOT(valueChanged(QString)));
-
-	outputValueLabel = new QLabel (this);
-
-	outputValueEdit = new QLineEdit (this);
-	outputValueEdit->setReadOnly(true);
+	dizssLabel = new QLabel (this);
 
 	QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
 													  Qt::Horizontal,
@@ -45,28 +33,22 @@ InputDialog::InputDialog (QWidget *parent)
 	connect (buttons, SIGNAL(rejected()), this, SLOT(reject()));
 
 	QVBoxLayout *mainLayout = new QVBoxLayout ();
-	mainLayout->addWidget(typeLabel);
-	mainLayout->addWidget(typeEdit);
-	mainLayout->addWidget(numbersCountLabel);
-	mainLayout->addWidget(numbersCountEdit);
-	mainLayout->addWidget(valueLabel);
-	mainLayout->addWidget(valueEdit);
-	mainLayout->addWidget(outputValueLabel);
-	mainLayout->addWidget(outputValueEdit);
+	mainLayout->addWidget(positiveChanelLabel);
+	mainLayout->addWidget(positiveChanelEdit);
+	mainLayout->addWidget(negativeChanelLabel);
+	mainLayout->addWidget(negativeChanelEdit);
+	mainLayout->addWidget(dizssLabel);
 	mainLayout->addWidget(buttons);
 	setLayout(mainLayout);
 
-	typeEdit->setCurrentIndex(Dec);
 	retranslateStrings();
 }
 
 void InputDialog::retranslateStrings()
 {
-	typeLabel->setText(tr ("Input type"));
+	positiveChanelLabel->setText(tr ("Positive chanel"));
 
-	numbersCountLabel->setText(tr ("Numbers count"));
-
-	valueLabel ->setText(tr ("Value"));
+	negativeChanelLabel->setText(tr ("Negative chanel"));
 }
 
 bool InputDialog::event(QEvent *ev)
@@ -78,42 +60,24 @@ bool InputDialog::event(QEvent *ev)
 	return QDialog::event(ev);
 }
 
-void InputDialog::indexChanged (int index)
-{
-	valueEdit->clear();
-	switch (index) {
-		case Hex:
-			valueEdit->setInputMask("\\0\\xhhhh;0");
-			break;
-		case Dec:
-			valueEdit->setInputMask("\\0\\,dddddd;0");
-			break;
-		default:
-			valueEdit->setEnabled(false);
-			return;
-	}
-	valueEdit->setFocus();
-	valueEdit->setEnabled(true);
-}
-
 QByteArray InputDialog::value ()
 {
-	return outputValueEdit->text().toAscii();
+	return m_value;
 }
 
-void InputDialog::valueChanged (const QString& /*text*/)
+void InputDialog::setValue (const QByteArray& value)
 {
-	bool ok = false;
-	switch (typeEdit->currentIndex()) {
-		case Hex:
-			outputValueEdit->setText("0." + Operations::decToBin((double) 1 / valueEdit->displayText().toLong(&ok, 16), numbersCountEdit->value()));
-			break;
-		case Dec: {
-			outputValueEdit->setText("0." + Operations::decToBin(valueEdit->displayText().toDouble(), numbersCountEdit->value()));
-			break;
-		}
-		default:
-			outputValueEdit->clear();
-			return;
-	}
+
+}
+
+void InputDialog::valueChanged ()
+{
+	const QByteArray& positive = Operations::stringToBin(positiveChanelEdit->text());
+	const QByteArray& negative = Operations::stringToBin(negativeChanelEdit->text());
+
+	m_value = Operations::dizssFromChanels(positive, negative);
+
+	QString text = "<p>" + Operations::binToString (m_value) + "</p>";
+	text = text.replace ("-1", "<span style=\"text-decoration: overline\">1</span>");
+	dizssLabel->setText (text);
 }

@@ -31,6 +31,7 @@
 
 #include "inoutwidget.h"
 #include "inputdialog.h"
+#include "operations.h"
 
 const int penWidth = 7;
 
@@ -54,6 +55,7 @@ InOutWidget::InOutWidget (Type type, QWidget *parent)
 		label->setFrameShape(QFrame::Box);
 		label->installEventFilter(this);
 		label->setContextMenuPolicy(Qt::CustomContextMenu);
+		label->setAlignment (Qt::AlignCenter);
 
 		mainLayout->addWidget(label);
 		labels.append(label);
@@ -142,11 +144,18 @@ void InOutWidget::changeValue ()
 
 	QLabel *label = qobject_cast<QLabel*> (action->parent());
 	if (label) {
+		int index = labels.indexOf(label);
+
 		InputDialog d (this);
+		d.setValue(m_values [index]);
 
 		if (d.exec()) {
-			m_values [label->objectName().toInt()] = d.value();
-			label->setText(d.value());
+			m_values [index] = d.value();
+
+			QString text = "<p>  " + Operations::binToString (m_values [index]) + "  </p>";
+			text = text.replace ("-1", "<span style=\"text-decoration: overline\">1</span>");
+			label->setText (text);
+			label->setToolTip (text);
 		}
 	}
 }
