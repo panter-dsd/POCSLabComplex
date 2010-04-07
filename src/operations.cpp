@@ -72,9 +72,13 @@ QByteArray Operations::dizssFromChanels (const QByteArray& positiveChanel, const
 				return QByteArray ();
 			else
 				value [i] = (char) -1;
+		} else {
+			if (negativeChanel [i] != (char) 0) {
+				value [i] = negativeChanel [i];
+			}
 		}
 	}
-	return value;
+	return value.size() > 2 ? value : QByteArray ();
 }
 
 QString Operations::binToString (const QByteArray& bin)
@@ -103,10 +107,10 @@ QByteArray Operations::stringToBin (const QString& string)
 			continue;
 		}
 
+		if (isMinus && string [i] != '1')
+			return QByteArray ();
+
 		if (string [i] == '0') {
-			if (isMinus) {
-				return QByteArray ();
-			}
 			out += (char) 0;
 		} else {
 			if (string [i] == '1') {
