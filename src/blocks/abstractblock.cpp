@@ -26,13 +26,25 @@
 #include <QtGui/QPaintEvent>
 #include <QtGui/QPen>
 #include <QtGui/QFont>
+#include <QtGui/QAction>
 
 #include "abstractblock.h"
 
 AbstractBlock::AbstractBlock(const QString& caption, QWidget *parent)
 	: QWidget(parent), m_caption(caption), m_isModule(false), m_operation(-1)
 {
+	actionChooseOperation = new QAction (this);
+	connect (actionChooseOperation, SIGNAL(triggered()), this, SLOT(chooseOperation()));
+	addAction(actionChooseOperation);
+
+	setContextMenuPolicy(Qt::ActionsContextMenu);
 	updateToolTip();
+	retranslateStrings ();
+}
+
+void AbstractBlock::retranslateStrings ()
+{
+	actionChooseOperation->setText (tr ("Choose operation"));
 }
 
 void AbstractBlock::paintEvent(QPaintEvent */*ev*/)
@@ -94,12 +106,19 @@ void AbstractBlock::setSecondValue(const QByteArray& value)
 	m_secondValue = value;
 }
 
-void AbstractBlock::mouseDoubleClickEvent(QMouseEvent */*ev*/)
-{
-	chooseOperation();
-}
-
 void AbstractBlock::updateToolTip()
 {
 	setToolTip("<h2 align=center><u>" + m_caption + "</u></h2>");
+}
+
+bool AbstractBlock::event(QEvent *ev)
+{
+	if (ev->type() == QEvent::MouseButtonDblClick) {
+		chooseOperation();
+	}
+	if (ev->type() == QEvent::LanguageChange) {
+		retranslateStrings ();
+	}
+
+	return QWidget::event(ev);
 }

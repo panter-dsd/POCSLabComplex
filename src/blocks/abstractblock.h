@@ -25,6 +25,8 @@
 #ifndef ABSTRACTBLOCK_H
 #define ABSTRACTBLOCK_H
 
+class QAction;
+
 #include <QtCore/QMap>
 
 #include <QtGui/QWidget>
@@ -41,6 +43,8 @@ protected:
 	char m_operation;
 	QMap<char, QString> operations;
 	QMap<char, QString> moduleOperations;
+
+	QAction *actionChooseOperation;
 
 public:
 	AbstractBlock(const QString& caption = 0, QWidget *parent = 0);
@@ -73,8 +77,9 @@ public:
 
 protected:
 	void paintEvent(QPaintEvent *ev);
-	void mouseDoubleClickEvent(QMouseEvent *ev);
+	bool event(QEvent *ev);
 	virtual void updateToolTip();
+	virtual void retranslateStrings ();
 
 public Q_SLOTS:
 	void setFirstValue(const QByteArray& value);
