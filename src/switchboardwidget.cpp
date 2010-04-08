@@ -27,6 +27,7 @@
 #include "switchboardwidget.h"
 
 const int penWidth = 7;
+
 SwitchboardWidget::SwitchboardWidget (QWidget *parent)
 	: QWidget (parent)
 {
@@ -55,4 +56,14 @@ void SwitchboardWidget::paintEvent(QPaintEvent *ev)
 	m_rect.setWidth(m_rect.width() - penWidth * 2);
 	m_rect.setHeight(m_rect.height() - penWidth * 2);
 	painter.drawRect(m_rect);
+
+	QRect m_workRect (rect().x() + penWidth / 2, rect ().y() + penWidth / 2,
+					  rect ().width() - penWidth / 2 - penWidth * 2, rect ().height() - penWidth / 2 - penWidth * 2);
+
+	pen.setWidth(1);
+	painter.setPen(pen);
+	for (int i = 0; i < 6; i++) {
+		painter.drawLine(m_workRect.x() + m_workRect.width(), m_workRect.y() + m_workRect.height() / 6 * i + m_workRect.height() / 6 / 2,
+						 rect ().width(), m_workRect.y() + m_workRect.height() / 6 * i + m_workRect.height() / 6 / 2);
+	}
 }

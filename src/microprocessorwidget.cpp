@@ -120,9 +120,10 @@ void MicroprocessorWidget::paintEvent(QPaintEvent *ev)
 
 	QRect m_rect(rect().x() + fontMetrics().width("WWWW"), rect().top(), rect().width() - fontMetrics().width("WWWW"), rect().height());
 
-	m_workRect = m_rect;
-	m_workRect.setTop(m_workRect.top() + pen.width() * 2);
-	m_workRect.setHeight(m_workRect.height() - pen.width() * 2);
+	m_workRect.setY(rect ().y() + pen.width() / 2);
+	m_workRect.setHeight(rect ().height() - pen.width() / 2 - pen.width() * 2);
+	m_workRect.setX(rect().x() + fontMetrics().width("WWWW") + pen.width() / 2);
+	m_workRect.setWidth(rect ().width() - m_workRect.x() - pen.width() * 2);
 
 	//Shadow
 	painter.drawLine(m_rect.x() + pen.width(), m_rect.y() + m_rect.height() - pen.width(), m_rect.x() + m_rect.width() - pen.width(), m_rect.y() + m_rect.height() - pen.width());
@@ -139,6 +140,22 @@ void MicroprocessorWidget::paintEvent(QPaintEvent *ev)
 
 	const QString& caption = tr("MP 4.601V ZHZ - 0034 Scheme %1").arg(m_scheme >= 0 ? QString::number(m_scheme) : "");
 	painter.drawText(width() / 2 - fontMetrics().width(caption) / 2, pen.width() * 2 + fontMetrics().height() / 2, caption);
+
+	pen.setWidth(1);
+	painter.setPen(pen);
+
+	for (int i = 0; i < 6; i++) {
+		inputPoints [i].setX(m_workRect.x());
+		inputPoints [i].setY(m_workRect.y() + m_workRect.height() / 6 * i + m_workRect.height() / 6 / 2);
+
+		outputPoints [i].setX(m_workRect.x() + m_workRect.width());
+		outputPoints [i].setY(m_workRect.y() + m_workRect.height() / 6 * i + m_workRect.height() / 6 / 2);
+
+		painter.drawLine(rect().x(), m_workRect.y() + m_workRect.height() / 6 * i + m_workRect.height() / 6 / 2,
+						 m_workRect.x(), m_workRect.y() + m_workRect.height() / 6 * i + m_workRect.height() / 6 / 2);
+		painter.drawLine(m_workRect.x() + m_workRect.width(), m_workRect.y() + m_workRect.height() / 6 * i + m_workRect.height() / 6 / 2,
+						 rect ().width(), m_workRect.y() + m_workRect.height() / 6 * i + m_workRect.height() / 6 / 2);
+	}
 
 	switch (m_scheme) {
 	case 0:

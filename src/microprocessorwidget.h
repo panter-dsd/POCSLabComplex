@@ -52,6 +52,8 @@ private:
 	QRect m_workRect;
 	char m_scheme;
 	qint16 m_adjustingWord;
+	QPoint inputPoints [6];
+	QPoint outputPoints [6];
 
 public:
 	MicroprocessorWidget(QWidget *parent);
