@@ -58,7 +58,7 @@ QByteArray Operations::dizssFromChanels (const QByteArray& positiveChanel, const
 	QByteArray value;
 
 	{
-		int size = positiveChanel.size() > negativeChanel.size() ? positiveChanel.size() : negativeChanel.size();
+		const int size = positiveChanel.size() > negativeChanel.size() ? positiveChanel.size() : negativeChanel.size();
 		value.fill((char) 0, size);
 	}
 

@@ -26,6 +26,7 @@
 
 #include "switchboardwidget.h"
 
+const int penWidth = 7;
 SwitchboardWidget::SwitchboardWidget (QWidget *parent)
 	: QWidget (parent)
 {
@@ -39,7 +40,7 @@ void SwitchboardWidget::paintEvent(QPaintEvent *ev)
 	QPen pen;
 	pen.setStyle(Qt::SolidLine);
 	pen.setBrush(Qt::darkGray);
-	pen.setWidth(7);
+	pen.setWidth(penWidth);
 	painter.setPen(pen);
 
 	QRect m_rect(rect().x(), rect().top(), rect().width(), rect().height());
@@ -51,7 +52,7 @@ void SwitchboardWidget::paintEvent(QPaintEvent *ev)
 	//Rect
 	pen.setBrush(Qt::black);
 	painter.setPen(pen);
-	m_rect.setWidth(m_rect.width() - pen.width() * 2);
-	m_rect.setHeight(m_rect.height() - pen.width() * 2);
+	m_rect.setWidth(m_rect.width() - penWidth * 2);
+	m_rect.setHeight(m_rect.height() - penWidth * 2);
 	painter.drawRect(m_rect);
 }
