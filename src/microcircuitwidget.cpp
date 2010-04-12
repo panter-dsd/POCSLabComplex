@@ -74,7 +74,7 @@ MicrocircuitWidget::MicrocircuitWidget (QWidget *parent)
 	mainLayout->addWidget(inputSwitchboard, 1, 1);
 	mainLayout->addWidget(microprocessor, 1, 2);
 	mainLayout->addWidget(outputSwitchboard, 1, 3);
-	mainLayout->addWidget(outputInOut), 1, 4;
+	mainLayout->addWidget(outputInOut, 1, 4);
 	setLayout (mainLayout);
 
 	retranslateStrings();

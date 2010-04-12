@@ -79,7 +79,7 @@ bool InOutWidget::event(QEvent *ev)
 	return QWidget::event(ev);
 }
 
-void InOutWidget::paintEvent(QPaintEvent *ev)
+void InOutWidget::paintEvent(QPaintEvent */*ev*/)
 {
 	QPainter painter(this);
 

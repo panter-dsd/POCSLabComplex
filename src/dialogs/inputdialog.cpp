@@ -67,7 +67,7 @@ QByteArray InputDialog::value ()
 
 void InputDialog::setValue (const QByteArray& value)
 {
-
+	m_value = value;
 }
 
 void InputDialog::valueChanged ()
