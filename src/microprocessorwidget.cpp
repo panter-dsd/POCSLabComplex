@@ -84,29 +84,29 @@ void MicroprocessorWidget::resizeEvent(QResizeEvent */*ev*/)
 
 void MicroprocessorWidget::resize_0()
 {
-	alb1->move(width() / 2 - alb1->width() / 2, m_workRect.y() + alb1->height() / 2);
-	alb2->move(alb1->x(), height() / 2 + alb2->height() / 2);
-	alb3->move(width() - alb3->width() - alb3->width() / 2, alb1->y() + alb1->height());
-	mb1->move(m_workRect.x() + mb1->width() / 2, height() / 2 - mb1->height() / 2);
-	mb2->move(mb1->x(), mb1->y() + mb1->height() * 2);
+	alb1->move (m_workRect.x () + m_workRect.width () / 2 - alb1->width () / 2, inputPoints [0].y ());
+	alb2->move (alb1->x (), inputPoints [3].y ());
+	alb3->move (m_workRect.x () + m_workRect.width () / 4 * 3, inputPoints [1].y ());
+	mb1->move (m_workRect.x () + mb1->width () / 2, inputPoints [2].y ());
+	mb2->move (mb1->x (), inputPoints [4].y ());
 }
 
 void MicroprocessorWidget::resize_1()
 {
-	alb1->move(width() / 2 - alb1->width() / 2, m_workRect.y() + alb1->height() / 2);
-	alb2->move(alb1->x(), height() / 2 + alb2->height() / 2);
-	alb3->move(width() - alb3->width() - alb3->width() / 2, alb1->y() + alb1->height());
-	mb1->move(m_workRect.x() + mb1->width() / 2, height() / 2 - mb1->height() / 2);
-	mb2->move(mb1->x(), mb1->y() + mb1->height() * 2);
+	alb1->move (m_workRect.x () + m_workRect.width () / 2 - alb1->width () / 2, inputPoints [0].y ());
+	alb2->move (alb1->x (), inputPoints [3].y ());
+	alb3->move (m_workRect.x () + m_workRect.width () / 4 * 3, inputPoints [1].y ());
+	mb1->move (m_workRect.x () + mb1->width () / 2, inputPoints [2].y ());
+	mb2->move (mb1->x (), inputPoints [4].y ());
 }
 
 void MicroprocessorWidget::resize_2()
 {
-	alb1->move(width() / 2 - alb1->width() / 2, m_workRect.y() + alb1->height() / 2);
-	alb2->move(alb1->x(), height() / 2 + alb2->height() / 2);
-	alb3->move(width() - alb3->width() - alb3->width() / 2, alb1->y() + alb1->height());
-	mb1->move(m_workRect.x() + mb1->width() / 2, height() / 2 - mb1->height() / 2);
-	mb2->move(mb1->x(), mb1->y() + mb1->height() * 2);
+	alb1->move (m_workRect.x () + m_workRect.width () / 2 - alb1->width () / 2, inputPoints [0].y ());
+	alb2->move (alb1->x (), inputPoints [3].y ());
+	alb3->move (m_workRect.x () + m_workRect.width () / 4 * 3, inputPoints [1].y ());
+	mb1->move (m_workRect.x () + mb1->width () / 2, inputPoints [2].y ());
+	mb2->move (mb1->x (), inputPoints [4].y ());
 }
 
 void MicroprocessorWidget::paintEvent(QPaintEvent *ev)
