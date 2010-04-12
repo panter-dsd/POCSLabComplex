@@ -55,6 +55,8 @@ private:
 	QPoint inputPoints [6];
 	QPoint outputPoints [6];
 
+	QString m_name;
+
 public:
 	MicroprocessorWidget(QWidget *parent);
 	virtual ~MicroprocessorWidget()
@@ -63,6 +65,9 @@ public:
 	qint16 adjustingWord() const
 	{ return m_adjustingWord; }
 	void setAdjustingWord(qint16 m_adjustingWord);
+
+	QString name ()
+	{ return m_name; }
 
 protected:
 	void paintEvent(QPaintEvent *ev);
@@ -76,10 +81,17 @@ private:
 	void resize_1();
 	void paint_2(QPaintEvent *ev, QPainter *painter);
 	void resize_2();
+	void retranslateStrings();
+
+protected:
+	bool event(QEvent *ev);
 
 private Q_SLOTS:
 	void chooseScheme();
 	void updateAdjustingWorld();
+
+Q_SIGNALS:
+	void nameChanged (const QString& name);
 };
 
 #endif //MICROPROCESSORWIDGET_H

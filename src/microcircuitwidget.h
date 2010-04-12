@@ -28,6 +28,7 @@
 class InOutWidget;
 class SwitchboardWidget;
 class MicroprocessorWidget;
+class QLabel;
 
 #include <QtGui/QWidget>
 
@@ -35,6 +36,12 @@ class MicrocircuitWidget : public QWidget {
 	Q_OBJECT
 
 private:
+	QLabel *inputLabel;
+	QLabel *inputSwitchboardLabel;
+	QLabel *microprocessorLabel;
+	QLabel *outputSwitchboardLabel;
+	QLabel *outputLabel;
+
 	InOutWidget *inputInOut;
 	SwitchboardWidget *inputSwitchboard;
 	MicroprocessorWidget *microprocessor;
@@ -45,6 +52,15 @@ public:
 	MicrocircuitWidget (QWidget *parent = 0);
 	virtual ~MicrocircuitWidget ()
 	{}
+
+protected:
+	bool event(QEvent *ev);
+
+private:
+	void retranslateStrings();
+
+private Q_SLOTS:
+	void microprocessorNameChanged (const QString& name);
 };
 
 #endif //MICROCIRCUITWIDGET_H

@@ -60,6 +60,7 @@ MicroprocessorWidget::MicroprocessorWidget(QWidget *parent)
 	}
 
 	updateWidgets();
+	retranslateStrings();
 }
 
 void MicroprocessorWidget::resizeEvent(QResizeEvent */*ev*/)
@@ -135,11 +136,6 @@ void MicroprocessorWidget::paintEvent(QPaintEvent *ev)
 	m_rect.setWidth(m_rect.width() - pen.width() * 2);
 	m_rect.setHeight(m_rect.height() - pen.width() * 2);
 	painter.drawRect(m_rect);
-
-	//Draw caption
-
-	const QString& caption = tr("MP 4.601V ZHZ - 0034 Scheme %1").arg(m_scheme >= 0 ? QString::number(m_scheme) : "");
-	painter.drawText(width() / 2 - fontMetrics().width(caption) / 2, pen.width() * 2 + fontMetrics().height() / 2, caption);
 
 	pen.setWidth(1);
 	painter.setPen(pen);
@@ -389,6 +385,8 @@ void MicroprocessorWidget::chooseScheme()
 		resizeEvent(0);
 		updateAdjustingWorld();
 	}
+
+	retranslateStrings();
 }
 
 void MicroprocessorWidget::updateWidgets()
@@ -438,4 +436,19 @@ void MicroprocessorWidget::setAdjustingWord(qint16 adjustingWord)
 
 	updateWidgets();
 	resizeEvent(0);
+}
+
+bool MicroprocessorWidget::event(QEvent *ev)
+{
+	if (ev->type() == QEvent::LanguageChange) {
+		retranslateStrings();
+	}
+
+	return QWidget::event(ev);
+}
+
+void MicroprocessorWidget::retranslateStrings()
+{
+	m_name = tr("MP 4.601V ZHZ - 0034 Scheme %1").arg(m_scheme >= 0 ? QString::number(m_scheme) : tr ("is not valid"));
+	emit nameChanged(m_name);
 }

@@ -30,6 +30,10 @@
 class SwitchboardWidget : public QWidget {
 	Q_OBJECT
 
+private:
+	QPoint inputPoints [6];
+	QPoint outputPoints [6];
+
 public:
 	SwitchboardWidget (QWidget *parent = 0);
 	virtual ~SwitchboardWidget ()

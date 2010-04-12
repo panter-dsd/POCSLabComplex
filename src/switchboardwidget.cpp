@@ -63,6 +63,12 @@ void SwitchboardWidget::paintEvent(QPaintEvent *ev)
 	pen.setWidth(1);
 	painter.setPen(pen);
 	for (int i = 0; i < 6; i++) {
+		inputPoints [i].setX(rect ().x() + penWidth / 2);
+		inputPoints [i].setY(m_workRect.y() + m_workRect.height() / 6 * i + m_workRect.height() / 6 / 2);
+
+		outputPoints [i].setX(m_workRect.x() + m_workRect.width());
+		outputPoints [i].setY(m_workRect.y() + m_workRect.height() / 6 * i + m_workRect.height() / 6 / 2);
+
 		painter.drawLine(m_workRect.x() + m_workRect.width(), m_workRect.y() + m_workRect.height() / 6 * i + m_workRect.height() / 6 / 2,
 						 rect ().width(), m_workRect.y() + m_workRect.height() / 6 * i + m_workRect.height() / 6 / 2);
 	}
