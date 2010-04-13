@@ -43,7 +43,7 @@ const int penWidth = 7;
 MicroprocessorWidget::MicroprocessorWidget(QWidget *parent)
 	:QWidget(parent), m_scheme(-1)
 {
-	setFixedSize(400, 200);
+	setMinimumSize(400, 200);
 
 	actionChooseScheme = new QAction(tr("Choose scheme"), this);
 	connect(actionChooseScheme, SIGNAL(triggered()), this, SLOT(chooseScheme()));
@@ -129,8 +129,10 @@ void MicroprocessorWidget::paintEvent(QPaintEvent *ev)
 	m_workRect.setWidth(rect ().width() - m_workRect.x() - pen.width() * 2);
 
 	//Shadow
-	painter.drawLine(m_rect.x() + pen.width(), m_rect.y() + m_rect.height() - pen.width(), m_rect.x() + m_rect.width() - pen.width(), m_rect.y() + m_rect.height() - pen.width());
-	painter.drawLine(m_rect.x() + m_rect.width() - pen.width(), m_rect.y() + pen.width(), m_rect.x() + m_rect.width() - pen.width(), m_rect.y() + m_rect.height() - pen.width());
+	painter.drawLine(m_rect.x() + pen.width(), m_rect.y() + m_rect.height() - pen.width(), 
+					 m_rect.x() + m_rect.width() - pen.width(), m_rect.y() + m_rect.height() - pen.width());
+	painter.drawLine(m_rect.x() + m_rect.width() - pen.width(), m_rect.y() + pen.width(), 
+					 m_rect.x() + m_rect.width() - pen.width(), m_rect.y() + m_rect.height() - pen.width());
 
 	//Rect
 	pen.setBrush(Qt::black);
@@ -203,31 +205,45 @@ void MicroprocessorWidget::paint_0(QPaintEvent */*ev*/, QPainter *painter)
 	painter->drawLine (m_workRect.x () + smallMargin, inputPoints [5].y (), m_workRect.x () + smallMargin, mb2->y () + mb2->height() / 3 * 2);
 	painter->drawLine (m_workRect.x () + smallMargin, mb2->y () + mb2->height () / 3 * 2, mb2->x (), mb2->y () + mb2->height() / 3 * 2);
 	//ALB1 -> Q1
-	painter->drawLine(alb1->x() + alb1->width(), alb1->y() + alb1->height() / 3, m_workRect.x () + m_workRect.width () - smallMargin, alb1->y() + alb1->height() / 3);
-	painter->drawLine(m_workRect.x () + m_workRect.width () - smallMargin, alb1->y() + alb1->height() / 3, m_workRect.x () + m_workRect.width () - smallMargin, outputPoints [0].y ());
-	painter->drawLine(m_workRect.x () + m_workRect.width () - smallMargin, outputPoints [0].y (), outputPoints [0].x (), outputPoints [0].y ());
+	painter->drawLine(alb1->x() + alb1->width(), alb1->y() + alb1->height() / 3, 
+					  m_workRect.x () + m_workRect.width () - smallMargin, alb1->y() + alb1->height() / 3);
+	painter->drawLine(m_workRect.x () + m_workRect.width () - smallMargin, 
+					  alb1->y() + alb1->height() / 3, m_workRect.x () + m_workRect.width () - smallMargin, outputPoints [0].y ());
+	painter->drawLine(m_workRect.x () + m_workRect.width () - smallMargin, 
+					  outputPoints [0].y (), outputPoints [0].x (), outputPoints [0].y ());
 	//ALB1 -> ALB3
-	painter->drawLine(alb1->x() + alb1->width() + 20, alb1->y() + alb1->height() / 3, alb1->x() + alb1->width() + 20, alb3->y() + alb3->height() / 3 * 2);
-	painter->drawLine(alb1->x() + alb1->width() + 20, alb3->y() + alb3->height() / 3 * 2, alb3->x(), alb3->y() + alb3->height() / 3 * 2);
+	painter->drawLine(alb1->x() + alb1->width() + 20, alb1->y() + alb1->height() / 3, 
+					  alb1->x() + alb1->width() + 20, alb3->y() + alb3->height() / 3 * 2);
+	painter->drawLine(alb1->x() + alb1->width() + 20, alb3->y() + alb3->height() / 3 * 2, 
+					  alb3->x(), alb3->y() + alb3->height() / 3 * 2);
 	//MB1 -> Q5
-	painter->drawLine(mb1->x() + mb1->width(), mb1->y() + mb1->height() / 3, m_workRect.x () + m_workRect.width () - smallMargin, mb1->y() + mb1->height() / 3);
-	painter->drawLine(m_workRect.x () + m_workRect.width () - smallMargin, mb1->y() + mb1->height() / 3, m_workRect.x () + m_workRect.width () - smallMargin, outputPoints [2].y ());
+	painter->drawLine(mb1->x() + mb1->width(), mb1->y() + mb1->height() / 3, 
+					  m_workRect.x () + m_workRect.width () - smallMargin, mb1->y() + mb1->height() / 3);
+	painter->drawLine(m_workRect.x () + m_workRect.width () - smallMargin, mb1->y() + mb1->height() / 3, 
+					  m_workRect.x () + m_workRect.width () - smallMargin, outputPoints [2].y ());
 	painter->drawLine(m_workRect.x () + m_workRect.width () - smallMargin, outputPoints [2].y (), outputPoints [2].x (), outputPoints [2].y ());
 	//MB1 -> ALB2
-	painter->drawLine(mb1->x() + mb1->width(), mb1->y() + mb1->height() / 3 * 2, mb1->x() + mb1->width() + 20, mb1->y() + mb1->height() / 3 * 2);
-	painter->drawLine(mb1->x() + mb1->width() + 20, mb1->y() + mb1->height() / 3 * 2, mb1->x() + mb1->width() + 20, alb2->y() + alb2->height() / 3);
+	painter->drawLine(mb1->x() + mb1->width(), mb1->y() + mb1->height() / 3 * 2, 
+					  mb1->x() + mb1->width() + 20, mb1->y() + mb1->height() / 3 * 2);
+	painter->drawLine(mb1->x() + mb1->width() + 20, mb1->y() + mb1->height() / 3 * 2, 
+					  mb1->x() + mb1->width() + 20, alb2->y() + alb2->height() / 3);
 	painter->drawLine(mb1->x() + mb1->width() + 20, alb2->y() + alb2->height() / 3, alb2->x(), alb2->y() + alb2->height() / 3);
 	//MB2 -> ALB2
 	painter->drawLine(mb2->x() + mb2->width(), mb2->y() + mb2->height() / 3, mb2->x() + mb2->width() + 20, mb2->y() + mb2->height() / 3);
-	painter->drawLine(mb2->x() + mb2->width() + 20, mb2->y() + mb2->height() / 3, mb2->x() + mb2->width() + 20, alb2->y() + alb2->height() / 3 * 2);
+	painter->drawLine(mb2->x() + mb2->width() + 20, mb2->y() + mb2->height() / 3, 
+					  mb2->x() + mb2->width() + 20, alb2->y() + alb2->height() / 3 * 2);
 	painter->drawLine(mb2->x() + mb2->width() + 20, alb2->y() + alb2->height() / 3 * 2, alb2->x(), alb2->y() + alb2->height() / 3 * 2);
 	//MB2 -> Q4
-	painter->drawLine(mb2->x() + mb2->width(), mb2->y() + mb2->height() / 3 * 2, m_workRect.x () + m_workRect.width () - smallMargin, mb2->y() + mb2->height() / 3 * 2);
-	painter->drawLine(m_workRect.x () + m_workRect.width () - smallMargin, mb2->y() + mb2->height() / 3 * 2, m_workRect.x () + m_workRect.width () - smallMargin, outputPoints [5].y ());
+	painter->drawLine(mb2->x() + mb2->width(), mb2->y() + mb2->height() / 3 * 2, 
+					  m_workRect.x () + m_workRect.width () - smallMargin, mb2->y() + mb2->height() / 3 * 2);
+	painter->drawLine(m_workRect.x () + m_workRect.width () - smallMargin, 
+					  mb2->y() + mb2->height() / 3 * 2, m_workRect.x () + m_workRect.width () - smallMargin, outputPoints [5].y ());
 	painter->drawLine(m_workRect.x () + m_workRect.width () - smallMargin, outputPoints [5].y (), outputPoints [5].x (), outputPoints [5].y ());
 	//ALB2 -> Q6
-	painter->drawLine(alb2->x() + alb2->width(), alb2->y() + alb2->height() / 3, m_workRect.x () + m_workRect.width () - smallMargin, alb2->y() + alb2->height() / 3);
-	painter->drawLine(m_workRect.x () + m_workRect.width () - smallMargin, alb2->y() + alb2->height() / 3, m_workRect.x () + m_workRect.width () - smallMargin, outputPoints [3].y ());
+	painter->drawLine(alb2->x() + alb2->width(), alb2->y() + alb2->height() / 3, 
+					  m_workRect.x () + m_workRect.width () - smallMargin, alb2->y() + alb2->height() / 3);
+	painter->drawLine(m_workRect.x () + m_workRect.width () - smallMargin, 
+					  alb2->y() + alb2->height() / 3, m_workRect.x () + m_workRect.width () - smallMargin, outputPoints [3].y ());
 	painter->drawLine(m_workRect.x () + m_workRect.width () - smallMargin, outputPoints [3].y (), outputPoints [3].x (), outputPoints [3].y ());
 	//ALB2 -> ALB3
 	painter->drawLine(alb2->x() + alb2->width() + 10, alb2->y() + alb2->height() / 3, alb2->x() + alb2->width() + 10, alb3->y() + alb3->height() / 3);
@@ -235,26 +251,29 @@ void MicroprocessorWidget::paint_0(QPaintEvent */*ev*/, QPainter *painter)
 	//ALB2 -> Qsign
 	painter->drawLine(alb2->x() + alb2->width(), alb2->y() + alb2->height() / 3 * 2, alb3->x() + alb3->width(), alb2->y() + alb2->height() / 3 * 2);
 	//ALB3 -> Q2
-	painter->drawLine(alb3->x() + alb3->width(), alb3->y() + alb3->height() / 3, m_workRect.x () + m_workRect.width () - smallMargin, alb3->y() + alb3->height() / 3);
-	painter->drawLine(m_workRect.x () + m_workRect.width () - smallMargin, alb3->y() + alb3->height() / 3, m_workRect.x () + m_workRect.width () - smallMargin, outputPoints [1].y ());
+	painter->drawLine(alb3->x() + alb3->width(), alb3->y() + alb3->height() / 3, 
+					  m_workRect.x () + m_workRect.width () - smallMargin, alb3->y() + alb3->height() / 3);
+	painter->drawLine(m_workRect.x () + m_workRect.width () - smallMargin, alb3->y() + alb3->height() / 3, 
+					  m_workRect.x () + m_workRect.width () - smallMargin, outputPoints [1].y ());
 	painter->drawLine(m_workRect.x () + m_workRect.width () - smallMargin, outputPoints [1].y (), outputPoints [1].x (), outputPoints [1].y ());
 
 	QFont font (painter->font());
 	font.setPointSize(alb1->height() / 3 - 2 < font.pointSize() ? alb1->height() / 3 - 2 : font.pointSize());
 	painter->setFont(font);
 
+	const int xPos = m_workRect.x () - penWidth - painter->fontMetrics ().width ("WW");
 	//A0 text
-	painter->drawText(m_workRect.x () - penWidth - painter->fontMetrics ().width ("WW"), inputPoints [0].y () - 1, "A0");
+	painter->drawText(xPos, inputPoints [0].y () - 1, "A0");
 	//A1 text
-	painter->drawText(m_workRect.x () - penWidth - painter->fontMetrics ().width ("WW"), inputPoints [1].y () - 1, "A1");
+	painter->drawText(xPos, inputPoints [1].y () - 1, "A1");
 	//A2 text
-	painter->drawText(m_workRect.x () - penWidth - painter->fontMetrics ().width ("WW"), inputPoints [2].y () - 1, "A2");
+	painter->drawText(xPos, inputPoints [2].y () - 1, "A2");
 	//A3 text
-	painter->drawText(m_workRect.x () - penWidth - painter->fontMetrics ().width ("WW"), inputPoints [3].y () - 1, "A3");
+	painter->drawText(xPos, inputPoints [3].y () - 1, "A3");
 	//A4 text
-	painter->drawText(m_workRect.x () - penWidth - painter->fontMetrics ().width ("WW"), inputPoints [4].y () - 1, "A4");
+	painter->drawText(xPos, inputPoints [4].y () - 1, "A4");
 	//A5 text
-	painter->drawText(m_workRect.x () - penWidth - painter->fontMetrics ().width ("WW"), inputPoints [5].y () - 1, "A5");
+	painter->drawText(xPos, inputPoints [5].y () - 1, "A5");
 }
 
 void MicroprocessorWidget::paint_1(QPaintEvent */*ev*/, QPainter *painter)
