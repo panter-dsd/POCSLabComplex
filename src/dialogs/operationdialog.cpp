@@ -29,54 +29,54 @@
 
 #include "operationdialog.h"
 
-OperationDialog::OperationDialog(QMap<char, QString> operations, QWidget *parent)
-	:QDialog(parent)
+OperationDialog::OperationDialog (QMap<char, QString> operations, QWidget *parent)
+	:QDialog (parent)
 {
-	groupBox = new QGroupBox(this);
+	groupBox = new QGroupBox (this);
 
-	QVBoxLayout *layout = new QVBoxLayout();
+	QVBoxLayout *layout = new QVBoxLayout ();
 
 	QRadioButton *radioButton;
 
-	QMapIterator<char, QString> it(operations);
+	QMapIterator<char, QString> it (operations);
 
-	while(it.hasNext()) {
-		it.next();
+	while (it.hasNext ()) {
+		it.next ();
 
-		radioButton = new QRadioButton(it.value(), this);
-		radioButton->setObjectName(QString::number(it.key()));
+		radioButton = new QRadioButton (it.value (), this);
+		radioButton->setObjectName (QString::number (it.key ()));
 
-		layout->addWidget(radioButton);
+		layout->addWidget (radioButton);
 	}
 
-	groupBox->setLayout(layout);
+	groupBox->setLayout (layout);
 
-	QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
+	QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
 													 Qt::Horizontal,
 													 this);
-	connect(buttons, SIGNAL(accepted()), this, SLOT(accept()));
-	connect(buttons, SIGNAL(rejected()), this, SLOT(reject()));
+	connect (buttons, SIGNAL (accepted ()), this, SLOT (accept ()));
+	connect (buttons, SIGNAL (rejected ()), this, SLOT (reject ()));
 
-	QVBoxLayout *mainLayout = new QVBoxLayout();
-	mainLayout->addWidget(groupBox);
-	mainLayout->addWidget(buttons);
-	setLayout(mainLayout);
+	QVBoxLayout *mainLayout = new QVBoxLayout ();
+	mainLayout->addWidget (groupBox);
+	mainLayout->addWidget (buttons);
+	setLayout (mainLayout);
 }
 
-int OperationDialog::operation()
+int OperationDialog::operation ()
 {
-	foreach(QRadioButton *rb, findChildren<QRadioButton*> ())
-		if (rb->isChecked())
-			return rb->objectName().toInt();
+	foreach (QRadioButton *rb, findChildren<QRadioButton*> ())
+		if (rb->isChecked ())
+			return rb->objectName ().toInt ();
 
 	return -1;
 }
 
-void OperationDialog::setOperation(int operation)
+void OperationDialog::setOperation (int operation)
 {
-	foreach(QRadioButton *rb, findChildren<QRadioButton*> ()) {
-		if (rb->objectName().toInt() == operation) {
-			rb->setChecked(true);
+	foreach (QRadioButton *rb, findChildren<QRadioButton*> ()) {
+		if (rb->objectName ().toInt () == operation) {
+			rb->setChecked (true);
 			break;
 		}
 	}

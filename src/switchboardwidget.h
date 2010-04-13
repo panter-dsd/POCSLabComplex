@@ -40,7 +40,7 @@ public:
 	{}
 
 protected:
-	void paintEvent(QPaintEvent *ev);
+	void paintEvent (QPaintEvent *ev);
 };
 
 #endif //SWITCHBOARDWIDGET_H

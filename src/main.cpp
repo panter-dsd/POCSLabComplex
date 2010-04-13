@@ -34,25 +34,25 @@
 
 #include "mainwindow.h"
 
-int main(int argc, char ** argv)
+int main (int argc, char ** argv)
 {
-	QTextCodec::setCodecForCStrings(QTextCodec::codecForName("System"));
+	QTextCodec::setCodecForCStrings (QTextCodec::codecForName ("System"));
 
-	QApplication app(argc, argv);
-	app.setOrganizationDomain("panter.org");
-	app.setOrganizationName("PanteR");
-	app.setApplicationName(QApplication::tr("POCSLabComplex"));
-	app.setApplicationVersion(ApplicationVersion);
-//	app.setWindowIcon(QIcon(":share/images/main.ico"));
+	QApplication app (argc, argv);
+	app.setOrganizationDomain ("panter.org");
+	app.setOrganizationName ("PanteR");
+	app.setApplicationName (QApplication::tr ("POCSLabComplex"));
+	app.setApplicationVersion (ApplicationVersion);
+//	app.setWindowIcon (QIcon (":share/images/main.ico"));
 
-	QSettings::setDefaultFormat(QSettings::IniFormat);
+	QSettings::setDefaultFormat (QSettings::IniFormat);
 
-	app.connect(&app, SIGNAL(lastWindowClosed()), &app, SLOT(quit()));
+	app.connect (&app, SIGNAL (lastWindowClosed ()), &app, SLOT (quit ()));
 
 	MainWindow win;
-	win.setWindowTitle(app.applicationName() + " " + app.applicationVersion());
+	win.setWindowTitle (app.applicationName () + " " + app.applicationVersion ());
 
-	win.show();
+	win.show ();
 
-	return app.exec();
+	return app.exec ();
 }

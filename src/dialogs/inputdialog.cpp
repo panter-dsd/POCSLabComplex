@@ -15,49 +15,49 @@ InputDialog::InputDialog (QWidget *parent)
 	positiveChanelLabel = new QLabel (this);
 
 	positiveChanelEdit = new QLineEdit (this);
-	positiveChanelEdit->setInputMask("b\\.bbbbbbbbbbbbbbbb");
-	connect (positiveChanelEdit, SIGNAL(textEdited(QString)), this, SLOT(valueChanged()));
+	positiveChanelEdit->setInputMask ("b\\.bbbbbbbbbbbbbbbb");
+	connect (positiveChanelEdit, SIGNAL (textEdited (QString)), this, SLOT (valueChanged ()));
 
 	negativeChanelLabel = new QLabel (this);
 
 	negativeChanelEdit = new QLineEdit (this);
-	negativeChanelEdit->setInputMask("b\\.bbbbbbbbbbbbbbbb");
-	connect (negativeChanelEdit, SIGNAL(textEdited(QString)), this, SLOT(valueChanged()));
+	negativeChanelEdit->setInputMask ("b\\.bbbbbbbbbbbbbbbb");
+	connect (negativeChanelEdit, SIGNAL (textEdited (QString)), this, SLOT (valueChanged ()));
 
 	dizssLabel = new QLabel (this);
 
 	QDialogButtonBox *buttons = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
 													  Qt::Horizontal,
 													  this);
-	connect (buttons, SIGNAL(accepted()), this, SLOT(accept()));
-	connect (buttons, SIGNAL(rejected()), this, SLOT(reject()));
+	connect (buttons, SIGNAL (accepted ()), this, SLOT (accept ()));
+	connect (buttons, SIGNAL (rejected ()), this, SLOT (reject ()));
 
 	QVBoxLayout *mainLayout = new QVBoxLayout ();
-	mainLayout->addWidget(positiveChanelLabel);
-	mainLayout->addWidget(positiveChanelEdit);
-	mainLayout->addWidget(negativeChanelLabel);
-	mainLayout->addWidget(negativeChanelEdit);
-	mainLayout->addWidget(dizssLabel);
-	mainLayout->addWidget(buttons);
-	setLayout(mainLayout);
+	mainLayout->addWidget (positiveChanelLabel);
+	mainLayout->addWidget (positiveChanelEdit);
+	mainLayout->addWidget (negativeChanelLabel);
+	mainLayout->addWidget (negativeChanelEdit);
+	mainLayout->addWidget (dizssLabel);
+	mainLayout->addWidget (buttons);
+	setLayout (mainLayout);
 
-	retranslateStrings();
+	retranslateStrings ();
 }
 
-void InputDialog::retranslateStrings()
+void InputDialog::retranslateStrings ()
 {
-	positiveChanelLabel->setText(tr ("Positive chanel"));
+	positiveChanelLabel->setText (tr ("Positive chanel"));
 
-	negativeChanelLabel->setText(tr ("Negative chanel"));
+	negativeChanelLabel->setText (tr ("Negative chanel"));
 }
 
-bool InputDialog::event(QEvent *ev)
+bool InputDialog::event (QEvent *ev)
 {
-	if (ev->type() == QEvent::LanguageChange) {
-		retranslateStrings();
+	if (ev->type () == QEvent::LanguageChange) {
+		retranslateStrings ();
 	}
 
-	return QDialog::event(ev);
+	return QDialog::event (ev);
 }
 
 QByteArray InputDialog::value ()
@@ -72,10 +72,10 @@ void InputDialog::setValue (const QByteArray& value)
 
 void InputDialog::valueChanged ()
 {
-	const QByteArray& positive = Operations::stringToBin(positiveChanelEdit->text());
-	const QByteArray& negative = Operations::stringToBin(negativeChanelEdit->text());
+	const QByteArray& positive = Operations::stringToBin (positiveChanelEdit->text ());
+	const QByteArray& negative = Operations::stringToBin (negativeChanelEdit->text ());
 
-	m_value = Operations::dizssFromChanels(positive, negative);
+	m_value = Operations::dizssFromChanels (positive, negative);
 
 	QString text = "<p>" + Operations::binToString (m_value) + "</p>";
 	text = text.replace ("-1", "<span style=\"text-decoration: overline\">1</span>");

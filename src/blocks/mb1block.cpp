@@ -29,44 +29,44 @@
 #include "mb1block.h"
 #include "operationdialog.h"
 
-Mb1Block::Mb1Block(const QString& caption, QWidget *parent)
-	: AbstractBlock(caption, parent)
+Mb1Block::Mb1Block (const QString& caption, QWidget *parent)
+	: AbstractBlock (caption, parent)
 {
-	operations.insert(0, "a * b");
-	operations.insert(1, "(a + b)/2");
-	operations.insert(2, "a");
-	operations.insert(3, "a - b");
+	operations.insert (0, "a * b");
+	operations.insert (1, " (a + b)/2");
+	operations.insert (2, "a");
+	operations.insert (3, "a - b");
 }
 
-void Mb1Block::chooseOperation()
+void Mb1Block::chooseOperation ()
 {
 	const QMap<char, QString> &m = m_isModule ? moduleOperations : operations;
 
-	OperationDialog d(m, this);
+	OperationDialog d (m, this);
 
-	d.setOperation(m_operation);
+	d.setOperation (m_operation);
 
-	if (d.exec()) {
-		m_operation = d.operation();
-		updateToolTip();
-		emit operationChanged(m_operation);
+	if (d.exec ()) {
+		m_operation = d.operation ();
+		updateToolTip ();
+		emit operationChanged (m_operation);
 	}
 }
 
-void Mb1Block::updateToolTip()
+void Mb1Block::updateToolTip ()
 {
 	QString m_toolTip = "<h2 align=center><u>" + m_caption + "</u></h2>";
 
 	if (m_operation >= 0) {
 		m_toolTip += "<p><b>";
-		m_toolTip += tr("Current operation");
+		m_toolTip += tr ("Current operation");
 		m_toolTip += "</b>: ";
 		if (m_isModule)
-			m_toolTip += moduleOperations.value(m_operation);
+			m_toolTip += moduleOperations.value (m_operation);
 		else
-			m_toolTip += operations.value(m_operation);
+			m_toolTip += operations.value (m_operation);
 		m_toolTip += "</p>";
 	}
 
-	setToolTip(m_toolTip);
+	setToolTip (m_toolTip);
 }

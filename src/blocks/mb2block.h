@@ -32,13 +32,13 @@ class Mb2Block : public AbstractBlock
 	Q_OBJECT
 
 public:
-	Mb2Block(const QString& caption = 0, QWidget *parent = 0);
+	Mb2Block (const QString& caption = 0, QWidget *parent = 0);
 
 private:
-	void updateToolTip();
+	void updateToolTip ();
 
 public Q_SLOTS:
-	void chooseOperation();
+	void chooseOperation ();
 };
 
 #endif // MB2BLOCK_H

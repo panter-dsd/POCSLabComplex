@@ -47,49 +47,49 @@ protected:
 	QAction *actionChooseOperation;
 
 public:
-	AbstractBlock(const QString& caption = 0, QWidget *parent = 0);
-	virtual ~AbstractBlock()
+	AbstractBlock (const QString& caption = 0, QWidget *parent = 0);
+	virtual ~AbstractBlock ()
 	{}
 
-	QString caption() const
+	QString caption () const
 	{ return m_caption; }
-	void setCaption(const QString& caption)
+	void setCaption (const QString& caption)
 	{
 		m_caption = caption;
-		updateToolTip();
+		updateToolTip ();
 	}
 
-	bool isModule() const
+	bool isModule () const
 	{ return m_isModule; }
-	void setIsModule(bool b)
+	void setIsModule (bool b)
 	{ m_isModule = b; }
 
-	char operation() const
+	char operation () const
 	{ return m_operation; }
-	void setOperation(char operation)
+	void setOperation (char operation)
 	{
 		m_operation = operation;
-		updateToolTip();
+		updateToolTip ();
 	}
 
-	bool isValid() const
+	bool isValid () const
 	{ return m_operation >= 0; }
 
 protected:
-	void paintEvent(QPaintEvent *ev);
-	bool event(QEvent *ev);
-	virtual void updateToolTip();
+	void paintEvent (QPaintEvent *ev);
+	bool event (QEvent *ev);
+	virtual void updateToolTip ();
 	virtual void retranslateStrings ();
 
 public Q_SLOTS:
-	void setFirstValue(const QByteArray& value);
-	void setSecondValue(const QByteArray& value);
-	virtual void chooseOperation()
+	void setFirstValue (const QByteArray& value);
+	void setSecondValue (const QByteArray& value);
+	virtual void chooseOperation ()
 	{}
 
 Q_SIGNALS:
-	void valueChanged(const QByteArray& newValue);
-	void operationChanged(char newOperation);
+	void valueChanged (const QByteArray& newValue);
+	void operationChanged (char newOperation);
 };
 
 #endif //ABSTRACTBLOCK_H

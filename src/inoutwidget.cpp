@@ -38,101 +38,101 @@ const int penWidth = 7;
 InOutWidget::InOutWidget (Type type, QWidget *parent)
 	: QWidget (parent), m_type (type), m_lastIndex (-1), actionChangeValue (0)
 {
-	setMouseTracking(true);
+	setMouseTracking (true);
 
 	if (m_type == In) {
 		actionChangeValue = new QAction (this);
-		connect (actionChangeValue, SIGNAL(triggered()), this, SLOT(changeValue()));
+		connect (actionChangeValue, SIGNAL (triggered ()), this, SLOT (changeValue ()));
 	}
 
 	QVBoxLayout *mainLayout = new QVBoxLayout ();
-	mainLayout->setContentsMargins(penWidth / 2, penWidth / 2, penWidth * 2, penWidth * 2);
-	mainLayout->setSpacing(0);
+	mainLayout->setContentsMargins (penWidth / 2, penWidth / 2, penWidth * 2, penWidth * 2);
+	mainLayout->setSpacing (0);
 
 	for (int i = 0; i < 6; i++) {
 		QLabel *label = new QLabel (this);
-		label->setFrameShape(QFrame::Box);
-		label->installEventFilter(this);
-		label->setContextMenuPolicy(Qt::CustomContextMenu);
+		label->setFrameShape (QFrame::Box);
+		label->installEventFilter (this);
+		label->setContextMenuPolicy (Qt::CustomContextMenu);
 		label->setAlignment (Qt::AlignLeft | Qt::AlignBottom);
 
-		mainLayout->addWidget(label);
-		labels.append(label);
+		mainLayout->addWidget (label);
+		labels.append (label);
 	}
-	setLayout(mainLayout);
+	setLayout (mainLayout);
 
-	retranslateStrings();
+	retranslateStrings ();
 }
 
-void InOutWidget::retranslateStrings()
+void InOutWidget::retranslateStrings ()
 {
 	if (actionChangeValue)
-		actionChangeValue->setText(tr ("Change value"));
+		actionChangeValue->setText (tr ("Change value"));
 }
 
-bool InOutWidget::event(QEvent *ev)
+bool InOutWidget::event (QEvent *ev)
 {
-	if (ev->type() == QEvent::LanguageChange) {
-		retranslateStrings();
+	if (ev->type () == QEvent::LanguageChange) {
+		retranslateStrings ();
 	}
 
-	return QWidget::event(ev);
+	return QWidget::event (ev);
 }
 
-void InOutWidget::paintEvent(QPaintEvent */*ev*/)
+void InOutWidget::paintEvent (QPaintEvent */*ev*/)
 {
-	QPainter painter(this);
+	QPainter painter (this);
 
 	QPen pen;
-	pen.setStyle(Qt::SolidLine);
-	pen.setBrush(Qt::darkGray);
-	pen.setWidth(penWidth);
-	painter.setPen(pen);
+	pen.setStyle (Qt::SolidLine);
+	pen.setBrush (Qt::darkGray);
+	pen.setWidth (penWidth);
+	painter.setPen (pen);
 
-	QRect m_rect(rect().x(), rect().y(), rect().width(), rect().height());
+	QRect m_rect (rect ().x (), rect ().y (), rect ().width (), rect ().height ());
 
 	//Shadow
-	painter.drawLine(m_rect.x() + pen.width(), m_rect.y() + m_rect.height() - pen.width(), m_rect.x() + m_rect.width() - pen.width(), m_rect.y() + m_rect.height() - pen.width());
-	painter.drawLine(m_rect.x() + m_rect.width() - pen.width(), m_rect.y() + pen.width(), m_rect.x() + m_rect.width() - pen.width(), m_rect.y() + m_rect.height() - pen.width());
+	painter.drawLine (m_rect.x () + pen.width (), m_rect.y () + m_rect.height () - pen.width (), m_rect.x () + m_rect.width () - pen.width (), m_rect.y () + m_rect.height () - pen.width ());
+	painter.drawLine (m_rect.x () + m_rect.width () - pen.width (), m_rect.y () + pen.width (), m_rect.x () + m_rect.width () - pen.width (), m_rect.y () + m_rect.height () - pen.width ());
 
 	//Rect
-	pen.setBrush(Qt::black);
-	painter.setPen(pen);
-	m_rect.setWidth(m_rect.width() - pen.width() * 2);
-	m_rect.setHeight(m_rect.height() - pen.width() * 2);
-	painter.drawRect(m_rect);
+	pen.setBrush (Qt::black);
+	painter.setPen (pen);
+	m_rect.setWidth (m_rect.width () - pen.width () * 2);
+	m_rect.setHeight (m_rect.height () - pen.width () * 2);
+	painter.drawRect (m_rect);
 
-	pen.setWidth(1);
-	painter.setPen(pen);
+	pen.setWidth (1);
+	painter.setPen (pen);
 
 	if (m_type == In) {
 		for (int i = 0; i < 6; i++) {
-			painter.drawLine(labels [i]->x() + labels [i]->width(), labels [i]->y() + labels [i]->height() / 2,
-							 width (), labels [i]->y() + labels [i]->height() / 2);
+			painter.drawLine (labels [i]->x () + labels [i]->width (), labels [i]->y () + labels [i]->height () / 2,
+							 width (), labels [i]->y () + labels [i]->height () / 2);
 		}
 	}
 }
 
-bool InOutWidget::eventFilter(QObject *o, QEvent *ev)
+bool InOutWidget::eventFilter (QObject *o, QEvent *ev)
 {
 	if (m_type == In) {
-		if (ev->type() == QEvent::MouseButtonDblClick) {
+		if (ev->type () == QEvent::MouseButtonDblClick) {
 			QLabel *label = qobject_cast<QLabel*> (o);
-			actionChangeValue->setParent(label);
-			actionChangeValue->trigger();
+			actionChangeValue->setParent (label);
+			actionChangeValue->trigger ();
 		}
 
-		if (ev->type() == QEvent::ContextMenu) {
+		if (ev->type () == QEvent::ContextMenu) {
 			QContextMenuEvent *contextEvent = static_cast<QContextMenuEvent*> (ev);
 			QLabel *label = qobject_cast<QLabel*> (o);
 			QMenu menu;
-			actionChangeValue->setParent(label);
-			menu.addAction(actionChangeValue);
-			menu.exec(label->mapToGlobal(contextEvent->pos()));
+			actionChangeValue->setParent (label);
+			menu.addAction (actionChangeValue);
+			menu.exec (label->mapToGlobal (contextEvent->pos ()));
 		}
 	}
 
-	return QWidget::eventFilter(0, ev);
+	return QWidget::eventFilter (0, ev);
 }
 
 void InOutWidget::changeValue ()
@@ -141,17 +141,17 @@ void InOutWidget::changeValue ()
 	if (!action)
 		return;
 
-	QLabel *label = qobject_cast<QLabel*> (action->parent());
+	QLabel *label = qobject_cast<QLabel*> (action->parent ());
 	if (label) {
-		const int index = labels.indexOf(label);
+		const int index = labels.indexOf (label);
 
 		InputDialog d (this);
-		d.setValue(m_values [index]);
+		d.setValue (m_values [index]);
 
-		if (d.exec()) {
-			m_values [index] = d.value();
+		if (d.exec ()) {
+			m_values [index] = d.value ();
 
-			QString text = "<p>  " + Operations::binToString (d.value()) + "  </p>";
+			QString text = "<p>  " + Operations::binToString (d.value ()) + "  </p>";
 			text = text.replace ("-1", "<span style=\"text-decoration: overline\">1</span>");
 			label->setText (text);
 			label->setToolTip (text);

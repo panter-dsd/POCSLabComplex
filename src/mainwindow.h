@@ -43,17 +43,17 @@ private:
 	QAction *actionAddMicrocircuit;
 
 public:
-	MainWindow(QWidget* parent = 0, Qt::WFlags f = 0);
-	~MainWindow();
+	MainWindow (QWidget* parent = 0, Qt::WFlags f = 0);
+	~MainWindow ();
 
 private:
-	void retranslateStrings();
+	void retranslateStrings ();
 
 protected:
-	bool event(QEvent *ev);
+	bool event (QEvent *ev);
 
 private Q_SLOTS:
-	void addMicrocircuit();
+	void addMicrocircuit ();
 };
 
 #endif // MAINWINDOW_H

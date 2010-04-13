@@ -52,12 +52,12 @@ public:
 	virtual ~InOutWidget ()
 	{}
 private:
-	void retranslateStrings();
+	void retranslateStrings ();
 
 protected:
-	void paintEvent(QPaintEvent *ev);
-	bool eventFilter(QObject *o, QEvent *ev);
-	bool event(QEvent *ev);
+	void paintEvent (QPaintEvent *ev);
+	bool eventFilter (QObject *o, QEvent *ev);
+	bool event (QEvent *ev);
 
 private Q_SLOTS:
 	void changeValue ();

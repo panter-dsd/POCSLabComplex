@@ -38,18 +38,18 @@ private:
 	QByteArray m_secondValue;
 
 public:
-	Operations()
+	Operations ()
 	{}
-	virtual ~Operations()
+	virtual ~Operations ()
 	{}
 
-	QByteArray firstValue()
+	QByteArray firstValue ()
 	{ return m_firstValue; }
-	void setFirstValue(const QByteArray& value);
+	void setFirstValue (const QByteArray& value);
 
-	QByteArray secondValue()
+	QByteArray secondValue ()
 	{ return m_secondValue; }
-	void setsecondValue(const QByteArray& value);
+	void setsecondValue (const QByteArray& value);
 
 	static QByteArray decToBin (double dec, int decimals);
 	static QByteArray dizssFromChanels (const QByteArray& positiveChanel, const QByteArray& negativeChanel);

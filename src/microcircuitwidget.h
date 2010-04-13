@@ -54,10 +54,10 @@ public:
 	{}
 
 protected:
-	bool event(QEvent *ev);
+	bool event (QEvent *ev);
 
 private:
-	void retranslateStrings();
+	void retranslateStrings ();
 
 private Q_SLOTS:
 	void microprocessorNameChanged (const QString& name);

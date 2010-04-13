@@ -32,13 +32,13 @@ class Mb1Block : public AbstractBlock
 	Q_OBJECT
 
 public:
-	Mb1Block(const QString& caption = 0, QWidget *parent = 0);
+	Mb1Block (const QString& caption = 0, QWidget *parent = 0);
 
 private:
-	void updateToolTip();
+	void updateToolTip ();
 
 public Q_SLOTS:
-	void chooseOperation();
+	void chooseOperation ();
 };
 
 #endif // MB1BLOCK_H

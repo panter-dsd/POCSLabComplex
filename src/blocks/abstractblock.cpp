@@ -30,15 +30,15 @@
 
 #include "abstractblock.h"
 
-AbstractBlock::AbstractBlock(const QString& caption, QWidget *parent)
-	: QWidget(parent), m_caption(caption), m_isModule(false), m_operation(-1)
+AbstractBlock::AbstractBlock (const QString& caption, QWidget *parent)
+	: QWidget (parent), m_caption (caption), m_isModule (false), m_operation (-1)
 {
 	actionChooseOperation = new QAction (this);
-	connect (actionChooseOperation, SIGNAL(triggered()), this, SLOT(chooseOperation()));
-	addAction(actionChooseOperation);
+	connect (actionChooseOperation, SIGNAL (triggered ()), this, SLOT (chooseOperation ()));
+	addAction (actionChooseOperation);
 
-	setContextMenuPolicy(Qt::ActionsContextMenu);
-	updateToolTip();
+	setContextMenuPolicy (Qt::ActionsContextMenu);
+	updateToolTip ();
 	retranslateStrings ();
 }
 
@@ -47,78 +47,78 @@ void AbstractBlock::retranslateStrings ()
 	actionChooseOperation->setText (tr ("Choose operation"));
 }
 
-void AbstractBlock::paintEvent(QPaintEvent */*ev*/)
+void AbstractBlock::paintEvent (QPaintEvent */*ev*/)
 {
-	QPainter painter(this);
+	QPainter painter (this);
 
 	QPen pen;
-	pen.setStyle(Qt::SolidLine);
-	pen.setBrush(Qt::darkGray);
-	pen.setWidth(5);
-	painter.setPen(pen);
+	pen.setStyle (Qt::SolidLine);
+	pen.setBrush (Qt::darkGray);
+	pen.setWidth (5);
+	painter.setPen (pen);
 
-	QRect m_rect(rect().x(), rect().top(), rect().width(), rect().height());
+	QRect m_rect (rect ().x (), rect ().top (), rect ().width (), rect ().height ());
 
 	//Shadow
-	painter.drawLine(m_rect.x() + pen.width(), m_rect.y() + m_rect.height(), m_rect.x() + m_rect.width(), m_rect.y() + m_rect.height());
-	painter.drawLine(m_rect.x() + m_rect.width(), m_rect.y() + pen.width(), m_rect.x() + m_rect.width(), m_rect.y() + m_rect.height() - pen.width());
+	painter.drawLine (m_rect.x () + pen.width (), m_rect.y () + m_rect.height (), m_rect.x () + m_rect.width (), m_rect.y () + m_rect.height ());
+	painter.drawLine (m_rect.x () + m_rect.width (), m_rect.y () + pen.width (), m_rect.x () + m_rect.width (), m_rect.y () + m_rect.height () - pen.width ());
 
 	//Rect
-	pen.setBrush(Qt::black);
-	painter.setPen(pen);
-	m_rect.setWidth(m_rect.width() - pen.width());
-	m_rect.setHeight(m_rect.height() - pen.width());
-	painter.drawRect(m_rect);
+	pen.setBrush (Qt::black);
+	painter.setPen (pen);
+	m_rect.setWidth (m_rect.width () - pen.width ());
+	m_rect.setHeight (m_rect.height () - pen.width ());
+	painter.drawRect (m_rect);
 
 	//Fill rect
-	m_rect.setX(m_rect.x() + pen.width() / 2);
-	m_rect.setY(m_rect.y() + pen.width() / 2);
+	m_rect.setX (m_rect.x () + pen.width () / 2);
+	m_rect.setY (m_rect.y () + pen.width () / 2);
 
 	if (m_operation < 0)
-		painter.fillRect(m_rect, Qt::red);
+		painter.fillRect (m_rect, Qt::red);
 	else
-		painter.fillRect(m_rect, Qt::green);
+		painter.fillRect (m_rect, Qt::green);
 
 	//
-	QPen smallPen(pen);
-	smallPen.setWidth(1);
-	painter.setPen(smallPen);
-	painter.drawLine(rect().x() + rect().width() - pen.width(), rect().y() + rect().height() / 3, rect().x() + rect().width(), rect().y() + rect().height() / 3);
-	painter.drawLine(rect().x() + rect().width() - pen.width(), rect().y() + rect().height() / 3 * 2, rect().x() + rect().width(), rect().y() + rect().height() / 3 * 2);
+	QPen smallPen (pen);
+	smallPen.setWidth (1);
+	painter.setPen (smallPen);
+	painter.drawLine (rect ().x () + rect ().width () - pen.width (), rect ().y () + rect ().height () / 3, rect ().x () + rect ().width (), rect ().y () + rect ().height () / 3);
+	painter.drawLine (rect ().x () + rect ().width () - pen.width (), rect ().y () + rect ().height () / 3 * 2, rect ().x () + rect ().width (), rect ().y () + rect ().height () / 3 * 2);
 
 	//Caption
-	QFont m_font(font());
-	m_font.setBold(true);
-	m_font.setUnderline(true);
-	painter.setFont(m_font);
+	QFont m_font (font ());
+	m_font.setBold (true);
+	m_font.setUnderline (true);
+	painter.setFont (m_font);
 
-	painter.drawText(m_rect.width() / 2 - fontMetrics().width(m_caption) / 2,
-					 m_rect.height() / 2 + fontMetrics().height() / 2, m_caption);
+	painter.drawText (m_rect.width () / 2 - fontMetrics ().width (m_caption) / 2,
+					 m_rect.height () / 2 + fontMetrics ().height () / 2, m_caption);
 }
 
-void AbstractBlock::setFirstValue(const QByteArray& value)
+void AbstractBlock::setFirstValue (const QByteArray& value)
 {
 	m_firstValue = value;
 }
 
-void AbstractBlock::setSecondValue(const QByteArray& value)
+void AbstractBlock::setSecondValue (const QByteArray& value)
 {
 	m_secondValue = value;
 }
 
-void AbstractBlock::updateToolTip()
+void AbstractBlock::updateToolTip ()
 {
-	setToolTip("<h2 align=center><u>" + m_caption + "</u></h2>");
+	setToolTip ("<h2 align=center><u>" + m_caption + "</u></h2>");
 }
 
-bool AbstractBlock::event(QEvent *ev)
+bool AbstractBlock::event (QEvent *ev)
 {
-	if (ev->type() == QEvent::MouseButtonDblClick) {
-		chooseOperation();
+	if (ev->type () == QEvent::MouseButtonDblClick) {
+		chooseOperation ();
 	}
-	if (ev->type() == QEvent::LanguageChange) {
+	if (ev->type () == QEvent::LanguageChange) {
 		retranslateStrings ();
 	}
 
-	return QWidget::event(ev);
+	return QWidget::event (ev);
 }

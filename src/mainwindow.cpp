@@ -34,73 +34,73 @@
 #include "mainwindow.h"
 #include "microcircuitwidget.h"
 
-MainWindow::MainWindow(QWidget* parent, Qt::WFlags f)
-		: QMainWindow(parent, f)
+MainWindow::MainWindow (QWidget* parent, Qt::WFlags f)
+		: QMainWindow (parent, f)
 {
-	resize(800, 600);
+	resize (800, 600);
 
-	QWidget *centralWidget = new QWidget(this);
-	setCentralWidget(centralWidget);
+	QWidget *centralWidget = new QWidget (this);
+	setCentralWidget (centralWidget);
 
 	//Set font for centralWidget
-	QFont m_font(centralWidget->font());
-	m_font.setFamily("Courier");
-	m_font.setPointSize(8);
-	centralWidget->setFont(m_font);
+	QFont m_font (centralWidget->font ());
+	m_font.setFamily ("Courier");
+	m_font.setPointSize (8);
+	centralWidget->setFont (m_font);
 
-	QVBoxLayout *mainLayout = new QVBoxLayout();
-	mainLayout->addSpacerItem(new QSpacerItem (0, 0, QSizePolicy::Preferred, QSizePolicy::Expanding));
-	centralWidget->setLayout(mainLayout);
+	QVBoxLayout *mainLayout = new QVBoxLayout ();
+	mainLayout->addSpacerItem (new QSpacerItem (0, 0, QSizePolicy::Preferred, QSizePolicy::Expanding));
+	centralWidget->setLayout (mainLayout);
 
-	actionAddMicrocircuit = new QAction(this);
-	connect(actionAddMicrocircuit, SIGNAL(triggered()), this, SLOT(addMicrocircuit()));
+	actionAddMicrocircuit = new QAction (this);
+	connect (actionAddMicrocircuit, SIGNAL (triggered ()), this, SLOT (addMicrocircuit ()));
 
-	QMenuBar *mainMenu = new QMenuBar(this);
-	setMenuBar(mainMenu);
+	QMenuBar *mainMenu = new QMenuBar (this);
+	setMenuBar (mainMenu);
 
-	fileMenu = new QMenu(this);
-	fileMenu->addAction(actionAddMicrocircuit);
-	mainMenu->addMenu(fileMenu);
+	fileMenu = new QMenu (this);
+	fileMenu->addAction (actionAddMicrocircuit);
+	mainMenu->addMenu (fileMenu);
 
-	retranslateStrings();
+	retranslateStrings ();
 }
 
-MainWindow::~MainWindow()
+MainWindow::~MainWindow ()
 {
 
 }
 
-void MainWindow::retranslateStrings()
+void MainWindow::retranslateStrings ()
 {
-	fileMenu->setTitle(tr("File"));
+	fileMenu->setTitle (tr ("File"));
 
-	actionAddMicrocircuit->setText(tr("Add microprocessor"));
+	actionAddMicrocircuit->setText (tr ("Add microprocessor"));
 }
 
-bool MainWindow::event(QEvent *ev)
+bool MainWindow::event (QEvent *ev)
 {
-	if (ev->type() == QEvent::LanguageChange) {
-		retranslateStrings();
+	if (ev->type () == QEvent::LanguageChange) {
+		retranslateStrings ();
 	}
 
-	return QMainWindow::event(ev);
+	return QMainWindow::event (ev);
 }
 
-void MainWindow::addMicrocircuit()
+void MainWindow::addMicrocircuit ()
 {
-	if (microciruits.size() >= 4)
+	if (microciruits.size () >= 4)
 		return;
 
-	QVBoxLayout *layout = qobject_cast<QVBoxLayout*> (centralWidget()->layout());
+	QVBoxLayout *layout = qobject_cast<QVBoxLayout*> (centralWidget ()->layout ());
 
 	Q_ASSERT (layout != 0);
 
 	MicrocircuitWidget *w = new MicrocircuitWidget (this);
-	//w->setAdjustingWord(0b0000001001010001);
+	//w->setAdjustingWord (0b0000001001010001);
 
-	layout->insertWidget(microciruits.size(), w);
-	microciruits.append(w);
+	layout->insertWidget (microciruits.size (), w);
+	microciruits.append (w);
 
-	QApplication::processEvents();
-	w->adjustSize();
+	QApplication::processEvents ();
+	w->adjustSize ();
 }

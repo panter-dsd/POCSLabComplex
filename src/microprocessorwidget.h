@@ -60,38 +60,38 @@ private:
 	QString m_name;
 
 public:
-	MicroprocessorWidget(QWidget *parent);
-	virtual ~MicroprocessorWidget()
+	MicroprocessorWidget (QWidget *parent);
+	virtual ~MicroprocessorWidget ()
 	{}
 
-	qint16 adjustingWord() const
+	qint16 adjustingWord () const
 	{ return m_adjustingWord; }
-	void setAdjustingWord(qint16 m_adjustingWord);
+	void setAdjustingWord (qint16 m_adjustingWord);
 
 	QString name ()
 	{ return m_name; }
 
 protected:
-	void paintEvent(QPaintEvent *ev);
-	void resizeEvent(QResizeEvent *ev);
-	void updateWidgets();
+	void paintEvent (QPaintEvent *ev);
+	void resizeEvent (QResizeEvent *ev);
+	void updateWidgets ();
 
 private:
-	void paint_0(QPaintEvent *ev, QPainter *painter);
-	void resize_0();
-	void paint_1(QPaintEvent *ev, QPainter *painter);
-	void resize_1();
-	void paint_2(QPaintEvent *ev, QPainter *painter);
-	void resize_2();
-	void retranslateStrings();
+	void paint_0 (QPaintEvent *ev, QPainter *painter);
+	void resize_0 ();
+	void paint_1 (QPaintEvent *ev, QPainter *painter);
+	void resize_1 ();
+	void paint_2 (QPaintEvent *ev, QPainter *painter);
+	void resize_2 ();
+	void retranslateStrings ();
 	void setCaptions ();
 
 protected:
-	bool event(QEvent *ev);
+	bool event (QEvent *ev);
 
 private Q_SLOTS:
-	void chooseScheme();
-	void updateAdjustingWorld();
+	void chooseScheme ();
+	void updateAdjustingWorld ();
 
 Q_SIGNALS:
 	void nameChanged (const QString& name);

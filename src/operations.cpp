@@ -26,12 +26,12 @@
 
 #include "operations.h"
 
-void Operations::setFirstValue(const QByteArray& value)
+void Operations::setFirstValue (const QByteArray& value)
 {
 	m_firstValue = value;
 }
 
-void Operations::setsecondValue(const QByteArray& value)
+void Operations::setsecondValue (const QByteArray& value)
 {
 	m_secondValue = value;
 }
@@ -44,10 +44,10 @@ QByteArray Operations::decToBin (double dec, int decimals)
 		dec *= 2;
 
 		if (dec >= 1) {
-			value.append('1');
+			value.append ('1');
 			dec -= 1;
 		} else {
-			value.append('0');
+			value.append ('0');
 		}
 	}
 	return value;
@@ -58,15 +58,15 @@ QByteArray Operations::dizssFromChanels (const QByteArray& positiveChanel, const
 	QByteArray value;
 
 	{
-		const int size = positiveChanel.size() > negativeChanel.size() ? positiveChanel.size() : negativeChanel.size();
-		value.fill((char) 0, size);
+		const int size = positiveChanel.size () > negativeChanel.size () ? positiveChanel.size () : negativeChanel.size ();
+		value.fill ((char) 0, size);
 	}
 
-	for (int i = 0, size = positiveChanel.size(); i < size; i++) {
+	for (int i = 0, size = positiveChanel.size (); i < size; i++) {
 		value [i] = positiveChanel [i];
 	}
 
-	for (int i = 0, size = negativeChanel.size(); i < size; i++) {
+	for (int i = 0, size = negativeChanel.size (); i < size; i++) {
 		if (negativeChanel [i] == (char) 1) {
 			if (value [i] == (char) 1)
 				return QByteArray ();
@@ -78,14 +78,14 @@ QByteArray Operations::dizssFromChanels (const QByteArray& positiveChanel, const
 			}
 		}
 	}
-	return value.size() > 2 ? value : QByteArray ();
+	return value.size () > 2 ? value : QByteArray ();
 }
 
 QString Operations::binToString (const QByteArray& bin)
 {
 	QString out;
 
-	for (int i = 0, size = bin.size(); i < size; i++) {
+	for (int i = 0, size = bin.size (); i < size; i++) {
 		switch (bin [i]) {
 			case -1: out += "-1"; break;
 			case 0: out += "0"; break;
@@ -101,7 +101,7 @@ QByteArray Operations::stringToBin (const QString& string)
 	QByteArray out;
 
 	bool isMinus = false;
-	for (int i = 0, size = string.size(); i < size; i++) {
+	for (int i = 0, size = string.size (); i < size; i++) {
 		if (string [i] == '-') {
 			isMinus = true;
 			continue;
