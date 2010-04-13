@@ -54,6 +54,8 @@ private:
 	qint16 m_adjustingWord;
 	QPoint inputPoints [6];
 	QPoint outputPoints [6];
+	QString inputCaptions [6];
+	QString outputCaptions [6];
 
 	QString m_name;
 
@@ -82,6 +84,7 @@ private:
 	void paint_2(QPaintEvent *ev, QPainter *painter);
 	void resize_2();
 	void retranslateStrings();
+	void setCaptions ();
 
 protected:
 	bool event(QEvent *ev);
