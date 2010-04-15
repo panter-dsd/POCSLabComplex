@@ -85,6 +85,10 @@ private:
 	void resize_2 ();
 	void paint_4 (QPaintEvent *ev, QPainter *painter);
 	void resize_4 ();
+	void paint_5 (QPaintEvent *ev, QPainter *painter);
+	void resize_5 ();
+	void paint_6 (QPaintEvent *ev, QPainter *painter);
+	void resize_6 ();
 	void retranslateStrings ();
 	void setCaptions ();
 
