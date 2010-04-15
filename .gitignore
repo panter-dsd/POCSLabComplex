@@ -13,3 +13,4 @@ qdevelop-settings.db
 archives/*
 updates/*
 *.qm
+*.*#
