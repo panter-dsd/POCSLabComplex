@@ -40,6 +40,27 @@ class MicroprocessorWidget : public QWidget
 {
 	Q_OBJECT
 
+public:
+	enum Inputs {
+		Input_0 = 0,
+		Input_1,
+		Input_2,
+		Input_3,
+		Input_4,
+		Input_5,
+		CountInputs
+	};
+	enum Outputs {
+		Output_0 = 0,
+		Output_1,
+		Output_2,
+		Output_3,
+		Output_4,
+		Output_5,
+		CountOutputs
+	};
+
+
 private:
 	Alb1Block *alb1;
 	Alb2Block *alb2;
@@ -52,10 +73,10 @@ private:
 	QRect m_workRect;
 	char m_scheme;
 	qint16 m_adjustingWord;
-	QPoint inputPoints [6];
-	QPoint outputPoints [6];
-	QString inputCaptions [6];
-	QString outputCaptions [6];
+	QPoint inputPoints [CountInputs];
+	QPoint outputPoints [CountOutputs];
+	QString inputCaptions [CountInputs];
+	QString outputCaptions [CountOutputs];
 
 	QString m_name;
 
