@@ -61,6 +61,7 @@ private:
 
 private Q_SLOTS:
 	void microprocessorNameChanged (const QString& name);
+	void microprocessorSchemeChanged ();
 };
 
 #endif //MICROCIRCUITWIDGET_H

@@ -56,6 +56,7 @@ MicrocircuitWidget::MicrocircuitWidget (QWidget *parent)
 	microprocessor = new MicroprocessorWidget (this);
 	microprocessorLabel->setText (microprocessor->name ());
 	connect (microprocessor, SIGNAL (nameChanged (QString)), this, SLOT (microprocessorNameChanged (QString)));
+	connect (microprocessor, SIGNAL (schemeChanged ()), this, SLOT (microprocessorSchemeChanged ()));
 
 	outputSwitchboard = new SwitchboardWidget (this);
 
@@ -100,4 +101,9 @@ bool MicrocircuitWidget::event (QEvent *ev)
 void MicrocircuitWidget::microprocessorNameChanged (const QString& name)
 {
 	microprocessorLabel->setText (name);
+}
+
+void MicrocircuitWidget::microprocessorSchemeChanged ()
+{
+	inputInOut->setCount (microprocessor->inputsCount ());
 }
