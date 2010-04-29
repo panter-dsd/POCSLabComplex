@@ -786,6 +786,7 @@ void MicroprocessorWidget::chooseScheme ()
 	if (ok && !scheme.isEmpty ()) {
 		m_scheme = scheme.toInt ();
 		updateWidgets ();
+		emit schemeChanged ();
 		resizeEvent (0);
 		updateAdjustingWorld ();
 	}
@@ -840,6 +841,7 @@ void MicroprocessorWidget::setAdjustingWord (qint16 adjustingWord)
 	alb1->setOperation (char (m_adjustingWord & 0b0000000000000111));
 
 	updateWidgets ();
+	emit schemeChanged ();
 	resizeEvent (0);
 }
 
@@ -917,4 +919,26 @@ void MicroprocessorWidget::setCaptions ()
 		inputCaptions [Input_4] = "";
 		inputCaptions [Input_5] = "";
 	}
+}
+
+int MicroprocessorWidget::inputsCount () const
+{
+	int count = 0;
+	for (int i = 0; i < CountInputs; i++) {
+		if (!inputCaptions [i].isEmpty ()) {
+			count++;
+		}
+	}
+	return count;
+}
+
+int MicroprocessorWidget::outputsCount () const
+{
+	int count = 0;
+	for (int i = 0; i < CountOutputs; i++) {
+		if (!outputCaptions [i].isEmpty ()) {
+			count++;
+		}
+	}
+	return count;
 }

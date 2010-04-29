@@ -92,6 +92,9 @@ public:
 	QString name ()
 	{ return m_name; }
 
+	int inputsCount () const;
+	int outputsCount () const;
+
 protected:
 	void paintEvent (QPaintEvent *ev);
 	void resizeEvent (QResizeEvent *ev);
@@ -122,6 +125,7 @@ private Q_SLOTS:
 
 Q_SIGNALS:
 	void nameChanged (const QString& name);
+	void schemeChanged ();
 };
 
 #endif //MICROPROCESSORWIDGET_H
