@@ -44,6 +44,7 @@ private:
 	QByteArray m_values[6];
 	QList<QLabel*> labels;
 	int m_lastIndex;
+	int m_count;
 
 	QAction *actionChangeValue;
 
@@ -51,6 +52,14 @@ public:
 	InOutWidget (Type type, QWidget *parent = 0);
 	virtual ~InOutWidget ()
 	{}
+
+	void setCount (int count);
+
+	QByteArray value (int index) const
+	{ return m_values [index]; }
+
+	bool isValid () const;
+
 private:
 	void retranslateStrings ();
 

@@ -60,6 +60,7 @@ InOutWidget::InOutWidget (Type type, QWidget *parent)
 		labels.append (label);
 	}
 	setLayout (mainLayout);
+	setCount (0);
 
 	retranslateStrings ();
 }
@@ -118,17 +119,21 @@ bool InOutWidget::eventFilter (QObject *o, QEvent *ev)
 	if (m_type == In) {
 		if (ev->type () == QEvent::MouseButtonDblClick) {
 			QLabel *label = qobject_cast<QLabel*> (o);
-			actionChangeValue->setParent (label);
-			actionChangeValue->trigger ();
+			if (label->isEnabled ()) {
+				actionChangeValue->setParent (label);
+				actionChangeValue->trigger ();
+			}
 		}
 
 		if (ev->type () == QEvent::ContextMenu) {
 			QContextMenuEvent *contextEvent = static_cast<QContextMenuEvent*> (ev);
 			QLabel *label = qobject_cast<QLabel*> (o);
 			QMenu menu;
-			actionChangeValue->setParent (label);
-			menu.addAction (actionChangeValue);
-			menu.exec (label->mapToGlobal (contextEvent->pos ()));
+			if (label->isEnabled ()) {
+				actionChangeValue->setParent (label);
+				menu.addAction (actionChangeValue);
+				menu.exec (label->mapToGlobal (contextEvent->pos ()));
+			}
 		}
 	}
 
@@ -157,4 +162,23 @@ void InOutWidget::changeValue ()
 			label->setToolTip (text);
 		}
 	}
+}
+
+void InOutWidget::setCount (int count)
+{
+	m_count = count;
+
+	for (int i = 0; i < labels.size (); i++) {
+		labels [i]->setEnabled (i < m_count);
+	}
+}
+
+bool InOutWidget::isValid () const
+{
+	for (int i = 0; i < m_count; i++) {
+		if (m_values [i].isEmpty ()) {
+			return false;
+		}
+	}
+	return true;
 }
