@@ -75,8 +75,8 @@ private:
 	qint16 m_adjustingWord;
 	QPoint inputPoints [CountInputs];
 	QPoint outputPoints [CountOutputs];
-	QString inputCaptions [CountInputs];
-	QString outputCaptions [CountOutputs];
+	QString m_inputCaptions [CountInputs];
+	QString m_outputCaptions [CountOutputs];
 
 	QString m_name;
 
@@ -94,6 +94,9 @@ public:
 
 	int inputsCount () const;
 	int outputsCount () const;
+
+	QStringList inputCaptions () const;
+	QStringList outputCaptions () const;
 
 protected:
 	void paintEvent (QPaintEvent *ev);

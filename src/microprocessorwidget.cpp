@@ -187,7 +187,7 @@ void MicroprocessorWidget::paintEvent (QPaintEvent *ev)
 		outputPoints [i].setX (m_workRect.x () + m_workRect.width ());
 		outputPoints [i].setY (m_workRect.y () + m_workRect.height () / 6 * i + m_workRect.height () / 6 / 2);
 
-		if (!inputCaptions [i].isEmpty ()) {
+		if (!m_inputCaptions [i].isEmpty ()) {
 			painter.drawLine (rect ().x (), m_workRect.y () + m_workRect.height () / 6 * i + m_workRect.height () / 6 / 2,
 							 m_workRect.x (), m_workRect.y () + m_workRect.height () / 6 * i + m_workRect.height () / 6 / 2);
 		}
@@ -202,7 +202,7 @@ void MicroprocessorWidget::paintEvent (QPaintEvent *ev)
 
 	const int xPos = m_workRect.x () - penWidth - painter.fontMetrics ().width ("WW");
 	for (int i = 0; i < 6; i++) {
-		painter.drawText (xPos, inputPoints [i].y () - 1, inputCaptions [i]);;
+		painter.drawText (xPos, inputPoints [i].y () - 1, m_inputCaptions [i]);;
 	}
 	
 	switch (m_scheme) {
@@ -864,60 +864,60 @@ void MicroprocessorWidget::setCaptions ()
 {
 	switch (m_scheme) {
 	case 0:
-		inputCaptions [Input_0] = "A0";
-		inputCaptions [Input_1] = "A1";
-		inputCaptions [Input_2] = "A2";
-		inputCaptions [Input_3] = "A3";
-		inputCaptions [Input_4] = "A4";
-		inputCaptions [Input_5] = "A5";
+		m_inputCaptions [Input_0] = "A0";
+		m_inputCaptions [Input_1] = "A1";
+		m_inputCaptions [Input_2] = "A2";
+		m_inputCaptions [Input_3] = "A3";
+		m_inputCaptions [Input_4] = "A4";
+		m_inputCaptions [Input_5] = "A5";
 		break;
 	case 1:
-		inputCaptions [Input_0] = "A0";
-		inputCaptions [Input_1] = "A1";
-		inputCaptions [Input_2] = "A2";
-		inputCaptions [Input_3] = "A3";
-		inputCaptions [Input_4] = "A4";
-		inputCaptions [Input_5] = "";
+		m_inputCaptions [Input_0] = "A0";
+		m_inputCaptions [Input_1] = "A1";
+		m_inputCaptions [Input_2] = "A2";
+		m_inputCaptions [Input_3] = "A3";
+		m_inputCaptions [Input_4] = "A4";
+		m_inputCaptions [Input_5] = "";
 		break;
 	case 2:
-		inputCaptions [Input_0] = "A0";
-		inputCaptions [Input_1] = "A1";
-		inputCaptions [Input_2] = "A2";
-		inputCaptions [Input_3] = "A3";
-		inputCaptions [Input_4] = "A4";
-		inputCaptions [Input_5] = "A5";
+		m_inputCaptions [Input_0] = "A0";
+		m_inputCaptions [Input_1] = "A1";
+		m_inputCaptions [Input_2] = "A2";
+		m_inputCaptions [Input_3] = "A3";
+		m_inputCaptions [Input_4] = "A4";
+		m_inputCaptions [Input_5] = "A5";
 		break;
 	case 4:
-		inputCaptions [Input_0] = "A0";
-		inputCaptions [Input_1] = "";
-		inputCaptions [Input_2] = "A2";
-		inputCaptions [Input_3] = "A3";
-		inputCaptions [Input_4] = "A4";
-		inputCaptions [Input_5] = "A1";
+		m_inputCaptions [Input_0] = "A0";
+		m_inputCaptions [Input_1] = "";
+		m_inputCaptions [Input_2] = "A2";
+		m_inputCaptions [Input_3] = "A3";
+		m_inputCaptions [Input_4] = "A4";
+		m_inputCaptions [Input_5] = "A1";
 		break;
 	case 5:
-		inputCaptions [Input_0] = "A6";
-		inputCaptions [Input_1] = "";
-		inputCaptions [Input_2] = "A2";
-		inputCaptions [Input_3] = "A0";
-		inputCaptions [Input_4] = "A4";
-		inputCaptions [Input_5] = "A1";
+		m_inputCaptions [Input_0] = "A6";
+		m_inputCaptions [Input_1] = "";
+		m_inputCaptions [Input_2] = "A2";
+		m_inputCaptions [Input_3] = "A0";
+		m_inputCaptions [Input_4] = "A4";
+		m_inputCaptions [Input_5] = "A1";
 		break;
 	case 6:
-		inputCaptions [Input_0] = "";
-		inputCaptions [Input_1] = "";
-		inputCaptions [Input_2] = "A2";
-		inputCaptions [Input_3] = "A0";
-		inputCaptions [Input_4] = "A4";
-		inputCaptions [Input_5] = "A1";
+		m_inputCaptions [Input_0] = "";
+		m_inputCaptions [Input_1] = "";
+		m_inputCaptions [Input_2] = "A2";
+		m_inputCaptions [Input_3] = "A0";
+		m_inputCaptions [Input_4] = "A4";
+		m_inputCaptions [Input_5] = "A1";
 		break;
 	default:
-		inputCaptions [Input_0] = "";
-		inputCaptions [Input_1] = "";
-		inputCaptions [Input_2] = "";
-		inputCaptions [Input_3] = "";
-		inputCaptions [Input_4] = "";
-		inputCaptions [Input_5] = "";
+		m_inputCaptions [Input_0] = "";
+		m_inputCaptions [Input_1] = "";
+		m_inputCaptions [Input_2] = "";
+		m_inputCaptions [Input_3] = "";
+		m_inputCaptions [Input_4] = "";
+		m_inputCaptions [Input_5] = "";
 	}
 }
 
@@ -925,7 +925,7 @@ int MicroprocessorWidget::inputsCount () const
 {
 	int count = 0;
 	for (int i = 0; i < CountInputs; i++) {
-		if (!inputCaptions [i].isEmpty ()) {
+		if (!m_inputCaptions [i].isEmpty ()) {
 			count++;
 		}
 	}
@@ -936,9 +936,27 @@ int MicroprocessorWidget::outputsCount () const
 {
 	int count = 0;
 	for (int i = 0; i < CountOutputs; i++) {
-		if (!outputCaptions [i].isEmpty ()) {
+		if (!m_outputCaptions [i].isEmpty ()) {
 			count++;
 		}
 	}
 	return count;
+}
+
+QStringList MicroprocessorWidget::inputCaptions () const
+{
+	QStringList l;
+	for (int i = 0; i < CountInputs; i++) {
+		l << m_inputCaptions [i];
+	}
+	return l;
+}
+
+QStringList MicroprocessorWidget::outputCaptions () const
+{
+	QStringList l;
+	for (int i = 0; i < CountOutputs; i++) {
+		l << m_outputCaptions [i];
+	}
+	return l;
 }
