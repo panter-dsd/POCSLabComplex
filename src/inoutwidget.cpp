@@ -54,7 +54,6 @@ InOutWidget::InOutWidget (Type type, QWidget *parent)
 		label->setFrameShape (QFrame::Box);
 		label->installEventFilter (this);
 		label->setContextMenuPolicy (Qt::CustomContextMenu);
-		label->setAlignment (Qt::AlignLeft | Qt::AlignBottom);
 
 		mainLayout->addWidget (label);
 		labels.append (label);
@@ -155,11 +154,7 @@ void InOutWidget::changeValue ()
 
 		if (d.exec ()) {
 			m_values [index] = d.value ();
-
-			QString text = "<p>  " + Operations::binToString (d.value ()) + "  </p>";
-			text = text.replace ("-1", "<span style=\"text-decoration: overline\">1</span>");
-			label->setText (text);
-			label->setToolTip (text);
+			updateLabelsText ();
 		}
 	}
 }
@@ -171,6 +166,7 @@ void InOutWidget::setCount (int count)
 	for (int i = 0; i < labels.size (); i++) {
 		labels [i]->setEnabled (i < m_count);
 	}
+	updateLabelsText ();
 }
 
 bool InOutWidget::isValid () const
@@ -181,4 +177,24 @@ bool InOutWidget::isValid () const
 		}
 	}
 	return true;
+}
+
+void InOutWidget::updateLabelsText ()
+{
+	for (int i = 0; i < 6; i++) {
+		if (!m_values [i].isEmpty ()) {
+			QString text = "<p> A" + QString::number (i) + " =  " + Operations::binToString (m_values [i]) + "  </p>";
+			text = text.replace ("-1", "<span style=\"text-decoration: overline\">1</span>");
+			labels [i]->setText (text);
+			labels [i]->setToolTip (text);
+			labels [i]->setAlignment (Qt::AlignLeft | Qt::AlignBottom);
+		} else {
+			labels [i]->setAlignment (Qt::AlignCenter | Qt::AlignBottom);
+			if (labels [i]->isEnabled ()) {
+				labels [i]->setText ("A" + QString::number (i));
+			} else {
+				labels [i]->setText ("X");
+			}
+		}
+	}
 }

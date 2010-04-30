@@ -70,6 +70,7 @@ protected:
 
 private Q_SLOTS:
 	void changeValue ();
+	void updateLabelsText ();
 };
 
 #endif //INOUTWIDGET_H
