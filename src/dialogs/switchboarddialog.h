@@ -22,57 +22,39 @@
 * Contact:		panter.dsd@gmail.com
 *******************************************************************/
 
-#ifndef INOUTWIDGET_H
-#define INOUTWIDGET_H
+#ifndef SWITCHBOARDDIALOG_H
+#define SWITCHBOARDDIALOG_H
 
-class QLabel;
-class QAction;
+#include <QtCore/QMap>
 
-#include <QtGui/QWidget>
+#include <QtGui/QDialog>
 
-class InOutWidget : public QWidget {
+class SwitchboardDialog : public QDialog {
 	Q_OBJECT
 
-public:
-	enum Type {
-		In = 0,
-		Out
-	};
-
 private:
-	int m_type;
-	QByteArray m_values[6];
-	QList<QLabel*> labels;
-	int m_lastIndex;
-	int m_count;
-
-	QAction *actionChangeValue;
+	QStringList m_inputCaptions;
+	QStringList m_outputCaptions;
+	QMap <int, int> m_connections;
 
 public:
-	InOutWidget (Type type, QWidget *parent = 0);
-	virtual ~InOutWidget ()
+	SwitchboardDialog (QWidget *parent = 0);
+	virtual ~SwitchboardDialog ()
 	{}
 
-	void setCount (int count);
+	void setInputCaptions (const QStringList& captions);
+	void setOutputCaptions (const QStringList& captions);
 
-	QByteArray value (int index) const
-	{ return m_values [index]; }
-
-	bool isValid () const;
-
-	QStringList outputCaptions () const;
+	QMap <int, int> connections () const
+	{ return m_connections; }
+	void setConnections (QMap <int, int> connections);
 
 private:
 	void retranslateStrings ();
 
 protected:
-	void paintEvent (QPaintEvent *ev);
-	bool eventFilter (QObject *o, QEvent *ev);
 	bool event (QEvent *ev);
-
-private Q_SLOTS:
-	void changeValue ();
-	void updateLabelsText ();
 };
 
-#endif //INOUTWIDGET_H
+
+#endif //SWITCHBOARDDIALOG_H

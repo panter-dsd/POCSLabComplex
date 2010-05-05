@@ -106,4 +106,6 @@ void MicrocircuitWidget::microprocessorNameChanged (const QString& name)
 void MicrocircuitWidget::microprocessorSchemeChanged ()
 {
 	inputInOut->setCount (microprocessor->inputsCount ());
+	inputSwitchboard->setInputCaptions(inputInOut->outputCaptions ());
+	inputSwitchboard->setOutputCaptions (microprocessor->inputCaptions ());
 }

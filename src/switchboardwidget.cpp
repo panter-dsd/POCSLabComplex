@@ -23,8 +23,10 @@
 *******************************************************************/
 
 #include <QtGui/QPainter>
+#include <QtGui/QtEvents>
 
 #include "switchboardwidget.h"
+#include "switchboarddialog.h"
 
 const int penWidth = 7;
 
@@ -71,5 +73,50 @@ void SwitchboardWidget::paintEvent (QPaintEvent *ev)
 
 		painter.drawLine (m_workRect.x () + m_workRect.width (), m_workRect.y () + m_workRect.height () / 6 * i + m_workRect.height () / 6 / 2,
 						 rect ().width (), m_workRect.y () + m_workRect.height () / 6 * i + m_workRect.height () / 6 / 2);
+	}
+
+	QMapIterator <int, int> it (m_connections);
+	while (it.hasNext ()) {
+		it.next ();
+		painter.drawLine (inputPoints [it.key ()], outputPoints  [it.value ()]);
+	}
+}
+
+void SwitchboardWidget::setInputCaptions (const QStringList& captions)
+{
+	m_inputCaptions = captions;
+}
+
+void SwitchboardWidget::setOutputCaptions (const QStringList& captions)
+{
+	m_outputCaptions = captions;
+}
+
+QByteArray SwitchboardWidget::outputValue (int index) const
+{ 
+	const int i = m_connections.key (index, -1);
+   
+	return i != -1 ? m_inputValues [i] : QByteArray (); 
+}
+
+bool SwitchboardWidget::event (QEvent *ev)
+{
+	if (ev->type () == QEvent::MouseButtonDblClick) {
+		setConnections ();
+	}
+
+	return QWidget::event (ev);
+}
+
+
+void SwitchboardWidget::setConnections ()
+{
+	SwitchboardDialog d (this);
+	d.setInputCaptions (m_inputCaptions);
+	d.setOutputCaptions (m_outputCaptions);
+	d.setConnections (m_connections);
+
+	if (d.exec ()) {
+		m_connections = d.connections ();
 	}
 }

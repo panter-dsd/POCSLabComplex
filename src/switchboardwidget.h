@@ -25,6 +25,8 @@
 #ifndef SWITCHBOARDWIDGET_H
 #define SWITCHBOARDWIDGET_H
 
+#include <QtCore/QMap>
+
 #include <QtGui/QWidget>
 
 class SwitchboardWidget : public QWidget {
@@ -33,14 +35,34 @@ class SwitchboardWidget : public QWidget {
 private:
 	QPoint inputPoints [6];
 	QPoint outputPoints [6];
+	QStringList m_inputCaptions;
+	QStringList m_outputCaptions;
+	QMap <int, int> m_connections;
+	QByteArray m_inputValues [6];
 
 public:
 	SwitchboardWidget (QWidget *parent = 0);
 	virtual ~SwitchboardWidget ()
 	{}
 
+	void setInputCaptions (const QStringList& captions);
+	void setOutputCaptions (const QStringList& captions);
+
+	void setInputValues (QByteArray values [6]) 
+	{
+		for (int i = 0; i < 6; i++) {
+			m_inputValues [i] = values [i];
+		}
+	}
+
+	QByteArray outputValue (int index) const;
+
 protected:
 	void paintEvent (QPaintEvent *ev);
+	bool event (QEvent *ev);
+
+private Q_SLOTS:
+	void setConnections ();
 };
 
 #endif //SWITCHBOARDWIDGET_H

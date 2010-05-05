@@ -198,3 +198,12 @@ void InOutWidget::updateLabelsText ()
 		}
 	}
 }
+
+QStringList InOutWidget::outputCaptions () const
+{
+	QStringList l;
+	for (int i = 0, count = labels.size (); i < count; i++) {
+		l.append (labels [i]->isEnabled () ? QString ("A%1").arg (i) : "");
+	}
+	return l;
+}
