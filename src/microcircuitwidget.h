@@ -53,6 +53,8 @@ public:
 	virtual ~MicrocircuitWidget ()
 	{}
 
+	bool isValid () const;
+
 protected:
 	bool event (QEvent *ev);
 

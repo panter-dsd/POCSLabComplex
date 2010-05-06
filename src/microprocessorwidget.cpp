@@ -1011,3 +1011,8 @@ QStringList MicroprocessorWidget::outputCaptions () const
 	}
 	return l;
 }
+
+bool MicroprocessorWidget::isValid () const
+{
+	return alb1->isValid () && alb2->isValid () && alb3->isValid () && mb1->isValid () && mb2->isValid ();
+}

@@ -138,3 +138,13 @@ void SwitchboardWidget::setConnections ()
 		m_connections = d.connections ();
 	}
 }
+
+bool SwitchboardWidget::isValid () const
+{
+	for (int i = 0; i < m_inputCaptions.size (); i++) {
+		if (!m_inputCaptions.at (i).isEmpty () && !m_connections.contains (i)) {
+			return false;
+		}
+	}
+	return true;
+}

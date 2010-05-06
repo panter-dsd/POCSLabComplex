@@ -61,6 +61,8 @@ public:
 
 	QByteArray outputValue (int index) const;
 
+	bool isValid () const;
+
 private:
 	void retranslateStrings ();
 

@@ -98,6 +98,8 @@ public:
 	QStringList inputCaptions () const;
 	QStringList outputCaptions () const;
 
+	bool isValid () const;
+
 protected:
 	void paintEvent (QPaintEvent *ev);
 	void resizeEvent (QResizeEvent *ev);

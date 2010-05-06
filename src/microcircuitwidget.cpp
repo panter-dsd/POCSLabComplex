@@ -112,3 +112,8 @@ void MicrocircuitWidget::microprocessorSchemeChanged ()
 	inputSwitchboard->setOutputCaptions (microprocessor->inputCaptions ());
 	outputInOut->setInputCaptions (microprocessor->outputCaptions ());
 }
+
+bool MicrocircuitWidget::isValid () const
+{
+	return inputInOut->isValid () && inputSwitchboard->isValid () && microprocessor->isValid ();
+}
