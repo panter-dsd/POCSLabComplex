@@ -192,8 +192,10 @@ void MicroprocessorWidget::paintEvent (QPaintEvent *ev)
 							 m_workRect.x (), m_workRect.y () + m_workRect.height () / 6 * i + m_workRect.height () / 6 / 2);
 		}
 		
-		painter.drawLine (m_workRect.x () + m_workRect.width (), m_workRect.y () + m_workRect.height () / 6 * i + m_workRect.height () / 6 / 2,
-						 rect ().width (), m_workRect.y () + m_workRect.height () / 6 * i + m_workRect.height () / 6 / 2);
+		if (!m_outputCaptions [i].isEmpty ()) {
+			painter.drawLine (m_workRect.x () + m_workRect.width (), m_workRect.y () + m_workRect.height () / 6 * i + m_workRect.height () / 6 / 2,
+							  rect ().width (), m_workRect.y () + m_workRect.height () / 6 * i + m_workRect.height () / 6 / 2);
+		}
 	}
 
 	QFont font (painter.font ());
@@ -870,6 +872,13 @@ void MicroprocessorWidget::setCaptions ()
 		m_inputCaptions [Input_3] = "A3";
 		m_inputCaptions [Input_4] = "A4";
 		m_inputCaptions [Input_5] = "A5";
+
+		m_outputCaptions [Output_0] = "Q1";
+		m_outputCaptions [Output_1] = "Q2";
+		m_outputCaptions [Output_2] = "Q5";
+		m_outputCaptions [Output_3] = "Q6";
+		m_outputCaptions [Output_4] = "";
+		m_outputCaptions [Output_5] = "Q4";
 		break;
 	case 1:
 		m_inputCaptions [Input_0] = "A0";
@@ -878,6 +887,13 @@ void MicroprocessorWidget::setCaptions ()
 		m_inputCaptions [Input_3] = "A3";
 		m_inputCaptions [Input_4] = "A4";
 		m_inputCaptions [Input_5] = "";
+
+		m_outputCaptions [Output_0] = "Q1";
+		m_outputCaptions [Output_1] = "Q2";
+		m_outputCaptions [Output_2] = "Q5";
+		m_outputCaptions [Output_3] = "Q6";
+		m_outputCaptions [Output_4] = "";
+		m_outputCaptions [Output_5] = "Q4";
 		break;
 	case 2:
 		m_inputCaptions [Input_0] = "A0";
@@ -886,6 +902,13 @@ void MicroprocessorWidget::setCaptions ()
 		m_inputCaptions [Input_3] = "A3";
 		m_inputCaptions [Input_4] = "A4";
 		m_inputCaptions [Input_5] = "A5";
+
+		m_outputCaptions [Output_0] = "";
+		m_outputCaptions [Output_1] = "Q2";
+		m_outputCaptions [Output_2] = "Q1";
+		m_outputCaptions [Output_3] = "Q5";
+		m_outputCaptions [Output_4] = "Q6";
+		m_outputCaptions [Output_5] = "Q4";
 		break;
 	case 4:
 		m_inputCaptions [Input_0] = "A0";
@@ -894,6 +917,13 @@ void MicroprocessorWidget::setCaptions ()
 		m_inputCaptions [Input_3] = "A3";
 		m_inputCaptions [Input_4] = "A4";
 		m_inputCaptions [Input_5] = "A1";
+
+		m_outputCaptions [Output_0] = "Q1";
+		m_outputCaptions [Output_1] = "";
+		m_outputCaptions [Output_2] = "Q2";
+		m_outputCaptions [Output_3] = "Q5";
+		m_outputCaptions [Output_4] = "Q6";
+		m_outputCaptions [Output_5] = "Q4";
 		break;
 	case 5:
 		m_inputCaptions [Input_0] = "A6";
@@ -902,6 +932,13 @@ void MicroprocessorWidget::setCaptions ()
 		m_inputCaptions [Input_3] = "A0";
 		m_inputCaptions [Input_4] = "A4";
 		m_inputCaptions [Input_5] = "A1";
+
+		m_outputCaptions [Output_0] = "Q1";
+		m_outputCaptions [Output_1] = "Q2";
+		m_outputCaptions [Output_2] = "Q5";
+		m_outputCaptions [Output_3] = "Q6";
+		m_outputCaptions [Output_4] = "";
+		m_outputCaptions [Output_5] = "Q4";
 		break;
 	case 6:
 		m_inputCaptions [Input_0] = "";
@@ -910,6 +947,13 @@ void MicroprocessorWidget::setCaptions ()
 		m_inputCaptions [Input_3] = "A0";
 		m_inputCaptions [Input_4] = "A4";
 		m_inputCaptions [Input_5] = "A1";
+
+		m_outputCaptions [Output_0] = "Q1";
+		m_outputCaptions [Output_1] = "";
+		m_outputCaptions [Output_2] = "Q2";
+		m_outputCaptions [Output_3] = "Q5";
+		m_outputCaptions [Output_4] = "Q6";
+		m_outputCaptions [Output_5] = "Q4";
 		break;
 	default:
 		m_inputCaptions [Input_0] = "";
@@ -918,6 +962,13 @@ void MicroprocessorWidget::setCaptions ()
 		m_inputCaptions [Input_3] = "";
 		m_inputCaptions [Input_4] = "";
 		m_inputCaptions [Input_5] = "";
+
+		m_outputCaptions [Output_0] = "";
+		m_outputCaptions [Output_1] = "";
+		m_outputCaptions [Output_2] = "";
+		m_outputCaptions [Output_3] = "";
+		m_outputCaptions [Output_4] = "";
+		m_outputCaptions [Output_5] = "";
 	}
 }
 
