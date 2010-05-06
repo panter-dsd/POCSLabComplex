@@ -43,9 +43,6 @@ MicrocircuitWidget::MicrocircuitWidget (QWidget *parent)
 	microprocessorLabel = new QLabel (this);
 	microprocessorLabel->setAlignment (Qt::AlignHCenter);
 
-	outputSwitchboardLabel = new QLabel (this);
-	outputSwitchboardLabel->setAlignment (Qt::AlignHCenter);
-
 	outputLabel = new QLabel (this);
 	outputLabel->setAlignment (Qt::AlignHCenter);
 
@@ -58,8 +55,6 @@ MicrocircuitWidget::MicrocircuitWidget (QWidget *parent)
 	connect (microprocessor, SIGNAL (nameChanged (QString)), this, SLOT (microprocessorNameChanged (QString)));
 	connect (microprocessor, SIGNAL (schemeChanged ()), this, SLOT (microprocessorSchemeChanged ()));
 
-	outputSwitchboard = new SwitchboardWidget (this);
-
 	outputInOut = new InOutWidget (InOutWidget::Out, this);
 
 	QGridLayout *mainLayout = new QGridLayout ();
@@ -68,14 +63,12 @@ MicrocircuitWidget::MicrocircuitWidget (QWidget *parent)
 	mainLayout->addWidget (inputLabel, 0, 0);
 	mainLayout->addWidget (inputSwitchboardLabel, 0, 1);
 	mainLayout->addWidget (microprocessorLabel, 0, 2);
-	mainLayout->addWidget (outputSwitchboardLabel, 0, 3);
-	mainLayout->addWidget (outputLabel, 0, 4);
+	mainLayout->addWidget (outputLabel, 0, 3);
 
 	mainLayout->addWidget (inputInOut, 1, 0);
 	mainLayout->addWidget (inputSwitchboard, 1, 1);
 	mainLayout->addWidget (microprocessor, 1, 2);
-	mainLayout->addWidget (outputSwitchboard, 1, 3);
-	mainLayout->addWidget (outputInOut, 1, 4);
+	mainLayout->addWidget (outputInOut, 1, 3);
 	setLayout (mainLayout);
 
 	retranslateStrings ();
@@ -85,7 +78,6 @@ void MicrocircuitWidget::retranslateStrings ()
 {
 	inputLabel->setText (tr ("Input"));
 	inputSwitchboardLabel->setText (tr ("Switchboard"));
-	outputSwitchboardLabel->setText (tr ("Switchboard"));
 	outputLabel->setText (tr ("Output"));
 }
 

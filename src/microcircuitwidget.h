@@ -39,13 +39,11 @@ private:
 	QLabel *inputLabel;
 	QLabel *inputSwitchboardLabel;
 	QLabel *microprocessorLabel;
-	QLabel *outputSwitchboardLabel;
 	QLabel *outputLabel;
 
 	InOutWidget *inputInOut;
 	SwitchboardWidget *inputSwitchboard;
 	MicroprocessorWidget *microprocessor;
-	SwitchboardWidget *outputSwitchboard;
 	InOutWidget *outputInOut;
 
 public:
