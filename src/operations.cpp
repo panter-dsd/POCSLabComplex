@@ -55,29 +55,45 @@ QByteArray Operations::decToBin (double dec, int decimals)
 
 QByteArray Operations::dizssFromChanels (const QByteArray& positiveChanel, const QByteArray& negativeChanel)
 {
+	QByteArray positive (positiveChanel);
+	QByteArray negative (negativeChanel);
+	for (int i = 0; i < positive.size (); i++) {
+		if (positive [i] != (char) 0 && positive [i] != (char) 1) {
+			positive.remove (i--, 1);
+		}
+	}
+	for (int i = 0; i < negative.size (); i++) {
+		if (negative [i] != (char) 0 && negative [i] != (char) 1) {
+			negative.remove (i--, 1);
+		}
+	}
+
 	QByteArray value;
 
 	{
-		const int size = positiveChanel.size () > negativeChanel.size () ? positiveChanel.size () : negativeChanel.size ();
+		const int size = positive.size () > negative.size () ? positive.size () : negative.size ();
 		value.fill ((char) 0, size);
 	}
 
-	for (int i = 0, size = positiveChanel.size (); i < size; i++) {
-		value [i] = positiveChanel [i];
+	for (int i = 0, size = positive.size (); i < size; i++) {
+		if (positive [i] == (char) 0 || positive [i] == (char) 1) {
+			value [i] = positive [i];
+		}
 	}
 
-	for (int i = 0, size = negativeChanel.size (); i < size; i++) {
-		if (negativeChanel [i] == (char) 1) {
+	for (int i = 0, size = negative.size (); i < size; i++) {
+		if (negative [i] == (char) 1) {
 			if (value [i] == (char) 1)
 				return QByteArray ();
 			else
 				value [i] = (char) -1;
 		} else {
-			if (negativeChanel [i] != (char) 0) {
-				value [i] = negativeChanel [i];
+			if (negative [i] != (char) 0) {
+				value [i] = negative [i];
 			}
 		}
 	}
+	value.insert (1, '.');
 	return value.size () > 2 ? value : QByteArray ();
 }
 
