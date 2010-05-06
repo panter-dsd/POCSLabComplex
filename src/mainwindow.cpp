@@ -30,6 +30,7 @@
 #include <QtGui/QMenuBar>
 #include <QtGui/QMenu>
 #include <QtGui/QApplication>
+#include <QtGui/QScrollArea>
 
 #include "mainwindow.h"
 #include "microcircuitwidget.h"
@@ -39,8 +40,13 @@ MainWindow::MainWindow (QWidget* parent, Qt::WFlags f)
 {
 	resize (800, 600);
 
-	QWidget *centralWidget = new QWidget (this);
-	setCentralWidget (centralWidget);
+	QScrollArea *area = new QScrollArea (this);
+	area->setWidgetResizable (true);
+	setCentralWidget (area);
+
+	centralWidget = new QWidget (this);
+	area->setWidget (centralWidget);
+	//setCentralWidget (centralWidget);
 
 	//Set font for centralWidget
 	QFont m_font (centralWidget->font ());
@@ -88,16 +94,9 @@ bool MainWindow::event (QEvent *ev)
 
 void MainWindow::addMicrocircuit ()
 {
-	QVBoxLayout *layout = qobject_cast<QVBoxLayout*> (centralWidget ()->layout ());
+	QVBoxLayout *layout = qobject_cast<QVBoxLayout*> (centralWidget->layout ());
 
 	Q_ASSERT (layout != 0);
 
-	MicrocircuitWidget *w = new MicrocircuitWidget (this);
-	//w->setAdjustingWord (0b0000001001010001);
-
-	layout->insertWidget ((findChildren<MicrocircuitWidget*> ()).size () - 1, w);
-	microciruits.append (w);
-
-	QApplication::processEvents ();
-	w->adjustSize ();
+	layout->insertWidget ((findChildren<MicrocircuitWidget*> ()).size () - 1, new MicrocircuitWidget (this));
 }

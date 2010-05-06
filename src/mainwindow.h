@@ -28,6 +28,7 @@
 class MicrocircuitWidget;
 class QAction;
 class QMenu;
+class QWidget;
 
 #include <QtGui/QMainWindow>
 
@@ -36,7 +37,7 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 
 private:
-	QList<MicrocircuitWidget*> microciruits;
+	QWidget *centralWidget;
 
 	QMenu *fileMenu;
 
