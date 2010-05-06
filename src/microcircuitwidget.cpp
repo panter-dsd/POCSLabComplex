@@ -25,6 +25,8 @@
 #include <QtGui/QGridLayout>
 #include <QtGui/QLabel>
 #include <QtGui/QtEvents>
+#include <QtGui/QToolButton>
+#include <QtGui/QStyle>
 
 #include "microcircuitwidget.h"
 #include "inoutwidget.h"
@@ -57,6 +59,11 @@ MicrocircuitWidget::MicrocircuitWidget (QWidget *parent)
 
 	outputInOut = new InOutWidget (InOutWidget::Out, this);
 
+	closeButton = new QToolButton (this);
+	closeButton->setIcon (style ()->standardIcon (QStyle::SP_TitleBarCloseButton));
+	closeButton->setAutoRaise (true);
+	connect (closeButton, SIGNAL (clicked ()), this, SLOT (deleteLater ()));
+
 	QGridLayout *mainLayout = new QGridLayout ();
 	mainLayout->setContentsMargins (0, 0, 0, 0);
 	mainLayout->setSpacing (0);
@@ -64,6 +71,7 @@ MicrocircuitWidget::MicrocircuitWidget (QWidget *parent)
 	mainLayout->addWidget (inputSwitchboardLabel, 0, 1);
 	mainLayout->addWidget (microprocessorLabel, 0, 2);
 	mainLayout->addWidget (outputLabel, 0, 3);
+	mainLayout->addWidget (closeButton, 0, 4);
 
 	mainLayout->addWidget (inputInOut, 1, 0);
 	mainLayout->addWidget (inputSwitchboard, 1, 1);
@@ -79,6 +87,8 @@ void MicrocircuitWidget::retranslateStrings ()
 	inputLabel->setText (tr ("Input"));
 	inputSwitchboardLabel->setText (tr ("Switchboard"));
 	outputLabel->setText (tr ("Output"));
+	closeButton->setText (tr ("Close"));
+	closeButton->setToolTip (tr ("Close"));
 }
 
 bool MicrocircuitWidget::event (QEvent *ev)

@@ -88,9 +88,6 @@ bool MainWindow::event (QEvent *ev)
 
 void MainWindow::addMicrocircuit ()
 {
-	if (microciruits.size () >= 4)
-		return;
-
 	QVBoxLayout *layout = qobject_cast<QVBoxLayout*> (centralWidget ()->layout ());
 
 	Q_ASSERT (layout != 0);
@@ -98,7 +95,7 @@ void MainWindow::addMicrocircuit ()
 	MicrocircuitWidget *w = new MicrocircuitWidget (this);
 	//w->setAdjustingWord (0b0000001001010001);
 
-	layout->insertWidget (microciruits.size (), w);
+	layout->insertWidget ((findChildren<MicrocircuitWidget*> ()).size () - 1, w);
 	microciruits.append (w);
 
 	QApplication::processEvents ();

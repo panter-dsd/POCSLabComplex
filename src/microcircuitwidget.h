@@ -29,6 +29,7 @@ class InOutWidget;
 class SwitchboardWidget;
 class MicroprocessorWidget;
 class QLabel;
+class QToolButton;
 
 #include <QtGui/QWidget>
 
@@ -40,6 +41,7 @@ private:
 	QLabel *inputSwitchboardLabel;
 	QLabel *microprocessorLabel;
 	QLabel *outputLabel;
+	QToolButton *closeButton;
 
 	InOutWidget *inputInOut;
 	SwitchboardWidget *inputSwitchboard;
