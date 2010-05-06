@@ -54,6 +54,7 @@ public:
 	{}
 
 	bool isValid () const;
+	void start ();
 
 protected:
 	bool event (QEvent *ev);

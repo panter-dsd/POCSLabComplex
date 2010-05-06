@@ -42,6 +42,7 @@ private:
 	QMenu *fileMenu;
 
 	QAction *actionAddMicrocircuit;
+	QAction *actionStart;
 
 public:
 	MainWindow (QWidget* parent = 0, Qt::WFlags f = 0);
@@ -55,6 +56,7 @@ protected:
 
 private Q_SLOTS:
 	void addMicrocircuit ();
+	void start ();
 };
 
 #endif // MAINWINDOW_H

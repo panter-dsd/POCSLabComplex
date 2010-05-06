@@ -117,3 +117,8 @@ bool MicrocircuitWidget::isValid () const
 {
 	return inputInOut->isValid () && inputSwitchboard->isValid () && microprocessor->isValid ();
 }
+
+void MicrocircuitWidget::start ()
+{
+
+}

@@ -31,6 +31,8 @@
 #include <QtGui/QMenu>
 #include <QtGui/QApplication>
 #include <QtGui/QScrollArea>
+#include <QtGui/QStyle>
+#include <QtGui/QMessageBox>
 
 #include "mainwindow.h"
 #include "microcircuitwidget.h"
@@ -61,11 +63,16 @@ MainWindow::MainWindow (QWidget* parent, Qt::WFlags f)
 	actionAddMicrocircuit = new QAction (this);
 	connect (actionAddMicrocircuit, SIGNAL (triggered ()), this, SLOT (addMicrocircuit ()));
 
+	actionStart = new QAction (this);
+	actionStart->setIcon (style ()->standardIcon (QStyle::SP_MediaPlay));
+	connect (actionStart, SIGNAL (triggered ()), this, SLOT (start ()));
+
 	QMenuBar *mainMenu = new QMenuBar (this);
 	setMenuBar (mainMenu);
 
 	fileMenu = new QMenu (this);
 	fileMenu->addAction (actionAddMicrocircuit);
+	fileMenu->addAction (actionStart);
 	mainMenu->addMenu (fileMenu);
 
 	retranslateStrings ();
@@ -80,7 +87,8 @@ void MainWindow::retranslateStrings ()
 {
 	fileMenu->setTitle (tr ("File"));
 
-	actionAddMicrocircuit->setText (tr ("Add microprocessor"));
+	actionAddMicrocircuit->setText (tr ("Add microcircuit"));
+	actionStart->setText (tr ("Start"));
 }
 
 bool MainWindow::event (QEvent *ev)
@@ -99,4 +107,21 @@ void MainWindow::addMicrocircuit ()
 	Q_ASSERT (layout != 0);
 
 	layout->insertWidget ((findChildren<MicrocircuitWidget*> ()).size () - 1, new MicrocircuitWidget (this));
+}
+
+void MainWindow::start ()
+{
+	QList <MicrocircuitWidget*> l = findChildren<MicrocircuitWidget*> ();
+
+	foreach (MicrocircuitWidget* w, l) {
+		if (!w->isValid ()) {
+			QMessageBox::critical (this, "", tr ("Microcircuit is not valid"));
+			return;
+		}
+	}
+
+	foreach (MicrocircuitWidget* w, l) {
+		w->start ();
+	}
+
 }
