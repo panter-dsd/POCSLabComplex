@@ -25,6 +25,12 @@
 #ifndef SWITCHBOARDDIALOG_H
 #define SWITCHBOARDDIALOG_H
 
+class QComboBox;
+class QListWidget;
+class QGroupBox;
+class QPushButton;
+class QLabel;
+
 #include <QtCore/QMap>
 
 #include <QtGui/QDialog>
@@ -37,6 +43,15 @@ private:
 	QStringList m_outputCaptions;
 	QMap <int, int> m_connections;
 
+	QGroupBox *group;
+	QLabel *inputLabel;
+	QComboBox *inputBox;
+	QLabel *outputLabel;
+	QComboBox *outputBox;
+	QPushButton *addButton;
+	QPushButton *removeButton;
+	QListWidget *switchesList;
+	
 public:
 	SwitchboardDialog (QWidget *parent = 0);
 	virtual ~SwitchboardDialog ()
@@ -51,9 +66,15 @@ public:
 
 private:
 	void retranslateStrings ();
+	void updateBoxes ();
+	void updateSwitchesList ();
 
 protected:
 	bool event (QEvent *ev);
+
+private Q_SLOTS:
+	void addSwitch ();
+	void removeSwitch ();
 };
 
 
