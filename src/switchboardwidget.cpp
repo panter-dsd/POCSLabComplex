@@ -24,6 +24,7 @@
 
 #include <QtGui/QPainter>
 #include <QtGui/QtEvents>
+#include <QtGui/QAction>
 
 #include "switchboardwidget.h"
 #include "switchboarddialog.h"
@@ -33,7 +34,13 @@ const int penWidth = 7;
 SwitchboardWidget::SwitchboardWidget (QWidget *parent)
 	: QWidget (parent)
 {
+	setContextMenuPolicy (Qt::ActionsContextMenu);
 
+	actionSetConnections = new QAction (this);
+	connect (actionSetConnections, SIGNAL (triggered ()), this, SLOT (setConnections ()));
+	addAction (actionSetConnections);
+
+	retranslateStrings ();
 }
 
 void SwitchboardWidget::paintEvent (QPaintEvent *ev)
@@ -85,11 +92,13 @@ void SwitchboardWidget::paintEvent (QPaintEvent *ev)
 void SwitchboardWidget::setInputCaptions (const QStringList& captions)
 {
 	m_inputCaptions = captions;
+	m_connections.clear ();
 }
 
 void SwitchboardWidget::setOutputCaptions (const QStringList& captions)
 {
 	m_outputCaptions = captions;
+	m_connections.clear ();
 }
 
 QByteArray SwitchboardWidget::outputValue (int index) const
@@ -99,8 +108,17 @@ QByteArray SwitchboardWidget::outputValue (int index) const
 	return i != -1 ? m_inputValues [i] : QByteArray (); 
 }
 
+void SwitchboardWidget::retranslateStrings ()
+{
+	actionSetConnections->setText (tr ("Set connections"));
+}
+
 bool SwitchboardWidget::event (QEvent *ev)
 {
+	if (ev->type () == QEvent::LanguageChange) {
+		retranslateStrings ();
+	}
+
 	if (ev->type () == QEvent::MouseButtonDblClick) {
 		setConnections ();
 	}

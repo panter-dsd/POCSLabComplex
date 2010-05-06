@@ -25,6 +25,8 @@
 #ifndef SWITCHBOARDWIDGET_H
 #define SWITCHBOARDWIDGET_H
 
+class QAction;
+
 #include <QtCore/QMap>
 
 #include <QtGui/QWidget>
@@ -39,6 +41,8 @@ private:
 	QStringList m_outputCaptions;
 	QMap <int, int> m_connections;
 	QByteArray m_inputValues [6];
+
+	QAction *actionSetConnections;
 
 public:
 	SwitchboardWidget (QWidget *parent = 0);
@@ -56,6 +60,9 @@ public:
 	}
 
 	QByteArray outputValue (int index) const;
+
+private:
+	void retranslateStrings ();
 
 protected:
 	void paintEvent (QPaintEvent *ev);
