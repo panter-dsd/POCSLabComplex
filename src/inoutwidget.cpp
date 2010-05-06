@@ -169,6 +169,15 @@ void InOutWidget::setCount (int count)
 	updateLabelsText ();
 }
 
+void InOutWidget::setInputCaptions (const QStringList& captions)
+{
+	for (int i = 0; i < 6; i++) {
+		m_captions [i] = captions.at (i);
+		labels [i]->setEnabled (!m_captions [i].isEmpty ());
+	}
+	updateLabelsText ();
+}
+
 bool InOutWidget::isValid () const
 {
 	for (int i = 0; i < m_count; i++) {
@@ -182,8 +191,9 @@ bool InOutWidget::isValid () const
 void InOutWidget::updateLabelsText ()
 {
 	for (int i = 0; i < 6; i++) {
+		const QString caption = (m_type == In ? QString("A%1").arg (i) : m_captions [i]);
 		if (!m_values [i].isEmpty ()) {
-			QString text = "<p> A" + QString::number (i) + " =  " + Operations::binToString (m_values [i]) + "  </p>";
+			QString text = "<p> " + caption + " =  " + Operations::binToString (m_values [i]) + "  </p>";
 			text = text.replace ("-1", "<span style=\"text-decoration: overline\">1</span>");
 			labels [i]->setText (text);
 			labels [i]->setToolTip (text);
@@ -191,7 +201,7 @@ void InOutWidget::updateLabelsText ()
 		} else {
 			labels [i]->setAlignment (Qt::AlignCenter | Qt::AlignBottom);
 			if (labels [i]->isEnabled ()) {
-				labels [i]->setText ("A" + QString::number (i));
+				labels [i]->setText (caption);
 			} else {
 				labels [i]->setText ("X");
 			}

@@ -100,4 +100,5 @@ void MicrocircuitWidget::microprocessorSchemeChanged ()
 	inputInOut->setCount (microprocessor->inputsCount ());
 	inputSwitchboard->setInputCaptions(inputInOut->outputCaptions ());
 	inputSwitchboard->setOutputCaptions (microprocessor->inputCaptions ());
+	outputInOut->setInputCaptions (microprocessor->outputCaptions ());
 }

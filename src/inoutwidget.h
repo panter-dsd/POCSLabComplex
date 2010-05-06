@@ -45,6 +45,7 @@ private:
 	QList<QLabel*> labels;
 	int m_lastIndex;
 	int m_count;
+	QString m_captions [6];
 
 	QAction *actionChangeValue;
 
@@ -54,6 +55,7 @@ public:
 	{}
 
 	void setCount (int count);
+	void setInputCaptions (const QStringList& captions); 
 
 	QByteArray value (int index) const
 	{ return m_values [index]; }
