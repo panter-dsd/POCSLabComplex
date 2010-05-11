@@ -23,6 +23,7 @@
 *******************************************************************/
 
 #include <QtCore/QDebug>
+#include <QtCore/QSettings>
 
 #include <QtGui/QtEvents>
 #include <QtGui/QVBoxLayout>
@@ -33,6 +34,7 @@
 #include <QtGui/QScrollArea>
 #include <QtGui/QStyle>
 #include <QtGui/QMessageBox>
+#include <QtGui/QFileDialog>
 
 #include "mainwindow.h"
 #include "microcircuitwidget.h"
@@ -68,10 +70,22 @@ MainWindow::MainWindow (QWidget* parent, Qt::WFlags f)
 	actionStart->setIcon (style ()->standardIcon (QStyle::SP_MediaPlay));
 	connect (actionStart, SIGNAL (triggered ()), this, SLOT (start ()));
 
+	actionOpen = new QAction (this);
+	actionOpen->setShortcut (QKeySequence::Open);
+	actionOpen->setIcon (style ()->standardIcon (QStyle::SP_DialogOpenButton));
+	connect (actionOpen, SIGNAL (triggered ()), this, SLOT (open ()));
+
+	actionSave = new QAction (this);
+	actionSave->setShortcut (QKeySequence::Save);
+	actionSave->setIcon (style ()->standardIcon (QStyle::SP_DialogSaveButton));
+	connect (actionSave, SIGNAL (triggered ()), this, SLOT (save ()));
+
 	QMenuBar *mainMenu = new QMenuBar (this);
 	setMenuBar (mainMenu);
 
 	fileMenu = new QMenu (this);
+	fileMenu->addAction (actionOpen);
+	fileMenu->addAction (actionSave);
 	fileMenu->addAction (actionAddMicrocircuit);
 	fileMenu->addAction (actionStart);
 	mainMenu->addMenu (fileMenu);
@@ -90,6 +104,8 @@ void MainWindow::retranslateStrings ()
 
 	actionAddMicrocircuit->setText (tr ("Add microcircuit"));
 	actionStart->setText (tr ("Start"));
+	actionOpen->setText (tr ("Open"));
+	actionSave->setText (tr ("Save"));
 }
 
 bool MainWindow::event (QEvent *ev)
@@ -125,4 +141,62 @@ void MainWindow::start ()
 		w->start ();
 	}
 
+}
+
+void MainWindow::saveState (const QString& fileName)
+{
+	QSettings settings (fileName, QSettings::IniFormat);
+
+	settings.beginWriteArray ("States");
+
+	int i = 0;
+	foreach (MicrocircuitWidget* w, findChildren<MicrocircuitWidget*> ()) {
+		settings.setArrayIndex (i++);
+		settings.setValue ("State", w->saveState ());
+	}
+	settings.endArray();
+}
+
+void MainWindow::restoreState (const QString& fileName)
+{
+	qDeleteAll (findChildren<MicrocircuitWidget*> ());
+	
+	QSettings settings (fileName, QSettings::IniFormat);
+
+	const int size = settings.beginReadArray("States");
+
+	QVBoxLayout *layout = qobject_cast<QVBoxLayout*> (centralWidget->layout ());
+	Q_ASSERT (layout != 0);
+
+	for (int i = 0; i < size; i++) {
+		settings.setArrayIndex (i);
+		MicrocircuitWidget *w = new MicrocircuitWidget (this);
+		layout->insertWidget ((findChildren<MicrocircuitWidget*> ()).size () - 1, w);
+
+		QByteArray state = settings.value ("State").toByteArray ();
+		w->restoreState (state);
+	}
+	settings.endArray();
+}
+
+void MainWindow::open ()
+{
+	const QString& fileName = QFileDialog::getOpenFileName (this, 
+															tr ("Open file"),
+															"",
+															tr ("POSCLabComplex files (*.plc)"));
+	if (!fileName.isEmpty ()) {
+		restoreState (fileName);
+	}
+}
+
+void MainWindow::save ()
+{
+	const QString& fileName = QFileDialog::getSaveFileName (this, 
+															tr ("Save file"),
+															"",
+															tr ("POSCLabComplex files (*.plc)"));
+	if (!fileName.isEmpty ()) {
+		saveState (fileName);
+	}
 }

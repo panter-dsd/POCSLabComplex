@@ -22,6 +22,8 @@
 * Contact:		panter.dsd@gmail.com
 *******************************************************************/
 
+#include <QtCore/QDataStream>
+
 #include <QtGui/QGridLayout>
 #include <QtGui/QLabel>
 #include <QtGui/QtEvents>
@@ -124,4 +126,29 @@ bool MicrocircuitWidget::isValid () const
 void MicrocircuitWidget::start ()
 {
 
+}
+
+QByteArray MicrocircuitWidget::saveState () const
+{
+	QByteArray state;
+
+	QDataStream stream (&state, QIODevice::WriteOnly);
+	stream << microprocessor->saveState ();
+	stream << inputInOut->saveState ();
+	stream << inputSwitchboard->saveState ();
+
+	return state;
+}
+
+void MicrocircuitWidget::restoreState (QByteArray state)
+{
+	QDataStream stream (&state, QIODevice::ReadOnly);
+
+	QByteArray data;
+	stream >> data;
+	microprocessor->restoreState (data);
+	stream >> data;
+	inputInOut->restoreState (data);
+	stream >> data;
+	inputSwitchboard->restoreState (data);
 }

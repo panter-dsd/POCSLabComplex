@@ -22,6 +22,8 @@
 * Contact:		panter.dsd@gmail.com
 *******************************************************************/
 
+#include <QtCore/QDataStream>
+
 #include <QtGui/QPainter>
 #include <QtGui/QVBoxLayout>
 #include <QtGui/QLabel>
@@ -36,7 +38,7 @@
 const int penWidth = 7;
 
 InOutWidget::InOutWidget (Type type, QWidget *parent)
-	: QWidget (parent), m_type (type), m_lastIndex (-1), actionChangeValue (0)
+	: QWidget (parent), m_type (type), actionChangeValue (0)
 {
 	setMouseTracking (true);
 
@@ -224,3 +226,29 @@ void InOutWidget::setValue (int index, const QByteArray& value)
 	m_values [index] = value;
 	updateLabelsText ();
 }
+
+QByteArray InOutWidget::saveState () const
+{
+	QByteArray state;
+
+	QDataStream stream (&state, QIODevice::WriteOnly);
+
+	for (int i = 0; i < 6; i++) {
+		stream << m_values [i];
+	}
+
+	return state;
+}
+
+void InOutWidget::restoreState (QByteArray state)
+{
+	QDataStream stream (&state, QIODevice::ReadOnly);
+
+	for (int i = 0; i < 6; i++) {
+		stream >> m_values [i];
+		emit valueChanged (i, m_values [i]);
+	}
+
+	updateLabelsText ();
+}
+

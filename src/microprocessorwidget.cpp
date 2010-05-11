@@ -23,6 +23,7 @@
 *******************************************************************/
 
 #include <QtCore/QDebug>
+#include <QtCore/QDataStream>
 
 #include <QtGui/QPainter>
 #include <QtGui/QPaintEvent>
@@ -69,6 +70,21 @@ void MicroprocessorWidget::resizeEvent (QResizeEvent */*ev*/)
 {
 	foreach (AbstractBlock *ab, findChildren<AbstractBlock*> ()) {
 		ab->setFixedSize (width () / 6, height () / 6);
+	}
+
+	m_rect.setRect (rect ().x () + fontMetrics ().width ("WWWW"), rect ().top (), rect ().width () - fontMetrics ().width ("WWWW"), rect ().height ());
+
+	m_workRect.setY (rect ().y () + penWidth / 2);
+	m_workRect.setHeight (rect ().height () - penWidth / 2 - penWidth * 2);
+	m_workRect.setX (rect ().x () + fontMetrics ().width ("WWWW") + penWidth / 2);
+	m_workRect.setWidth (rect ().width () - m_workRect.x () - penWidth * 2);
+
+	for (int i = 0; i < 6; i++) {
+		inputPoints [i].setX (m_workRect.x ());
+		inputPoints [i].setY (m_workRect.y () + m_workRect.height () / 6 * i + m_workRect.height () / 6 / 2);
+
+		outputPoints [i].setX (m_workRect.x () + m_workRect.width ());
+		outputPoints [i].setY (m_workRect.y () + m_workRect.height () / 6 * i + m_workRect.height () / 6 / 2);
 	}
 
 	switch (m_scheme) {
@@ -157,12 +173,7 @@ void MicroprocessorWidget::paintEvent (QPaintEvent *ev)
 	pen.setWidth (penWidth);
 	painter.setPen (pen);
 
-	QRect m_rect (rect ().x () + fontMetrics ().width ("WWWW"), rect ().top (), rect ().width () - fontMetrics ().width ("WWWW"), rect ().height ());
-
-	m_workRect.setY (rect ().y () + pen.width () / 2);
-	m_workRect.setHeight (rect ().height () - pen.width () / 2 - pen.width () * 2);
-	m_workRect.setX (rect ().x () + fontMetrics ().width ("WWWW") + pen.width () / 2);
-	m_workRect.setWidth (rect ().width () - m_workRect.x () - pen.width () * 2);
+	m_rect.setRect (rect ().x () + fontMetrics ().width ("WWWW"), rect ().top (), rect ().width () - fontMetrics ().width ("WWWW"), rect ().height ());
 
 	//Shadow
 	painter.drawLine (m_rect.x () + pen.width (), m_rect.y () + m_rect.height () - pen.width (), 
@@ -181,12 +192,6 @@ void MicroprocessorWidget::paintEvent (QPaintEvent *ev)
 	painter.setPen (pen);
 
 	for (int i = 0; i < 6; i++) {
-		inputPoints [i].setX (m_workRect.x ());
-		inputPoints [i].setY (m_workRect.y () + m_workRect.height () / 6 * i + m_workRect.height () / 6 / 2);
-
-		outputPoints [i].setX (m_workRect.x () + m_workRect.width ());
-		outputPoints [i].setY (m_workRect.y () + m_workRect.height () / 6 * i + m_workRect.height () / 6 / 2);
-
 		if (!m_inputCaptions [i].isEmpty ()) {
 			painter.drawLine (rect ().x (), m_workRect.y () + m_workRect.height () / 6 * i + m_workRect.height () / 6 / 2,
 							 m_workRect.x (), m_workRect.y () + m_workRect.height () / 6 * i + m_workRect.height () / 6 / 2);
@@ -846,6 +851,7 @@ void MicroprocessorWidget::setAdjustingWord (qint16 adjustingWord)
 
 	updateWidgets ();
 	emit schemeChanged ();
+	retranslateStrings ();
 	resizeEvent (0);
 }
 
@@ -1031,5 +1037,35 @@ void MicroprocessorWidget::clearValues ()
 	}
 	for (int i = 0; i < CountOutputs; i++) {
 		outputValues [i].clear ();
+	}
+}
+
+QByteArray MicroprocessorWidget::saveState () const
+{
+	QByteArray state;
+
+	QDataStream stream (&state, QIODevice::WriteOnly);
+
+	stream << adjustingWord ();
+
+	for  (int i = 0; i < CountOutputs; i++) {
+		stream << outputValues [i];
+	}
+
+	return state;
+}
+
+void MicroprocessorWidget::restoreState (QByteArray state)
+{
+	QDataStream stream (&state, QIODevice::ReadOnly);
+
+	stream >> m_adjustingWord;
+
+	if (m_adjustingWord != -1) {
+		setAdjustingWord (m_adjustingWord);
+	}
+
+	for  (int i = 0; i < CountOutputs; i++) {
+		stream >> outputValues [i];
 	}
 }

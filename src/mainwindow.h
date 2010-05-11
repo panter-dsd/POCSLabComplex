@@ -43,6 +43,8 @@ private:
 
 	QAction *actionAddMicrocircuit;
 	QAction *actionStart;
+	QAction *actionOpen;
+	QAction *actionSave;
 
 public:
 	MainWindow (QWidget* parent = 0, Qt::WFlags f = 0);
@@ -50,6 +52,8 @@ public:
 
 private:
 	void retranslateStrings ();
+	void saveState (const QString& fileName);
+	void restoreState (const QString& fileName);
 
 protected:
 	bool event (QEvent *ev);
@@ -57,6 +61,8 @@ protected:
 private Q_SLOTS:
 	void addMicrocircuit ();
 	void start ();
+	void open ();
+	void save ();
 };
 
 #endif // MAINWINDOW_H

@@ -22,6 +22,8 @@
 * Contact:		panter.dsd@gmail.com
 *******************************************************************/
 
+#include <QtCore/QDataStream>
+
 #include <QtGui/QPainter>
 #include <QtGui/QtEvents>
 #include <QtGui/QAction>
@@ -162,4 +164,22 @@ void SwitchboardWidget::setValue (int index, const QByteArray& value)
 	if (m_connections.contains (index)) {
 		emit valueChanged (m_connections.value (index), m_inputValues [index]);
 	}
+}
+
+QByteArray SwitchboardWidget::saveState () const
+{
+	QByteArray state;
+	
+	QDataStream stream (&state, QIODevice::WriteOnly);
+
+	stream << m_connections;
+
+	return state; 
+}
+
+void SwitchboardWidget::restoreState (QByteArray state)
+{
+	QDataStream stream (&state, QIODevice::ReadOnly);
+
+	stream >> m_connections;
 }

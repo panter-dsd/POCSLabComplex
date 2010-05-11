@@ -63,6 +63,9 @@ public:
 
 	bool isValid () const;
 
+	QByteArray saveState () const;
+	void restoreState (QByteArray state);
+
 private:
 	void retranslateStrings ();
 

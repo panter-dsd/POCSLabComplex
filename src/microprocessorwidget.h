@@ -71,7 +71,8 @@ private:
 	QAction *actionChooseScheme;
 
 	QRect m_workRect;
-	char m_scheme;
+	QRect m_rect;
+	qint8 m_scheme;
 	qint16 m_adjustingWord;
 	QPoint inputPoints [CountInputs];
 	QPoint outputPoints [CountOutputs];
@@ -101,6 +102,9 @@ public:
 	QStringList outputCaptions () const;
 
 	bool isValid () const;
+
+	QByteArray saveState () const;
+	void restoreState (QByteArray state);
 
 protected:
 	void paintEvent (QPaintEvent *ev);

@@ -43,7 +43,6 @@ private:
 	int m_type;
 	QByteArray m_values[6];
 	QList<QLabel*> labels;
-	int m_lastIndex;
 	int m_count;
 	QString m_captions [6];
 
@@ -63,6 +62,9 @@ public:
 	bool isValid () const;
 
 	QStringList outputCaptions () const;
+
+	QByteArray saveState () const;
+	void restoreState (QByteArray state);
 
 private:
 	void retranslateStrings ();

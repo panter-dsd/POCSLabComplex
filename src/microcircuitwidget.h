@@ -56,6 +56,9 @@ public:
 	bool isValid () const;
 	void start ();
 
+	QByteArray saveState () const;
+	void restoreState (QByteArray state);
+
 protected:
 	bool event (QEvent *ev);
 
