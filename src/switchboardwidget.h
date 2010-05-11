@@ -72,6 +72,10 @@ protected:
 
 private Q_SLOTS:
 	void setConnections ();
+	void setValue (int index, const QByteArray& value);
+
+Q_SIGNALS:
+	void valueChanged (int index, const QByteArray& value);
 };
 
 #endif //SWITCHBOARDWIDGET_H

@@ -51,13 +51,16 @@ MicrocircuitWidget::MicrocircuitWidget (QWidget *parent)
 	inputInOut = new InOutWidget (InOutWidget::In, this);
 
 	inputSwitchboard = new SwitchboardWidget (this);
+	connect (inputInOut, SIGNAL (valueChanged (int, QByteArray)), inputSwitchboard, SLOT (setValue (int, QByteArray)));
 
 	microprocessor = new MicroprocessorWidget (this);
 	microprocessorLabel->setText (microprocessor->name ());
 	connect (microprocessor, SIGNAL (nameChanged (QString)), this, SLOT (microprocessorNameChanged (QString)));
 	connect (microprocessor, SIGNAL (schemeChanged ()), this, SLOT (microprocessorSchemeChanged ()));
+	connect (inputSwitchboard, SIGNAL (valueChanged (int, QByteArray)), microprocessor, SLOT (setValue (int, QByteArray)));
 
 	outputInOut = new InOutWidget (InOutWidget::Out, this);
+	connect (microprocessor, SIGNAL (valueChanged (int, QByteArray)), outputInOut, SLOT (setValue (int, QByteArray)));
 
 	closeButton = new QToolButton (this);
 	closeButton->setIcon (style ()->standardIcon (QStyle::SP_TitleBarCloseButton));

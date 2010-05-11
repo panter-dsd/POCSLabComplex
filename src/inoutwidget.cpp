@@ -154,6 +154,7 @@ void InOutWidget::changeValue ()
 
 		if (d.exec ()) {
 			m_values [index] = d.value ();
+			emit valueChanged (index, m_values [index]);
 			updateLabelsText ();
 		}
 	}
@@ -216,4 +217,10 @@ QStringList InOutWidget::outputCaptions () const
 		l.append (labels [i]->isEnabled () ? QString ("A%1").arg (i) : "");
 	}
 	return l;
+}
+
+void InOutWidget::setValue (int index, const QByteArray& value)
+{
+	m_values [index] = value;
+	updateLabelsText ();
 }

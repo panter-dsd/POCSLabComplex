@@ -75,6 +75,10 @@ protected:
 private Q_SLOTS:
 	void changeValue ();
 	void updateLabelsText ();
+	void setValue (int index, const QByteArray& value);
+
+Q_SIGNALS:
+	void valueChanged (int index, const QByteArray& value);
 };
 
 #endif //INOUTWIDGET_H

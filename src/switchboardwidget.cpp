@@ -136,6 +136,12 @@ void SwitchboardWidget::setConnections ()
 
 	if (d.exec ()) {
 		m_connections = d.connections ();
+		QMapIterator <int, int> it (m_connections);
+		while (it.hasNext ()) {
+			it.next ();
+
+			emit valueChanged (it.value (), m_inputValues [it.key ()]);
+		}
 	}
 }
 
@@ -147,4 +153,13 @@ bool SwitchboardWidget::isValid () const
 		}
 	}
 	return true;
+}
+
+void SwitchboardWidget::setValue (int index, const QByteArray& value)
+{
+	m_inputValues [index] = value;
+
+	if (m_connections.contains (index)) {
+		emit valueChanged (m_connections.value (index), m_inputValues [index]);
+	}
 }

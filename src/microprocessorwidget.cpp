@@ -787,6 +787,7 @@ void MicroprocessorWidget::chooseScheme ()
 
 	if (ok && !scheme.isEmpty ()) {
 		m_scheme = scheme.toInt ();
+		clearValues ();
 		updateWidgets ();
 		emit schemeChanged ();
 		resizeEvent (0);
@@ -830,6 +831,7 @@ void MicroprocessorWidget::updateAdjustingWorld ()
 
 void MicroprocessorWidget::setAdjustingWord (qint16 adjustingWord)
 {
+	clearValues ();
 	if (adjustingWord < -1)
 		return;
 
@@ -1015,4 +1017,17 @@ QStringList MicroprocessorWidget::outputCaptions () const
 bool MicroprocessorWidget::isValid () const
 {
 	return alb1->isValid () && alb2->isValid () && alb3->isValid () && mb1->isValid () && mb2->isValid ();
+}
+
+void MicroprocessorWidget::setValue (int index, const QByteArray& value)
+{
+	inputValues [index] = value;
+}
+
+MicroprocessorWidget::clearValues ()
+{
+	for (int i = 0; i < CountInputs; i++) {
+		inputValues [i].clear ();
+	for (int i = 0; i < CountOutputs; i++) {
+		outputValues [i].clear ();
 }

@@ -77,6 +77,8 @@ private:
 	QPoint outputPoints [CountOutputs];
 	QString m_inputCaptions [CountInputs];
 	QString m_outputCaptions [CountOutputs];
+	QByteArray inputValues [CountInputs];
+	QByteArray outputValues [CountOutputs];
 
 	QString m_name;
 
@@ -120,6 +122,7 @@ private:
 	void resize_6 ();
 	void retranslateStrings ();
 	void setCaptions ();
+	void clearValues ();
 
 protected:
 	bool event (QEvent *ev);
@@ -127,10 +130,12 @@ protected:
 private Q_SLOTS:
 	void chooseScheme ();
 	void updateAdjustingWorld ();
+	void setValue (int index, const QByteArray& value);
 
 Q_SIGNALS:
 	void nameChanged (const QString& name);
 	void schemeChanged ();
+	void valueChanged (int index, const QByteArray& value);
 };
 
 #endif //MICROPROCESSORWIDGET_H
