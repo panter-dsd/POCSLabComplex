@@ -82,3 +82,10 @@ void Alb3Block::updateToolTip ()
 
 	setToolTip (m_toolTip);
 }
+
+QByteArray Alb3Block::calculate ()
+{
+	if (!isValid ()) {
+		return QByteArray ();
+	}
+}

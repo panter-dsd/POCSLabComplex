@@ -1024,10 +1024,12 @@ void MicroprocessorWidget::setValue (int index, const QByteArray& value)
 	inputValues [index] = value;
 }
 
-MicroprocessorWidget::clearValues ()
+void MicroprocessorWidget::clearValues ()
 {
 	for (int i = 0; i < CountInputs; i++) {
 		inputValues [i].clear ();
+	}
 	for (int i = 0; i < CountOutputs; i++) {
 		outputValues [i].clear ();
+	}
 }

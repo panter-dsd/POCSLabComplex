@@ -33,6 +33,7 @@ class Alb3Block : public AbstractBlock
 
 public:
 	Alb3Block (const QString& caption = 0, QWidget *parent = 0);
+	QByteArray calculate ();
 
 private:
 	void updateToolTip ();

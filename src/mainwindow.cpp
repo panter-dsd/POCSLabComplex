@@ -44,6 +44,7 @@ MainWindow::MainWindow (QWidget* parent, Qt::WFlags f)
 
 	QScrollArea *area = new QScrollArea (this);
 	area->setWidgetResizable (true);
+	area->setFrameShape (QFrame::NoFrame);
 	setCentralWidget (area);
 
 	centralWidget = new QWidget (this);

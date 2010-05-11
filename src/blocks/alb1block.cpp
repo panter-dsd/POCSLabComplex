@@ -82,3 +82,10 @@ void Alb1Block::updateToolTip ()
 
 	setToolTip (m_toolTip);
 }
+
+QByteArray Alb1Block::calculate ()
+{
+	if (!isValid ()) {
+		return QByteArray ();
+	}
+}

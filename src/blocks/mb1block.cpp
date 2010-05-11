@@ -70,3 +70,10 @@ void Mb1Block::updateToolTip ()
 
 	setToolTip (m_toolTip);
 }
+
+QByteArray Mb1Block::calculate ()
+{
+	if (!isValid ()) {
+		return QByteArray ();
+	}
+}

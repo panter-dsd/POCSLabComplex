@@ -33,6 +33,7 @@ class Mb1Block : public AbstractBlock
 
 public:
 	Mb1Block (const QString& caption = 0, QWidget *parent = 0);
+	QByteArray calculate ();
 
 private:
 	void updateToolTip ();

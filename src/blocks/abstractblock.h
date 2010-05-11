@@ -39,6 +39,7 @@ protected:
 	QString m_caption;
 	QByteArray m_firstValue;
 	QByteArray m_secondValue;
+	QByteArray m_calculatedValue;
 	bool m_isModule;
 	char m_operation;
 	QMap<char, QString> operations;
@@ -74,6 +75,9 @@ public:
 
 	bool isValid () const
 	{ return m_operation >= 0; }
+
+	virtual QByteArray calculate ()
+	{ return QByteArray (); }
 
 protected:
 	void paintEvent (QPaintEvent *ev);
