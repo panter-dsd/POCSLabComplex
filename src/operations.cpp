@@ -139,3 +139,26 @@ QByteArray Operations::stringToBin (const QString& string)
 	}
 	return out;
 }
+
+void Operations::dizssToChanels (const QByteArray& dizss, QByteArray *positiveChanel, QByteArray *negativeChanel)
+{
+	positiveChanel->clear ();
+	negativeChanel->clear ();
+
+	for (int i = 0, size = dizss.size (); i < size; i++) {
+		switch (dizss [i]) {
+		case (char) 1 : 
+			positiveChanel->append ((char) 1);
+			negativeChanel->append ((char) 0);
+			break;
+		case (char) -1 : 
+			positiveChanel->append ((char) 0);
+			negativeChanel->append ((char) -1);
+			break;
+		default:
+			positiveChanel->append (dizss [i]);
+			negativeChanel->append (dizss [i]);
+
+		}
+	}
+}
