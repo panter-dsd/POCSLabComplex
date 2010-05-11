@@ -73,7 +73,7 @@ private:
 	QRect m_workRect;
 	QRect m_rect;
 	qint8 m_scheme;
-	qint16 m_adjustingWord;
+	quint16 m_adjustingWord;
 	QPoint inputPoints [CountInputs];
 	QPoint outputPoints [CountOutputs];
 	QString m_inputCaptions [CountInputs];
@@ -88,9 +88,9 @@ public:
 	virtual ~MicroprocessorWidget ()
 	{}
 
-	qint16 adjustingWord () const
+	quint16 adjustingWord () const
 	{ return m_adjustingWord; }
-	void setAdjustingWord (qint16 m_adjustingWord);
+	void setAdjustingWord (quint16 m_adjustingWord);
 
 	QString name ()
 	{ return m_name; }

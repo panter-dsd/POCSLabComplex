@@ -42,7 +42,7 @@
 const int penWidth = 7;
 
 MicroprocessorWidget::MicroprocessorWidget (QWidget *parent)
-	:QWidget (parent), m_scheme (-1)
+	:QWidget (parent), m_scheme (-1), m_adjustingWord (0)
 {
 	setMinimumSize (400, 200);
 
@@ -814,8 +814,6 @@ void MicroprocessorWidget::updateWidgets ()
 
 void MicroprocessorWidget::updateAdjustingWorld ()
 {
-	m_adjustingWord = -1;
-
 	if (m_scheme < 0 || !alb1->isValid () || !alb2->isValid () || !alb3->isValid () || !mb1->isValid () || !mb2->isValid ())
 		return;
 
@@ -834,11 +832,9 @@ void MicroprocessorWidget::updateAdjustingWorld ()
 	m_adjustingWord |= alb1->operation ();
 }
 
-void MicroprocessorWidget::setAdjustingWord (qint16 adjustingWord)
+void MicroprocessorWidget::setAdjustingWord (quint16 adjustingWord)
 {
 	clearValues ();
-	if (adjustingWord < -1)
-		return;
 
 	m_adjustingWord = adjustingWord;
 
@@ -1047,6 +1043,7 @@ QByteArray MicroprocessorWidget::saveState () const
 	QDataStream stream (&state, QIODevice::WriteOnly);
 
 	stream << adjustingWord ();
+	stream << m_scheme;
 
 	for  (int i = 0; i < CountOutputs; i++) {
 		stream << outputValues [i];
@@ -1060,8 +1057,9 @@ void MicroprocessorWidget::restoreState (QByteArray state)
 	QDataStream stream (&state, QIODevice::ReadOnly);
 
 	stream >> m_adjustingWord;
+	stream >> m_scheme;
 
-	if (m_adjustingWord != -1) {
+	if (m_scheme >= 0) {
 		setAdjustingWord (m_adjustingWord);
 	}
 

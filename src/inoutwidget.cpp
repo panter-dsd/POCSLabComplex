@@ -195,7 +195,7 @@ void InOutWidget::updateLabelsText ()
 {
 	for (int i = 0; i < 6; i++) {
 		const QString caption = m_type == In ? QString("A%1").arg (i) : m_captions [i];
-		if (!m_values [i].isEmpty ()) {
+		if (!m_values [i].isEmpty () && labels [i]->isEnabled ()) {
 			QString text = "<p> " + caption + " =  " + Operations::binToString (m_values [i]) + "  </p>";
 			text = text.replace ("-1", "<span style=\"text-decoration: overline\">1</span>");
 			labels [i]->setText (text);
