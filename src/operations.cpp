@@ -176,3 +176,189 @@ QByteArray Operations::normalizeBin (const QByteArray& bin)
 
 	return tmp;
 }
+
+QByteArray Operations::add (const QByteArray& first, const QByteArray& second)
+{
+	QByteArray a (first);
+	QByteArray b (second);
+	a.leftJustified (b.size (), (char) 0);
+	b.leftJustified (a.size (), (char) 0);
+
+	QByteArray s1, p1, c0;
+	p1.append ((char) 0);
+	c0.append ((char) 0);
+	c0.append ((char) 0);
+
+	QByteArray s2, p2;
+	p2.append ((char) 0);
+
+	QByteArray value;
+
+	//First step
+
+	for (int i = a.size () - 1; i >= 0; i--) {
+		switch (a [i]) {
+		case (char) -1:
+			switch (b [i]) {
+			case (char) -1:
+				s1.insert (0, (char) 0);
+				p1.insert (0, (char) -1);
+				c0.insert (0, (char) 0);
+				break;
+			case (char) 0:
+				s1.insert (0, (char) 1);
+				p1.insert (0, (char) -1);
+				c0.insert (0, (char) 0);
+				break;
+			case (char) 1:
+				s1.insert (0, (char) 0);
+				p1.insert (0, (char) 0);
+				c0.insert (0, (char) 0);
+				break;
+			}
+			break;
+		case (char) 0:
+			switch (b [i]) {
+			case (char) -1:
+				s1.insert (0, (char) 1);
+				p1.insert (0, (char) -1);
+				c0.insert (0, (char) 0);
+				break;
+			case (char) 0:
+				s1.insert (0, (char) 0);
+				p1.insert (0, (char) 0);
+				c0.insert (0, (char) 0);
+				break;
+			case (char) 1:
+				s1.insert (0, (char) 1);
+				p1.insert (0, (char) 0);
+				c0.insert (0, (char) 0);
+				break;
+			}
+			break;
+		case (char) 1:
+			switch (b [i]) {
+			case (char) -1:
+				s1.insert (0, (char) 0);
+				p1.insert (0, (char) 0);
+				c0.insert (0, (char) 0);
+				break;
+			case (char) 0:
+				s1.insert (0, (char) 1);
+				p1.insert (0, (char) 0);
+				c0.insert (0, (char) 0);
+				break;
+			case (char) 1:
+				s1.insert (0, (char) 0);
+				p1.insert (0, (char) -1);
+				c0.insert (0, (char) 1);
+				break;
+			}
+			break;
+		}
+	}
+
+	//Second step
+
+	s1.rightJustified (p1.size (), (char) 0);
+
+	for (int i = s1.size () - 1; i >= 0; i--) {
+		switch (s1 [i]) {
+		case (char) -1:
+			switch (p1 [i]) {
+			case (char) 0:
+				s2.insert (0, (char) -1);
+				p2.insert (0, (char) 0);
+				break;
+			case (char) 1:
+				s2.insert (0, (char) 0);
+				p2.insert (0, (char) 0);
+				break;
+			}
+			break;
+		case (char) 0:
+			switch (p1 [i]) {
+			case (char) -1:
+				s2.insert (0, (char) -1);
+				p2.insert (0, (char) 0);
+				break;
+			case (char) 0:
+				s2.insert (0, (char) 0);
+				p2.insert (0, (char) 0);
+				break;
+			case (char) 1:
+				s2.insert (0, (char) -1);
+				p2.insert (0, (char) 1);
+				break;
+			}
+			break;
+		case (char) 1:
+			switch (p1 [i]) {
+			case (char) -1:
+				s2.insert (0, (char) 0);
+				p2.insert (0, (char) 0);
+				break;
+			case (char) 0:
+				s2.insert (0, (char) -1);
+				p2.insert (0, (char) 1);
+				break;
+			}
+			break;
+		}
+	}
+
+	//Third step
+
+	s2.rightJustified (c0.size (), (char) 0);
+	p2.rightJustified (c0.size (), (char) 0);
+
+	for (int i = c0.size () - 1; i >= 0; i--) {
+		char c = s2 [i] + p2 [i] + c0 [i];
+
+		if (c > 1) {
+			c = 0;
+		}
+		value.insert (0, c);
+	}
+
+	return value;
+}
+
+QByteArray Operations::mul (const QByteArray& first, const QByteArray& second)
+{
+	QByteArray a (first.size () > second.size () ? first : second); //Lager
+	QByteArray b (first.size () <= second.size () ? first : second); //Smaller
+
+	QList <QByteArray> chp;
+
+	for (int i = 0, size = b.size (); i < size; i++) {
+		chp.append (a);
+
+		switch (b [i]) {
+		case (char) 0:
+			chp [i].fill (char (0));
+			break;
+		case (char) -1:
+			chp [i] = invert (chp [i]);
+			break;
+		}
+	}
+
+	QByteArray result = chp [0];
+
+	for (int i = 1, size = chp.size (); i < size; i++) {
+		result = add (result, chp [i]);
+	}
+	return result;
+}
+
+QByteArray Operations::invert (const QByteArray& value)
+{
+	QByteArray result;
+
+	for (int i = 0, size = value.size (); i < size; i++) {
+		result.append (value [i] * (char) -1);
+	}
+	
+	return result;
+}
