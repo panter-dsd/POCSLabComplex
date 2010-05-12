@@ -68,6 +68,16 @@ QByteArray InputDialog::value ()
 void InputDialog::setValue (const QByteArray& value)
 {
 	m_value = value;
+
+	QByteArray positive;
+	QByteArray negative;
+
+	Operations::dizssToChanels (m_value, &positive, &negative);
+
+	positiveChanelEdit->setText (Operations::binToString (positive));
+	positiveChanelEdit->setCursorPosition (0);
+	negativeChanelEdit->setText (Operations::binToString (negative));
+	negativeChanelEdit->setCursorPosition (0);
 }
 
 void InputDialog::valueChanged ()
