@@ -63,7 +63,10 @@ public:
 	bool isModule () const
 	{ return m_isModule; }
 	void setIsModule (bool b)
-	{ m_isModule = b; }
+	{ 
+		m_isModule = b; 
+		setOperation (-1);
+	}
 
 	char operation () const
 	{ return m_operation; }
@@ -71,6 +74,7 @@ public:
 	{
 		m_operation = operation;
 		updateToolTip ();
+		update ();
 	}
 
 	bool isValid () const

@@ -42,13 +42,19 @@
 const int penWidth = 7;
 
 MicroprocessorWidget::MicroprocessorWidget (QWidget *parent)
-	:QWidget (parent), m_scheme (-1), m_adjustingWord (0)
+	: QWidget (parent), m_scheme (-1), m_adjustingWord (0), m_isModule (false)
 {
 	setMinimumSize (400, 200);
 
-	actionChooseScheme = new QAction (tr ("Choose scheme"), this);
+	actionChooseScheme = new QAction (this);
 	connect (actionChooseScheme, SIGNAL (triggered ()), this, SLOT (chooseScheme ()));
 	addAction (actionChooseScheme);
+
+	actionSetModule = new QAction (this);
+	actionSetModule->setCheckable (true);
+	actionSetModule->setChecked (m_isModule);
+	connect (actionSetModule, SIGNAL (toggled (bool)), this, SLOT (setModule (bool)));
+	addAction (actionSetModule);
 
 	setContextMenuPolicy (Qt::ActionsContextMenu);
 
@@ -862,6 +868,9 @@ bool MicroprocessorWidget::event (QEvent *ev)
 
 void MicroprocessorWidget::retranslateStrings ()
 {
+	actionChooseScheme->setText (tr ("Choose scheme"));
+	actionSetModule->setText (tr ("Set module"));
+
 	m_name = tr ("MP 4.601V ZHZ - 0034 Scheme %1").arg (m_scheme >= 0 ? QString::number (m_scheme) : tr ("is not valid"));
 	emit nameChanged (m_name);
 }
@@ -1066,4 +1075,15 @@ void MicroprocessorWidget::restoreState (QByteArray state)
 	for  (int i = 0; i < CountOutputs; i++) {
 		stream >> outputValues [i];
 	}
+}
+
+void MicroprocessorWidget::setModule (bool isModule)
+{
+	m_isModule = isModule;
+
+	alb1->setIsModule (m_isModule);
+	alb2->setIsModule (m_isModule);
+	alb3->setIsModule (m_isModule);
+	mb1->setIsModule (m_isModule);
+	mb2->setIsModule (m_isModule);
 }
