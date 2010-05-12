@@ -162,3 +162,17 @@ void Operations::dizssToChanels (const QByteArray& dizss, QByteArray *positiveCh
 		}
 	}
 }
+
+QByteArray Operations::normalizeBin (const QByteArray& bin)
+{
+	QByteArray tmp (bin);
+
+	while (!tmp.isEmpty () && tmp [tmp.size () - 1] == (char) 0) {
+		tmp.remove (tmp.size () - 1, 1);
+	}
+	if (tmp.size () < 3) {
+		tmp.clear ();
+	}
+
+	return tmp;
+}
