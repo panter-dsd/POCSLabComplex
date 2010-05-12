@@ -75,7 +75,7 @@ void InputDialog::valueChanged ()
 	const QByteArray& positive = Operations::stringToBin (positiveChanelEdit->text ());
 	const QByteArray& negative = Operations::stringToBin (negativeChanelEdit->text ());
 
-	m_value = Operations::dizssFromChanels (positive, negative);
+	m_value = Operations::normalizeBin (Operations::dizssFromChanels (positive, negative));
 
 	QString text = "<p>" + Operations::binToString (m_value) + "</p>";
 	text = text.replace ("-1", "<span style=\"text-decoration: overline\">1</span>");
