@@ -63,6 +63,7 @@ MicrocircuitWidget::MicrocircuitWidget (QWidget *parent)
 	connect (inputSwitchboard, SIGNAL (valueChanged (int, QByteArray)), microprocessor, SLOT (setValue (int, QByteArray)));
 
 	outputWidget = new OutputWidget (this);
+	connect (inputWidget, SIGNAL (scaledFactorChanged (int)), outputWidget, SLOT (setScaledFactor (int)));
 	connect (microprocessor, SIGNAL (valueChanged (int, QByteArray)), outputWidget, SLOT (setValue (int, QByteArray)));
 
 	closeButton = new QToolButton (this);

@@ -118,7 +118,19 @@ void OutputWidget::updateLabelsText ()
 	for (int i = 0; i < 6; i++) {
 		const QString caption = m_captions [i];
 		if (!m_values [i].isEmpty () && labels [i]->isEnabled ()) {
-			QString text = "<p> " + caption + " =  " + Operations::binToString (m_values [i]) + "  </p>";
+			QByteArray tmp (m_values [i]);
+
+			if (m_scaleFactor) {
+				tmp.insert (0, '.');
+				tmp.insert (0, (char) 0);
+			} else {
+				tmp.insert (m_scaleFactor, '.');
+				while (tmp [1] != '.') {
+					tmp.remove (0, 1);
+				}
+			}
+
+			QString text = "<p> " + caption + " =  " + Operations::binToString (tmp) + "  </p>";
 			text = text.replace ("-1", "<span style=\"text-decoration: overline\">1</span>");
 			labels [i]->setText (text);
 			labels [i]->setToolTip (text);
