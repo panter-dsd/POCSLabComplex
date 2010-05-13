@@ -38,7 +38,7 @@
 const int penWidth = 7;
 
 InOutWidget::InOutWidget (Type type, QWidget *parent)
-	: QWidget (parent), m_type (type), actionChangeValue (0)
+	: QWidget (parent), m_type (type), actionChangeValue (0), m_scaleFactor (0)
 {
 	setMouseTracking (true);
 
@@ -156,7 +156,7 @@ void InOutWidget::changeValue ()
 
 		if (d.exec ()) {
 			m_values [index] = d.value ();
-			emit valueChanged (index, m_values [index]);
+			updateScaledFactor ();
 			updateLabelsText ();
 		}
 	}
@@ -188,6 +188,7 @@ bool InOutWidget::isValid () const
 			return false;
 		}
 	}
+
 	return true;
 }
 
@@ -196,7 +197,7 @@ void InOutWidget::updateLabelsText ()
 	for (int i = 0; i < 6; i++) {
 		const QString caption = m_type == In ? QString("A%1").arg (i) : m_captions [i];
 		if (!m_values [i].isEmpty () && labels [i]->isEnabled ()) {
-			QString text = "<p> " + caption + " =  " + Operations::binToString (m_values [i]) + "  </p>";
+			QString text = "<p> " + caption + " =  " + Operations::binToString (m_values [i]) + " / " + QString::number (m_scaleFactor * 2) + "  </p>";
 			text = text.replace ("-1", "<span style=\"text-decoration: overline\">1</span>");
 			labels [i]->setText (text);
 			labels [i]->setToolTip (text);
@@ -224,6 +225,7 @@ QStringList InOutWidget::outputCaptions () const
 void InOutWidget::setValue (int index, const QByteArray& value)
 {
 	m_values [index] = value;
+	updateScaledFactor ();
 	updateLabelsText ();
 }
 
@@ -246,9 +248,47 @@ void InOutWidget::restoreState (QByteArray state)
 
 	for (int i = 0; i < 6; i++) {
 		stream >> m_values [i];
-		emit valueChanged (i, m_values [i]);
 	}
 
+	updateScaledFactor ();
 	updateLabelsText ();
 }
 
+void InOutWidget::setScaledFactor (int scaledFactor)
+{
+	m_scaleFactor = scaledFactor;
+	sendValues ();
+}
+
+void InOutWidget::updateScaledFactor ()
+{
+	m_scaleFactor = 0;
+	for (int i = 0; i < m_count; i++) {
+		if (!m_values [i].isEmpty () && m_values [i] [0] != (char) 0) {
+			m_scaleFactor = 1;
+			break;
+		}
+	}
+	emit scaledFactorChanged (m_scaleFactor);
+	sendValues ();
+}
+
+void InOutWidget::sendValues ()
+{
+	for (int i = 0; i < m_count; i++) {
+		if (!m_values [i].isEmpty ()) {
+			QByteArray tmp (m_values [i]);
+			tmp.remove (tmp.indexOf ('.'), 1);
+			switch (m_scaleFactor) {
+			case 0:
+				tmp.remove (0, 1);
+				break;
+			case 1:
+				break;
+			default:
+				tmp.rightJustified ((char) 0, tmp.size () + m_scaleFactor - 1);
+			}
+			emit valueChanged (i, tmp);
+		}
+	}
+}

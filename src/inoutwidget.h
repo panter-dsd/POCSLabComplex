@@ -45,6 +45,7 @@ private:
 	QList<QLabel*> labels;
 	int m_count;
 	QString m_captions [6];
+	int m_scaleFactor;
 
 	QAction *actionChangeValue;
 
@@ -68,6 +69,8 @@ public:
 
 private:
 	void retranslateStrings ();
+	void updateScaledFactor ();
+	void sendValues ();
 
 protected:
 	void paintEvent (QPaintEvent *ev);
@@ -78,9 +81,11 @@ private Q_SLOTS:
 	void changeValue ();
 	void updateLabelsText ();
 	void setValue (int index, const QByteArray& value);
+	void setScaledFactor (int scaledFactor);
 
 Q_SIGNALS:
 	void valueChanged (int index, const QByteArray& value);
+	void scaledFactorChanged (int value);
 };
 
 #endif //INOUTWIDGET_H
