@@ -31,21 +31,19 @@
 #include <QtGui/QMenu>
 #include <QtGui/QAction>
 
-#include "inoutwidget.h"
+#include "inputwidget.h"
 #include "inputdialog.h"
 #include "operations.h"
 
 const int penWidth = 7;
 
-InOutWidget::InOutWidget (Type type, QWidget *parent)
-	: QWidget (parent), m_type (type), actionChangeValue (0), m_scaleFactor (0)
+InputWidget::InputWidget (QWidget *parent)
+	: QWidget (parent), actionChangeValue (0), m_scaleFactor (0)
 {
 	setMouseTracking (true);
 
-	if (m_type == In) {
-		actionChangeValue = new QAction (this);
-		connect (actionChangeValue, SIGNAL (triggered ()), this, SLOT (changeValue ()));
-	}
+	actionChangeValue = new QAction (this);
+	connect (actionChangeValue, SIGNAL (triggered ()), this, SLOT (changeValue ()));
 
 	QVBoxLayout *mainLayout = new QVBoxLayout ();
 	mainLayout->setContentsMargins (penWidth / 2, penWidth / 2, penWidth * 2, penWidth * 2);
@@ -66,13 +64,12 @@ InOutWidget::InOutWidget (Type type, QWidget *parent)
 	retranslateStrings ();
 }
 
-void InOutWidget::retranslateStrings ()
+void InputWidget::retranslateStrings ()
 {
-	if (actionChangeValue)
-		actionChangeValue->setText (tr ("Change value"));
+	actionChangeValue->setText (tr ("Change value"));
 }
 
-bool InOutWidget::event (QEvent *ev)
+bool InputWidget::event (QEvent *ev)
 {
 	if (ev->type () == QEvent::LanguageChange) {
 		retranslateStrings ();
@@ -81,7 +78,7 @@ bool InOutWidget::event (QEvent *ev)
 	return QWidget::event (ev);
 }
 
-void InOutWidget::paintEvent (QPaintEvent */*ev*/)
+void InputWidget::paintEvent (QPaintEvent */*ev*/)
 {
 	QPainter painter (this);
 
@@ -107,41 +104,38 @@ void InOutWidget::paintEvent (QPaintEvent */*ev*/)
 	pen.setWidth (1);
 	painter.setPen (pen);
 
-	if (m_type == In) {
-		for (int i = 0; i < 6; i++) {
-			painter.drawLine (labels [i]->x () + labels [i]->width (), labels [i]->y () + labels [i]->height () / 2,
-							 width (), labels [i]->y () + labels [i]->height () / 2);
-		}
+	for (int i = 0; i < 6; i++) {
+		painter.drawLine (labels [i]->x () + labels [i]->width (), labels [i]->y () + labels [i]->height () / 2,
+						  width (), labels [i]->y () + labels [i]->height () / 2);
 	}
 }
 
-bool InOutWidget::eventFilter (QObject *o, QEvent *ev)
+bool InputWidget::eventFilter (QObject *o, QEvent *ev)
 {
-	if (m_type == In) {
-		if (ev->type () == QEvent::MouseButtonDblClick) {
-			QLabel *label = qobject_cast<QLabel*> (o);
-			if (label->isEnabled ()) {
-				actionChangeValue->setParent (label);
-				actionChangeValue->trigger ();
-			}
+	if (ev->type () == QEvent::MouseButtonDblClick) {
+		QLabel *label = qobject_cast<QLabel*> (o);
+		if (label->isEnabled ()) {
+			actionChangeValue->setParent (label);
+			actionChangeValue->trigger ();
 		}
+	}
 
-		if (ev->type () == QEvent::ContextMenu) {
-			QContextMenuEvent *contextEvent = static_cast<QContextMenuEvent*> (ev);
-			QLabel *label = qobject_cast<QLabel*> (o);
-			QMenu menu;
-			if (label->isEnabled ()) {
-				actionChangeValue->setParent (label);
-				menu.addAction (actionChangeValue);
-				menu.exec (label->mapToGlobal (contextEvent->pos ()));
-			}
+
+	if (ev->type () == QEvent::ContextMenu) {
+		QContextMenuEvent *contextEvent = static_cast<QContextMenuEvent*> (ev);
+		QLabel *label = qobject_cast<QLabel*> (o);
+		QMenu menu;
+		if (label->isEnabled ()) {
+			actionChangeValue->setParent (label);
+			menu.addAction (actionChangeValue);
+			menu.exec (label->mapToGlobal (contextEvent->pos ()));
 		}
 	}
 
 	return QWidget::eventFilter (0, ev);
 }
 
-void InOutWidget::changeValue ()
+void InputWidget::changeValue ()
 {
 	QAction *action = qobject_cast<QAction*> (sender ());
 	if (!action)
@@ -162,7 +156,7 @@ void InOutWidget::changeValue ()
 	}
 }
 
-void InOutWidget::setCount (int count)
+void InputWidget::setCount (int count)
 {
 	m_count = count;
 
@@ -172,16 +166,7 @@ void InOutWidget::setCount (int count)
 	updateLabelsText ();
 }
 
-void InOutWidget::setInputCaptions (const QStringList& captions)
-{
-	for (int i = 0; i < 6; i++) {
-		m_captions [i] = captions.at (i);
-		labels [i]->setEnabled (!m_captions [i].isEmpty ());
-	}
-	updateLabelsText ();
-}
-
-bool InOutWidget::isValid () const
+bool InputWidget::isValid () const
 {
 	for (int i = 0; i < m_count; i++) {
 		if (m_values [i].isEmpty ()) {
@@ -192,10 +177,10 @@ bool InOutWidget::isValid () const
 	return true;
 }
 
-void InOutWidget::updateLabelsText ()
+void InputWidget::updateLabelsText ()
 {
 	for (int i = 0; i < 6; i++) {
-		const QString caption = m_type == In ? QString("A%1").arg (i) : m_captions [i];
+		const QString caption = QString("A%1").arg (i);
 		if (!m_values [i].isEmpty () && labels [i]->isEnabled ()) {
 			QString text = "<p> " + caption + " =  " + Operations::binToString (m_values [i]) + " / " + QString::number (m_scaleFactor * 2) + "  </p>";
 			text = text.replace ("-1", "<span style=\"text-decoration: overline\">1</span>");
@@ -213,7 +198,7 @@ void InOutWidget::updateLabelsText ()
 	}
 }
 
-QStringList InOutWidget::outputCaptions () const
+QStringList InputWidget::outputCaptions () const
 {
 	QStringList l;
 	for (int i = 0, count = labels.size (); i < count; i++) {
@@ -222,14 +207,7 @@ QStringList InOutWidget::outputCaptions () const
 	return l;
 }
 
-void InOutWidget::setValue (int index, const QByteArray& value)
-{
-	m_values [index] = value;
-	updateScaledFactor ();
-	updateLabelsText ();
-}
-
-QByteArray InOutWidget::saveState () const
+QByteArray InputWidget::saveState () const
 {
 	QByteArray state;
 
@@ -242,7 +220,7 @@ QByteArray InOutWidget::saveState () const
 	return state;
 }
 
-void InOutWidget::restoreState (QByteArray state)
+void InputWidget::restoreState (QByteArray state)
 {
 	QDataStream stream (&state, QIODevice::ReadOnly);
 
@@ -254,13 +232,13 @@ void InOutWidget::restoreState (QByteArray state)
 	updateLabelsText ();
 }
 
-void InOutWidget::setScaledFactor (int scaledFactor)
+void InputWidget::setScaledFactor (int scaledFactor)
 {
 	m_scaleFactor = scaledFactor;
 	sendValues ();
 }
 
-void InOutWidget::updateScaledFactor ()
+void InputWidget::updateScaledFactor ()
 {
 	m_scaleFactor = 0;
 	for (int i = 0; i < m_count; i++) {
@@ -273,7 +251,7 @@ void InOutWidget::updateScaledFactor ()
 	sendValues ();
 }
 
-void InOutWidget::sendValues ()
+void InputWidget::sendValues ()
 {
 	for (int i = 0; i < m_count; i++) {
 		if (!m_values [i].isEmpty ()) {

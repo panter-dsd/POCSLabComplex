@@ -22,55 +22,35 @@
 * Contact:		panter.dsd@gmail.com
 *******************************************************************/
 
-#ifndef INOUTWIDGET_H
-#define INOUTWIDGET_H
+#ifndef OUTPUTWIDGET_H
+#define OUTPUTWIDGET_H
 
 class QLabel;
 class QAction;
 
 #include <QtGui/QWidget>
 
-class InOutWidget : public QWidget {
+class OutputWidget : public QWidget {
 	Q_OBJECT
 
-public:
-	enum Type {
-		In = 0,
-		Out
-	};
-
 private:
-	int m_type;
 	QByteArray m_values[6];
 	QList<QLabel*> labels;
-	int m_count;
 	QString m_captions [6];
 	int m_scaleFactor;
 
-	QAction *actionChangeValue;
-
 public:
-	InOutWidget (Type type, QWidget *parent = 0);
-	virtual ~InOutWidget ()
+	OutputWidget (QWidget *parent = 0);
+	virtual ~OutputWidget ()
 	{}
 
-	void setCount (int count);
 	void setInputCaptions (const QStringList& captions); 
-
-	QByteArray value (int index) const
-	{ return m_values [index]; }
-
-	bool isValid () const;
-
-	QStringList outputCaptions () const;
 
 	QByteArray saveState () const;
 	void restoreState (QByteArray state);
 
 private:
 	void retranslateStrings ();
-	void updateScaledFactor ();
-	void sendValues ();
 
 protected:
 	void paintEvent (QPaintEvent *ev);
@@ -78,14 +58,9 @@ protected:
 	bool event (QEvent *ev);
 
 private Q_SLOTS:
-	void changeValue ();
 	void updateLabelsText ();
 	void setValue (int index, const QByteArray& value);
 	void setScaledFactor (int scaledFactor);
-
-Q_SIGNALS:
-	void valueChanged (int index, const QByteArray& value);
-	void scaledFactorChanged (int value);
 };
 
-#endif //INOUTWIDGET_H
+#endif //OUTPUTWIDGET_H

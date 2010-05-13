@@ -22,53 +22,60 @@
 * Contact:		panter.dsd@gmail.com
 *******************************************************************/
 
-#ifndef MICROCIRCUITWIDGET_H
-#define MICROCIRCUITWIDGET_H
+#ifndef INPUTWIDGET_H
+#define INPUTWIDGET_H
 
-class InputWidget;
-class OutputWidget;
-class SwitchboardWidget;
-class MicroprocessorWidget;
 class QLabel;
-class QToolButton;
+class QAction;
 
 #include <QtGui/QWidget>
 
-class MicrocircuitWidget : public QWidget {
+class InputWidget : public QWidget {
 	Q_OBJECT
 
 private:
-	QLabel *inputLabel;
-	QLabel *inputSwitchboardLabel;
-	QLabel *microprocessorLabel;
-	QLabel *outputLabel;
-	QToolButton *closeButton;
+	QByteArray m_values[6];
+	QList<QLabel*> labels;
+	int m_count;
+	int m_scaleFactor;
 
-	InputWidget *inputWidget;
-	SwitchboardWidget *inputSwitchboard;
-	MicroprocessorWidget *microprocessor;
-	OutputWidget *outputWidget;
+	QAction *actionChangeValue;
 
 public:
-	MicrocircuitWidget (QWidget *parent = 0);
-	virtual ~MicrocircuitWidget ()
+	InputWidget (QWidget *parent = 0);
+	virtual ~InputWidget ()
 	{}
 
+	void setCount (int count);
+
+	QByteArray value (int index) const
+	{ return m_values [index]; }
+
 	bool isValid () const;
-	void start ();
+
+	QStringList outputCaptions () const;
 
 	QByteArray saveState () const;
 	void restoreState (QByteArray state);
 
-protected:
-	bool event (QEvent *ev);
-
 private:
 	void retranslateStrings ();
+	void updateScaledFactor ();
+	void sendValues ();
+
+protected:
+	void paintEvent (QPaintEvent *ev);
+	bool eventFilter (QObject *o, QEvent *ev);
+	bool event (QEvent *ev);
 
 private Q_SLOTS:
-	void microprocessorNameChanged (const QString& name);
-	void microprocessorSchemeChanged ();
+	void changeValue ();
+	void updateLabelsText ();
+	void setScaledFactor (int scaledFactor);
+
+Q_SIGNALS:
+	void valueChanged (int index, const QByteArray& value);
+	void scaledFactorChanged (int value);
 };
 
-#endif //MICROCIRCUITWIDGET_H
+#endif //INPUTWIDGET_H

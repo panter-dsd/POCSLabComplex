@@ -31,7 +31,8 @@
 #include <QtGui/QStyle>
 
 #include "microcircuitwidget.h"
-#include "inoutwidget.h"
+#include "inputwidget.h"
+#include "outputwidget.h"
 #include "switchboardwidget.h"
 #include "microprocessorwidget.h"
 
@@ -50,10 +51,10 @@ MicrocircuitWidget::MicrocircuitWidget (QWidget *parent)
 	outputLabel = new QLabel (this);
 	outputLabel->setAlignment (Qt::AlignHCenter);
 
-	inputInOut = new InOutWidget (InOutWidget::In, this);
+	inputWidget = new InputWidget (this);
 
 	inputSwitchboard = new SwitchboardWidget (this);
-	connect (inputInOut, SIGNAL (valueChanged (int, QByteArray)), inputSwitchboard, SLOT (setValue (int, QByteArray)));
+	connect (inputWidget, SIGNAL (valueChanged (int, QByteArray)), inputSwitchboard, SLOT (setValue (int, QByteArray)));
 
 	microprocessor = new MicroprocessorWidget (this);
 	microprocessorLabel->setText (microprocessor->name ());
@@ -61,8 +62,8 @@ MicrocircuitWidget::MicrocircuitWidget (QWidget *parent)
 	connect (microprocessor, SIGNAL (schemeChanged ()), this, SLOT (microprocessorSchemeChanged ()));
 	connect (inputSwitchboard, SIGNAL (valueChanged (int, QByteArray)), microprocessor, SLOT (setValue (int, QByteArray)));
 
-	outputInOut = new InOutWidget (InOutWidget::Out, this);
-	connect (microprocessor, SIGNAL (valueChanged (int, QByteArray)), outputInOut, SLOT (setValue (int, QByteArray)));
+	outputWidget = new OutputWidget (this);
+	connect (microprocessor, SIGNAL (valueChanged (int, QByteArray)), outputWidget, SLOT (setValue (int, QByteArray)));
 
 	closeButton = new QToolButton (this);
 	closeButton->setIcon (style ()->standardIcon (QStyle::SP_TitleBarCloseButton));
@@ -78,10 +79,10 @@ MicrocircuitWidget::MicrocircuitWidget (QWidget *parent)
 	mainLayout->addWidget (outputLabel, 0, 3);
 	mainLayout->addWidget (closeButton, 0, 4);
 
-	mainLayout->addWidget (inputInOut, 1, 0);
+	mainLayout->addWidget (inputWidget, 1, 0);
 	mainLayout->addWidget (inputSwitchboard, 1, 1);
 	mainLayout->addWidget (microprocessor, 1, 2);
-	mainLayout->addWidget (outputInOut, 1, 3);
+	mainLayout->addWidget (outputWidget, 1, 3);
 	setLayout (mainLayout);
 
 	retranslateStrings ();
@@ -112,15 +113,15 @@ void MicrocircuitWidget::microprocessorNameChanged (const QString& name)
 
 void MicrocircuitWidget::microprocessorSchemeChanged ()
 {
-	inputInOut->setCount (microprocessor->inputsCount ());
-	inputSwitchboard->setInputCaptions(inputInOut->outputCaptions ());
+	inputWidget->setCount (microprocessor->inputsCount ());
+	inputSwitchboard->setInputCaptions(inputWidget->outputCaptions ());
 	inputSwitchboard->setOutputCaptions (microprocessor->inputCaptions ());
-	outputInOut->setInputCaptions (microprocessor->outputCaptions ());
+	outputWidget->setInputCaptions (microprocessor->outputCaptions ());
 }
 
 bool MicrocircuitWidget::isValid () const
 {
-	return inputInOut->isValid () && inputSwitchboard->isValid () && microprocessor->isValid ();
+	return inputWidget->isValid () && inputSwitchboard->isValid () && microprocessor->isValid ();
 }
 
 void MicrocircuitWidget::start ()
@@ -134,7 +135,7 @@ QByteArray MicrocircuitWidget::saveState () const
 
 	QDataStream stream (&state, QIODevice::WriteOnly);
 	stream << microprocessor->saveState ();
-	stream << inputInOut->saveState ();
+	stream << inputWidget->saveState ();
 	stream << inputSwitchboard->saveState ();
 
 	return state;
@@ -148,7 +149,7 @@ void MicrocircuitWidget::restoreState (QByteArray state)
 	stream >> data;
 	microprocessor->restoreState (data);
 	stream >> data;
-	inputInOut->restoreState (data);
+	inputWidget->restoreState (data);
 	stream >> data;
 	inputSwitchboard->restoreState (data);
 }
