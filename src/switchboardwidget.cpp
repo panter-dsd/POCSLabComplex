@@ -138,12 +138,7 @@ void SwitchboardWidget::setConnections ()
 
 	if (d.exec ()) {
 		m_connections = d.connections ();
-		QMapIterator <int, int> it (m_connections);
-		while (it.hasNext ()) {
-			it.next ();
-
-			emit valueChanged (it.value (), m_inputValues [it.key ()]);
-		}
+		sendValues ();
 	}
 }
 
@@ -182,4 +177,16 @@ void SwitchboardWidget::restoreState (QByteArray state)
 	QDataStream stream (&state, QIODevice::ReadOnly);
 
 	stream >> m_connections;
+	sendValues ();
+}
+
+void SwitchboardWidget::sendValues ()
+{
+	QMapIterator <int, int> it (m_connections);
+	while (it.hasNext ()) {
+		it.next ();
+		
+		emit valueChanged (it.value (), m_inputValues [it.key ()]);
+	}
+
 }

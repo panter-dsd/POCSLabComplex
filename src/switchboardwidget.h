@@ -68,6 +68,7 @@ public:
 
 private:
 	void retranslateStrings ();
+	void sendValues ();
 
 protected:
 	void paintEvent (QPaintEvent *ev);

@@ -255,18 +255,7 @@ void InputWidget::sendValues ()
 {
 	for (int i = 0; i < m_count; i++) {
 		if (!m_values [i].isEmpty ()) {
-			QByteArray tmp (m_values [i]);
-			tmp.remove (tmp.indexOf ('.'), 1);
-			switch (m_scaleFactor) {
-			case 0:
-				tmp.remove (0, 1);
-				break;
-			case 1:
-				break;
-			default:
-				tmp.rightJustified ((char) 0, tmp.size () + m_scaleFactor - 1);
-			}
-			emit valueChanged (i, tmp);
+			emit valueChanged (i, Operations::scaleIn (m_values [i], m_scaleFactor));
 		}
 	}
 }

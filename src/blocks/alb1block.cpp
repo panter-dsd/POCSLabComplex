@@ -28,6 +28,7 @@
 
 #include "alb1block.h"
 #include "operationdialog.h"
+#include "operations.h"
 
 Alb1Block::Alb1Block (const QString& caption, QWidget *parent)
 	: AbstractBlock (caption, parent)
@@ -65,27 +66,18 @@ void Alb1Block::chooseOperation ()
 	}
 }
 
-void Alb1Block::updateToolTip ()
-{
-	QString m_toolTip = "<h2 align=center><u>" + m_caption + "</u></h2>";
-
-	if (m_operation >= 0) {
-		m_toolTip += "<p><b>";
-		m_toolTip += tr ("Current operation");
-		m_toolTip += "</b>: ";
-		if (m_isModule)
-			m_toolTip += moduleOperations.value (m_operation);
-		else
-			m_toolTip += operations.value (m_operation);
-		m_toolTip += "</p>";
-	}
-
-	setToolTip (m_toolTip);
-}
-
-QByteArray Alb1Block::calculate ()
+bool Alb1Block::calculate ()
 {
 	if (!isValid ()) {
-		return QByteArray ();
+		return false;
 	}
+
+	switch (m_operation) {
+	case 0:
+		m_calculatedValue = Operations::add (m_firstValue, m_secondValue);
+		break;
+	}
+
+	updateToolTip ();
+	return true;
 }

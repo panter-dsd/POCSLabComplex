@@ -53,27 +53,11 @@ void Mb2Block::chooseOperation ()
 	}
 }
 
-void Mb2Block::updateToolTip ()
-{
-	QString m_toolTip = "<h2 align=center><u>" + m_caption + "</u></h2>";
-
-	if (m_operation >= 0) {
-		m_toolTip += "<p><b>";
-		m_toolTip += tr ("Current operation");
-		m_toolTip += "</b>: ";
-		if (m_isModule)
-			m_toolTip += moduleOperations.value (m_operation);
-		else
-			m_toolTip += operations.value (m_operation);
-		m_toolTip += "</p>";
-	}
-
-	setToolTip (m_toolTip);
-}
-
-QByteArray Mb2Block::calculate ()
+bool Mb2Block::calculate ()
 {
 	if (!isValid ()) {
-		return QByteArray ();
+		return false;
 	}
+
+	updateToolTip ();
 }

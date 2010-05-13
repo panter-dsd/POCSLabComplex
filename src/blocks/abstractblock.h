@@ -80,8 +80,11 @@ public:
 	bool isValid () const
 	{ return m_operation >= 0; }
 
-	virtual QByteArray calculate ()
-	{ return QByteArray (); }
+	virtual bool calculate ()
+	{ return false; }
+
+	QByteArray calculatedValue () const
+	{ return m_calculatedValue;}
 
 protected:
 	void paintEvent (QPaintEvent *ev);

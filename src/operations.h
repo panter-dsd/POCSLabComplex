@@ -60,6 +60,8 @@ public:
 	static QByteArray add (const QByteArray& first, const QByteArray& second);
 	static QByteArray mul (const QByteArray& first, const QByteArray& second);
 	static QByteArray invert (const QByteArray& value);
+	static QByteArray scaleIn (const QByteArray& value, int scaleFactor);
+	static QByteArray scaleOut (const QByteArray& value, int scaleFactor);
 };
 
 #endif //OPERATIONS_H

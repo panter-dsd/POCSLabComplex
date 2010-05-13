@@ -33,10 +33,7 @@ class Alb2Block : public AbstractBlock
 
 public:
 	Alb2Block (const QString& caption = 0, QWidget *parent = 0);
-	QByteArray calculate ();
-
-private:
-	void updateToolTip ();
+	bool calculate ();
 
 public Q_SLOTS:
 	void chooseOperation ();

@@ -181,8 +181,8 @@ QByteArray Operations::add (const QByteArray& first, const QByteArray& second)
 {
 	QByteArray a (first);
 	QByteArray b (second);
-	a.leftJustified (b.size (), (char) 0);
-	b.leftJustified (a.size (), (char) 0);
+	a = a.rightJustified (b.size (), (char) 0);
+	b = b.rightJustified (a.size (), (char) 0);
 
 	QByteArray s1, p1, c0;
 	p1.append ((char) 0);
@@ -260,7 +260,7 @@ QByteArray Operations::add (const QByteArray& first, const QByteArray& second)
 
 	//Second step
 
-	s1.rightJustified (p1.size (), (char) 0);
+	s1 = s1.rightJustified (p1.size (), (char) 0);
 
 	for (int i = s1.size () - 1; i >= 0; i--) {
 		switch (s1 [i]) {
@@ -309,8 +309,8 @@ QByteArray Operations::add (const QByteArray& first, const QByteArray& second)
 
 	//Third step
 
-	s2.rightJustified (c0.size (), (char) 0);
-	p2.rightJustified (c0.size (), (char) 0);
+	s2 = s2.rightJustified (c0.size (), (char) 0);
+	p2 = p2.rightJustified (c0.size (), (char) 0);
 
 	for (int i = c0.size () - 1; i >= 0; i--) {
 		char c = s2 [i] + p2 [i] + c0 [i];
@@ -319,6 +319,10 @@ QByteArray Operations::add (const QByteArray& first, const QByteArray& second)
 			c = 0;
 		}
 		value.insert (0, c);
+	}
+
+	while (value.size () != a.size () && value [0] == (char) 0) {
+		value.remove (0, 1);
 	}
 
 	return value;
@@ -358,6 +362,39 @@ QByteArray Operations::invert (const QByteArray& value)
 
 	for (int i = 0, size = value.size (); i < size; i++) {
 		result.append (value [i] * (char) -1);
+	}
+	
+	return result;
+}
+
+QByteArray Operations::scaleIn (const QByteArray& value, int scaleFactor)
+{
+	QByteArray result (value);
+	result.remove (result.indexOf ('.'), 1);
+	switch (scaleFactor) {
+	case 0:
+		result.remove (0, 1);
+		break;
+	case 1:
+		break;
+	default:
+		result = result.rightJustified ((char) 0, result.size () + scaleFactor - 1);
+	}
+
+	return result;
+}
+
+QByteArray Operations::scaleOut (const QByteArray& value, int scaleFactor)
+{
+	QByteArray result (value);
+
+	if (scaleFactor == 0) {
+		result.insert (1, '.');
+	} else {
+		result.insert (scaleFactor, '.');
+		while (result [1] != '.') {
+			result.remove (0, 1);
+		}
 	}
 	
 	return result;

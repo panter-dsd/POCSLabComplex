@@ -127,7 +127,7 @@ bool MicrocircuitWidget::isValid () const
 
 void MicrocircuitWidget::start ()
 {
-
+	microprocessor->calculate ();
 }
 
 QByteArray MicrocircuitWidget::saveState () const

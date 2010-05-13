@@ -108,6 +108,8 @@ public:
 	QByteArray saveState () const;
 	void restoreState (QByteArray state);
 
+	bool calculate ();
+
 protected:
 	void paintEvent (QPaintEvent *ev);
 	void resizeEvent (QResizeEvent *ev);
@@ -116,16 +118,22 @@ protected:
 private:
 	void paint_0 (QPaintEvent *ev, QPainter *painter);
 	void resize_0 ();
+	bool calculate_0 ();
 	void paint_1 (QPaintEvent *ev, QPainter *painter);
 	void resize_1 ();
+	bool calculate_1 ();
 	void paint_2 (QPaintEvent *ev, QPainter *painter);
 	void resize_2 ();
+	bool calculate_2 ();
 	void paint_4 (QPaintEvent *ev, QPainter *painter);
 	void resize_4 ();
+	bool calculate_4 ();
 	void paint_5 (QPaintEvent *ev, QPainter *painter);
 	void resize_5 ();
+	bool calculate_5 ();
 	void paint_6 (QPaintEvent *ev, QPainter *painter);
 	void resize_6 ();
+	bool calculate_6 ();
 	void retranslateStrings ();
 	void setCaptions ();
 	void clearValues ();

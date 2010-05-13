@@ -29,6 +29,7 @@
 #include <QtGui/QAction>
 
 #include "abstractblock.h"
+#include "operations.h"
 
 AbstractBlock::AbstractBlock (const QString& caption, QWidget *parent)
 	: QWidget (parent), m_caption (caption), m_isModule (false), m_operation (-1)
@@ -99,16 +100,50 @@ void AbstractBlock::paintEvent (QPaintEvent */*ev*/)
 void AbstractBlock::setFirstValue (const QByteArray& value)
 {
 	m_firstValue = value;
+	updateToolTip ();
 }
 
 void AbstractBlock::setSecondValue (const QByteArray& value)
 {
 	m_secondValue = value;
+	updateToolTip ();
 }
 
 void AbstractBlock::updateToolTip ()
 {
-	setToolTip ("<h2 align=center><u>" + m_caption + "</u></h2>");
+	QString m_toolTip = "<h2 align=center><u>" + m_caption + "</u></h2>";
+
+	if (m_operation >= 0) {
+		m_toolTip += "<p><b>";
+		m_toolTip += tr ("Current operation");
+		m_toolTip += "</b>: ";
+		if (m_isModule)
+			m_toolTip += moduleOperations.value (m_operation);
+		else
+			m_toolTip += operations.value (m_operation);
+		m_toolTip += "</p>";
+	}
+
+	m_toolTip += "<p><b>";
+	m_toolTip += tr ("First value");
+	m_toolTip += "</b>: ";
+	m_toolTip += Operations::binToString (m_firstValue);
+	m_toolTip += "</p>";
+
+	m_toolTip += "<p><b>";
+	m_toolTip += tr ("Second value");
+	m_toolTip += "</b>: ";
+	m_toolTip += Operations::binToString (m_secondValue);
+	m_toolTip += "</p>";
+
+	m_toolTip += "<p><b>";
+	m_toolTip += tr ("Result");
+	m_toolTip += "</b>: ";
+	m_toolTip += Operations::binToString (m_calculatedValue);
+	m_toolTip += "</p>";
+
+
+	setToolTip (m_toolTip);
 }
 
 bool AbstractBlock::event (QEvent *ev)
