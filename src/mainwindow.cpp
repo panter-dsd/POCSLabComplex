@@ -80,15 +80,24 @@ MainWindow::MainWindow (QWidget* parent, Qt::WFlags f)
 	actionSave->setIcon (style ()->standardIcon (QStyle::SP_DialogSaveButton));
 	connect (actionSave, SIGNAL (triggered ()), this, SLOT (save ()));
 
+	actionExit = new QAction (this);
+	actionExit->setShortcut (Qt::ALT + Qt::Key_X);
+	actionExit->setIcon (style ()->standardIcon (QStyle::SP_DialogCloseButton));
+	connect (actionExit, SIGNAL (triggered ()), this, SLOT (close ()));
+
 	QMenuBar *mainMenu = new QMenuBar (this);
 	setMenuBar (mainMenu);
 
 	fileMenu = new QMenu (this);
 	fileMenu->addAction (actionOpen);
 	fileMenu->addAction (actionSave);
-	fileMenu->addAction (actionAddMicrocircuit);
-	fileMenu->addAction (actionStart);
+	fileMenu->addAction (actionExit);
 	mainMenu->addMenu (fileMenu);
+
+	operationsMenu = new QMenu (this);
+	operationsMenu->addAction (actionAddMicrocircuit);
+	operationsMenu->addAction (actionStart);
+	mainMenu->addMenu (operationsMenu);
 
 	retranslateStrings ();
 }
@@ -101,11 +110,13 @@ MainWindow::~MainWindow ()
 void MainWindow::retranslateStrings ()
 {
 	fileMenu->setTitle (tr ("File"));
+	operationsMenu->setTitle (tr ("Operations"));
 
 	actionAddMicrocircuit->setText (tr ("Add microcircuit"));
 	actionStart->setText (tr ("Start"));
 	actionOpen->setText (tr ("Open"));
 	actionSave->setText (tr ("Save"));
+	actionExit->setText (tr ("Exit"));
 }
 
 bool MainWindow::event (QEvent *ev)

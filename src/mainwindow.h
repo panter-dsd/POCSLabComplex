@@ -40,11 +40,13 @@ private:
 	QWidget *centralWidget;
 
 	QMenu *fileMenu;
+	QMenu *operationsMenu;
 
 	QAction *actionAddMicrocircuit;
 	QAction *actionStart;
 	QAction *actionOpen;
 	QAction *actionSave;
+	QAction *actionExit;
 
 public:
 	MainWindow (QWidget* parent = 0, Qt::WFlags f = 0);
