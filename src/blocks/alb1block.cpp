@@ -37,9 +37,9 @@ Alb1Block::Alb1Block (const QString& caption, QWidget *parent)
 	operations.insert (1, "a - b");
 	operations.insert (2, "a + 0");
 	operations.insert (3, "max (a, b)");
-	operations.insert (4, " (a + b)/2");
-	operations.insert (5, " (a - b)/2");
-	operations.insert (6, " (a + 0)/2");
+	operations.insert (4, "(a + b)/2");
+	operations.insert (5, "(a - b)/2");
+	operations.insert (6, "(a + 0)/2");
 	operations.insert (7, "a");
 
 	moduleOperations.insert (0, "|a + b|");
@@ -75,6 +75,26 @@ bool Alb1Block::calculate ()
 	switch (m_operation) {
 	case 0:
 		m_calculatedValue = Operations::add (m_firstValue, m_secondValue);
+		break;
+	case 1:
+		m_calculatedValue = Operations::add (m_firstValue, Operations::invert(m_secondValue));
+		break;
+	case 2:
+		m_calculatedValue = Operations::add (m_firstValue, QByteArray ());
+		break;
+	case 3:
+		break;
+	case 4:
+		m_calculatedValue = Operations::scaleIn (Operations::add (m_firstValue, m_secondValue), 1);
+		break;
+	case 5:
+		m_calculatedValue = Operations::scaleIn (Operations::add (m_firstValue, Operations::invert(m_secondValue)), 1);
+		break;
+	case 6:
+		m_calculatedValue = Operations::scaleIn (Operations::add (m_firstValue, QByteArray ()), 1);
+		break;
+	case 7:
+		m_calculatedValue = m_firstValue;
 		break;
 	}
 
