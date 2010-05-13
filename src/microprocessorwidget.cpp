@@ -1450,5 +1450,68 @@ bool MicroprocessorWidget::calculate_5 ()
 
 bool MicroprocessorWidget::calculate_6 ()
 {
+	//Mb1
+	mb1->setFirstValue (inputValues [2]);
+	mb1->setSecondValue (inputValues [3]);
 
+	if (!mb1->calculate ()) {
+		return false;
+	}
+
+	const QByteArray& mb1Result = mb1->calculatedValue ();
+
+	outputValues [3] = mb1Result;
+	emit valueChanged (3, outputValues [3]);
+
+	//Mb2
+	mb2->setFirstValue (inputValues [4]);
+	mb2->setSecondValue (inputValues [5]);
+
+	if (!mb2->calculate ()) {
+		return false;
+	}
+
+	const QByteArray& mb2Result = mb2->calculatedValue ();
+
+	outputValues [5] = mb2Result;
+	emit valueChanged (5, outputValues [5]);
+
+	//Alb2
+	alb2->setFirstValue (mb1Result);
+	alb2->setSecondValue (mb2Result);
+
+	if (!alb2->calculate ()) {
+		return false;
+	}
+
+	const QByteArray& alb2Result = alb2->calculatedValue ();
+
+	outputValues [4] = alb2Result;
+	emit valueChanged (4, outputValues [4]);
+
+	//Alb1
+	alb1->setFirstValue (mb1Result);
+	alb1->setSecondValue (alb2Result);
+
+	if (!alb1->calculate ()) {
+		return false;
+	}
+
+	const QByteArray& alb1Result = alb1->calculatedValue ();
+
+	outputValues [0] = alb1Result;
+	emit valueChanged (0, outputValues [0]);
+
+	//Alb3
+	alb3->setFirstValue (alb2Result);
+	alb3->setSecondValue (mb1Result);
+
+	if (!alb3->calculate ()) {
+		return false;
+	}
+
+	const QByteArray& alb3Result = alb3->calculatedValue ();
+
+	outputValues [2] = alb3Result;
+	emit valueChanged (2, outputValues [2]);
 }
