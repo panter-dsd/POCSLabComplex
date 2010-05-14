@@ -133,19 +133,19 @@ void AbstractBlock::updateToolTip ()
 	m_toolTip += "<p><b>";
 	m_toolTip += tr ("First value");
 	m_toolTip += "</b>: ";
-	m_toolTip += Operations::binToString (m_firstValue);
+	m_toolTip += Operations::binToHtmlString (m_firstValue);
 	m_toolTip += "</p>";
 
 	m_toolTip += "<p><b>";
 	m_toolTip += tr ("Second value");
 	m_toolTip += "</b>: ";
-	m_toolTip += Operations::binToString (m_secondValue);
+	m_toolTip += Operations::binToHtmlString (m_secondValue);
 	m_toolTip += "</p>";
 
 	m_toolTip += "<p><b>";
 	m_toolTip += tr ("Result");
 	m_toolTip += "</b>: ";
-	m_toolTip += Operations::binToString (m_calculatedValue);
+	m_toolTip += Operations::binToHtmlString (m_calculatedValue);
 	m_toolTip += "</p>";
 
 	setToolTip (m_toolTip);
