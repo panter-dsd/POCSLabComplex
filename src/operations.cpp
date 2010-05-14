@@ -206,9 +206,9 @@ QByteArray Operations::add (const QByteArray& first, const QByteArray& second)
 				c0.insert (0, (char) 0);
 				break;
 			case (char) 0:
-				s1.insert (0, (char) 0);
+				s1.insert (0, (char) 1);
 				p1.insert (0, (char) -1);
-				c0.insert (0, (char) 1);
+				c0.insert (0, (char) 0);
 				break;
 			case (char) 1:
 				s1.insert (0, (char) 0);
@@ -220,9 +220,9 @@ QByteArray Operations::add (const QByteArray& first, const QByteArray& second)
 		case (char) 0:
 			switch (b [i]) {
 			case (char) -1:
-				s1.insert (0, (char) 0);
+				s1.insert (0, (char) 1);
 				p1.insert (0, (char) -1);
-				c0.insert (0, (char) 1);
+				c0.insert (0, (char) 0);
 				break;
 			case (char) 0:
 				s1.insert (0, (char) 0);
@@ -230,9 +230,9 @@ QByteArray Operations::add (const QByteArray& first, const QByteArray& second)
 				c0.insert (0, (char) 0);
 				break;
 			case (char) 1:
-				s1.insert (0, (char) 0);
+				s1.insert (0, (char) 1);
 				p1.insert (0, (char) 0);
-				c0.insert (0, (char) 1);
+				c0.insert (0, (char) 0);
 				break;
 			}
 			break;
@@ -244,14 +244,14 @@ QByteArray Operations::add (const QByteArray& first, const QByteArray& second)
 				c0.insert (0, (char) 0);
 				break;
 			case (char) 0:
-				s1.insert (0, (char) 0);
+				s1.insert (0, (char) 1);
 				p1.insert (0, (char) 0);
-				c0.insert (0, (char) 1);
+				c0.insert (0, (char) 0);
 				break;
 			case (char) 1:
-				s1.insert (0, (char) 1);
+				s1.insert (0, (char) 0);
 				p1.insert (0, (char) -1);
-				c0.insert (0, (char) 0);
+				c0.insert (0, (char) 1);
 				break;
 			}
 			break;
