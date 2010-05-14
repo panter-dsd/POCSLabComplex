@@ -55,6 +55,7 @@ public:
 	static QByteArray dizssFromChanels (const QByteArray& positiveChanel, const QByteArray& negativeChanel);
 	static void dizssToChanels (const QByteArray& dizss, QByteArray *positiveChanel, QByteArray *negativeChanel);
 	static QString binToString (const QByteArray& bin);
+	static QString binToHtmlString (const QByteArray& bin);
 	static QByteArray stringToBin (const QString& string);
 	static QByteArray normalizeBin (const QByteArray& bin);
 	static QByteArray add (const QByteArray& first, const QByteArray& second, QString *html = 0);

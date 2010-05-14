@@ -113,6 +113,21 @@ QString Operations::binToString (const QByteArray& bin)
 	return out;
 }
 
+QString Operations::binToHtmlString (const QByteArray& bin)
+{
+	QString out;
+
+	for (int i = 0, size = bin.size (); i < size; i++) {
+		switch (bin [i]) {
+			case -1: out += "<span style=\"text-decoration: overline\">1</span>"; break;
+			case 0: out += "0"; break;
+			case 1: out += "1"; break;
+			default: out += bin [i];
+		}
+	}
+	return out;
+}
+
 QByteArray Operations::stringToBin (const QString& string)
 {
 	QByteArray out;
@@ -324,7 +339,7 @@ QByteArray Operations::add (const QByteArray& first, const QByteArray& second, Q
 
 	if (html) {
 		QStringList l;
-		l << "<TABLE BORDER=1 BORDERCOLOR=\"#000000\" CELLPADDING=4 CELLSPACING=0>";
+		l << "<BR><TABLE BORDER=1 BORDERCOLOR=\"#000000\" CELLPADDING=4 CELLSPACING=0>";
 
 		for (int i = 0, size = value.size () + 1; i < size; i++) {
 			l << "<COL WIDTH=32*>";
