@@ -72,6 +72,8 @@ bool Alb1Block::calculate ()
 		return false;
 	}
 
+	m_html.clear ();
+
 	switch (m_operation) {
 	case 0:
 		m_calculatedValue = Operations::add (m_firstValue, m_secondValue, &m_html);
