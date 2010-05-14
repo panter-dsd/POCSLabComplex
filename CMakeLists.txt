@@ -50,12 +50,14 @@ set (dialogs_SRC
 	src/dialogs/operationdialog.cpp
 	src/dialogs/inputdialog.cpp
 	src/dialogs/switchboarddialog.cpp
+	src/dialogs/reportdialog.cpp
 )
 
 set (dialogs_HEADERS
 	src/dialogs/operationdialog.h
 	src/dialogs/inputdialog.h
 	src/dialogs/switchboarddialog.h
+	src/dialogs/reportdialog.h
 )
 
 ################################################################
