@@ -23,6 +23,7 @@
 *******************************************************************/
 
 #include <QtCore/QDebug>
+#include <QtCore/QStringList>
 
 #include "operations.h"
 
@@ -177,7 +178,7 @@ QByteArray Operations::normalizeBin (const QByteArray& bin)
 	return tmp;
 }
 
-QByteArray Operations::add (const QByteArray& first, const QByteArray& second)
+QByteArray Operations::add (const QByteArray& first, const QByteArray& second, QString *html)
 {
 	QByteArray a (first);
 	QByteArray b (second);
@@ -319,6 +320,139 @@ QByteArray Operations::add (const QByteArray& first, const QByteArray& second)
 			c = 0;
 		}
 		value.insert (0, c);
+	}
+
+	if (html) {
+		QStringList l;
+		l << "<TABLE BORDER=1 BORDERCOLOR=\"#000000\" CELLPADDING=4 CELLSPACING=0>";
+
+		for (int i = 0, size = value.size () + 1; i < size; i++) {
+			l << "<COL WIDTH=32*>";
+		}
+
+		QString rowStr = "<TR>";
+		for (int i = 0, size = value.size () + 1; i < size; i++) {
+			rowStr += QString("<TD align=\"center\">-=%1=-</TD>").arg (i);
+		}
+		rowStr += "</TR>";
+
+		l << rowStr;
+		l [l.size () - 1].replace (QString ("-=%1=-").arg (value.size ()), QObject::tr ("First value"));
+
+		QString tmpStr = binToString (a);
+		for (int i = value.size () - 1, j = tmpStr.size () - 1; i >= 0; i--, j--) {
+			if (j >=1 && tmpStr [j] == '1' && tmpStr [j - 1] == '-') {
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j - 1, 2));
+				j--;
+			} else {
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j, 1));
+			}
+		}
+
+		l << rowStr;
+		l [l.size () - 1].replace (QString ("-=%1=-").arg (value.size ()), QObject::tr ("Second value"));
+
+		tmpStr = binToString (b);
+		for (int i = value.size () - 1, j = tmpStr.size () - 1; i >= 0; i--, j--) {
+			if (j >=1 && tmpStr [j] == '1' && tmpStr [j - 1] == '-') {
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j - 1, 2));
+				j--;
+			} else {
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j, 1));
+			}
+		}
+
+		l << "<TR></TR>";
+
+		l << rowStr;
+		l [l.size () - 1].replace (QString ("-=%1=-").arg (value.size ()), QObject::tr ("S1 &gt;= 0"));
+
+		tmpStr = binToString (s1);
+		for (int i = value.size () - 1, j = tmpStr.size () - 1; i >= 0; i--, j--) {
+			if (j >=1 && tmpStr [j] == '1' && tmpStr [j - 1] == '-') {
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j - 1, 2));
+				j--;
+			} else {
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j, 1));
+			}
+		}
+
+		l << rowStr;
+		l [l.size () - 1].replace (QString ("-=%1=-").arg (value.size ()), QObject::tr ("P1 &lt;= 0"));
+
+		tmpStr = binToString (p1);
+		for (int i = value.size () - 1, j = tmpStr.size () - 1; i >= 0; i--, j--) {
+			if (j >=1 && tmpStr [j] == '1' && tmpStr [j - 1] == '-') {
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j - 1, 2));
+				j--;
+			} else {
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j, 1));
+			}
+		}
+
+		l << "<TR></TR>";
+
+		l << rowStr;
+		l [l.size () - 1].replace (QString ("-=%1=-").arg (value.size ()), QObject::tr ("S2 &lt;= 0"));
+
+		tmpStr = binToString (s2);
+		for (int i = value.size () - 1, j = tmpStr.size () - 1; i >= 0; i--, j--) {
+			if (j >=1 && tmpStr [j] == '1' && tmpStr [j - 1] == '-') {
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j - 1, 2));
+				j--;
+			} else {
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j, 1));
+			}
+		}
+
+		l << rowStr;
+		l [l.size () - 1].replace (QString ("-=%1=-").arg (value.size ()), QObject::tr ("P2 &gt;= 0"));
+
+		tmpStr = binToString (p2);
+		for (int i = value.size () - 1, j = tmpStr.size () - 1; i >= 0; i--, j--) {
+			if (j >=1 && tmpStr [j] == '1' && tmpStr [j - 1] == '-') {
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j - 1, 2));
+				j--;
+			} else {
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j, 1));
+			}
+		}
+
+		l << rowStr;
+		l [l.size () - 1].replace (QString ("-=%1=-").arg (value.size ()), QObject::tr ("C0 &gt;= 0"));
+
+		tmpStr = binToString (c0);
+		for (int i = value.size () - 1, j = tmpStr.size () - 1; i >= 0; i--, j--) {
+			if (j >=1 && tmpStr [j] == '1' && tmpStr [j - 1] == '-') {
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j - 1, 2));
+				j--;
+			} else {
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j, 1));
+			}
+		}
+
+		l << "<TR></TR>";
+
+		l << rowStr;
+		l [l.size () - 1].replace (QString ("-=%1=-").arg (value.size ()), QObject::tr ("Result"));
+
+		tmpStr = binToString (value);
+		for (int i = value.size () - 1, j = tmpStr.size () - 1; i >= 0; i--, j--) {
+			if (j >=1 && tmpStr [j] == '1' && tmpStr [j - 1] == '-') {
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j - 1, 2));
+				j--;
+			} else {
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j, 1));
+			}
+		}
+
+		l << "</TABLE>";
+
+		for (int i = 0, size = l.size (); i < size; i++) {
+			l [i].replace ("-1", "<span style=\"text-decoration: overline\">1</span>");
+		}
+
+		*html = l.join ("\n");
 	}
 
 	while (value.size () != a.size () && value [0] == (char) 0) {

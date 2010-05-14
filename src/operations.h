@@ -57,7 +57,7 @@ public:
 	static QString binToString (const QByteArray& bin);
 	static QByteArray stringToBin (const QString& string);
 	static QByteArray normalizeBin (const QByteArray& bin);
-	static QByteArray add (const QByteArray& first, const QByteArray& second);
+	static QByteArray add (const QByteArray& first, const QByteArray& second, QString *html = 0);
 	static QByteArray mul (const QByteArray& first, const QByteArray& second);
 	static QByteArray invert (const QByteArray& value);
 	static QByteArray scaleIn (const QByteArray& value, int scaleFactor);
