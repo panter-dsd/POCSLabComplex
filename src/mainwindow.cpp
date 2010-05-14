@@ -158,6 +158,8 @@ void MainWindow::saveState (const QString& fileName)
 {
 	QSettings settings (fileName, QSettings::IniFormat);
 
+	settings.remove ("States");
+
 	settings.beginWriteArray ("States");
 
 	int i = 0;
