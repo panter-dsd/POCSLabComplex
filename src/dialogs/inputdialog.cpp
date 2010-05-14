@@ -1,10 +1,8 @@
 #include <QtGui/QLabel>
-#include <QtGui/QComboBox>
 #include <QtGui/QtEvents>
 #include <QtGui/QDialogButtonBox>
 #include <QtGui/QLayout>
 #include <QtGui/QLineEdit>
-#include <QtGui/QSpinBox>
 
 #include "inputdialog.h"
 #include "operations.h"

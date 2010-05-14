@@ -25,21 +25,13 @@
 #ifndef INPUTDIALOG_H
 #define INPUTDIALOG_H
 
-class QComboBox;
 class QLabel;
 class QLineEdit;
-class QSpinBox;
 
 #include <QtGui/QDialog>
 
 class InputDialog : public QDialog {
 	Q_OBJECT
-
-public:
-	enum InputType {
-		Hex,
-		Dec
-	};
 
 private:
 	QLabel *positiveChanelLabel;
@@ -66,6 +58,5 @@ protected:
 private Q_SLOTS:
 	void valueChanged ();
 };
-
 
 #endif //INPUTDIALOG_H
