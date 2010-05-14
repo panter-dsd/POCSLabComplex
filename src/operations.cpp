@@ -467,7 +467,7 @@ QByteArray Operations::add (const QByteArray& first, const QByteArray& second, Q
 			l [i].replace ("-1", "<span style=\"text-decoration: overline\">1</span>");
 		}
 
-		*html = l.join ("\n");
+		*html += l.join ("\n");
 	}
 
 	while (value.size () != a.size () && value [0] == (char) 0) {
@@ -477,7 +477,7 @@ QByteArray Operations::add (const QByteArray& first, const QByteArray& second, Q
 	return value;
 }
 
-QByteArray Operations::mul (const QByteArray& first, const QByteArray& second)
+QByteArray Operations::mul (const QByteArray& first, const QByteArray& second, QString *html)
 {
 	QByteArray a (first.size () > second.size () ? first : second); //Lager
 	QByteArray b (first.size () <= second.size () ? first : second); //Smaller
@@ -485,7 +485,7 @@ QByteArray Operations::mul (const QByteArray& first, const QByteArray& second)
 	QList <QByteArray> chp;
 
 	for (int i = 0, size = b.size (); i < size; i++) {
-		chp.append (a);
+		chp.append (a.rightJustified (a.size () + i + 1, (char) 0));
 
 		switch (b [i]) {
 		case (char) 0:
@@ -497,10 +497,25 @@ QByteArray Operations::mul (const QByteArray& first, const QByteArray& second)
 		}
 	}
 
+	if (html) {
+		QStringList l;
+		l << "<BR>";
+
+		QByteArray tmp;
+		tmp.append ((char) 0);
+		tmp.append ('.');
+		for (int i = 0, size = chp.size (); i < size; i++) {
+			tmp.append (b [i]);
+			l << "<P><b>" + QObject::tr ("ChP") + QString ("%1</b>: %2 * %3 = %4").arg (i + 1).arg (binToHtmlString (a)).arg (binToHtmlString (tmp)).arg (binToHtmlString (chp [i])) + "</P>";
+			tmp [tmp.size () - 1] = (char) 0;
+		}
+		*html += l.join ("\n");
+	}
+
 	QByteArray result = chp [0];
 
 	for (int i = 1, size = chp.size (); i < size; i++) {
-		result = add (result, chp [i]);
+		result = add (result, chp [i], html);
 	}
 	return result;
 }
