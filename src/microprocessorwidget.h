@@ -112,6 +112,9 @@ public:
 
 	bool calculate ();
 
+	QString report () const
+	{ return m_report;}
+
 protected:
 	void paintEvent (QPaintEvent *ev);
 	void resizeEvent (QResizeEvent *ev);

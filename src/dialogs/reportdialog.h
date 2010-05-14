@@ -26,6 +26,8 @@
 #define REPORTDIALOG_H
 
 class QTextEdit;
+class QToolBar;
+class QAction;
 
 #include <QtGui/QDialog>
 
@@ -34,6 +36,13 @@ class ReportDialog : public QDialog {
 
 private:
 	QTextEdit *edit;
+	QToolBar *toolBar;
+
+	QAction *actionPrint;
+	QAction *actionExportToHtml;
+
+	QString m_report;
+
 public:
 	ReportDialog (const QString& report, QWidget *parent = 0);
 	virtual ~ReportDialog ()
@@ -41,10 +50,14 @@ public:
 
 private:
 	void retranslateStrings ();
+	void saveHtml (const QString& fileName);
 
 protected:
 	bool event (QEvent *ev);
-};
 
+private Q_SLOTS:
+	void print ();
+	void exportToHtml ();
+};
 
 #endif //REPORTDIALOG_H
