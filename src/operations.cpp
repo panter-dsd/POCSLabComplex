@@ -357,10 +357,10 @@ QByteArray Operations::add (const QByteArray& first, const QByteArray& second, Q
 		QString tmpStr = binToString (a);
 		for (int i = value.size () - 1, j = tmpStr.size () - 1; i >= 0; i--, j--) {
 			if (j >=1 && tmpStr [j] == '1' && tmpStr [j - 1] == '-') {
-				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j - 1, 2));
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P> </P>" : tmpStr.mid (j - 1, 2));
 				j--;
 			} else {
-				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j, 1));
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P> </P>" : tmpStr.mid (j, 1));
 			}
 		}
 
@@ -370,10 +370,10 @@ QByteArray Operations::add (const QByteArray& first, const QByteArray& second, Q
 		tmpStr = binToString (b);
 		for (int i = value.size () - 1, j = tmpStr.size () - 1; i >= 0; i--, j--) {
 			if (j >=1 && tmpStr [j] == '1' && tmpStr [j - 1] == '-') {
-				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j - 1, 2));
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P> </P>" : tmpStr.mid (j - 1, 2));
 				j--;
 			} else {
-				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j, 1));
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P> </P>" : tmpStr.mid (j, 1));
 			}
 		}
 
@@ -385,10 +385,10 @@ QByteArray Operations::add (const QByteArray& first, const QByteArray& second, Q
 		tmpStr = binToString (s1);
 		for (int i = value.size () - 1, j = tmpStr.size () - 1; i >= 0; i--, j--) {
 			if (j >=1 && tmpStr [j] == '1' && tmpStr [j - 1] == '-') {
-				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j - 1, 2));
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P> </P>" : tmpStr.mid (j - 1, 2));
 				j--;
 			} else {
-				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j, 1));
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P> </P>" : tmpStr.mid (j, 1));
 			}
 		}
 
@@ -398,10 +398,10 @@ QByteArray Operations::add (const QByteArray& first, const QByteArray& second, Q
 		tmpStr = binToString (p1);
 		for (int i = value.size () - 1, j = tmpStr.size () - 1; i >= 0; i--, j--) {
 			if (j >=1 && tmpStr [j] == '1' && tmpStr [j - 1] == '-') {
-				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j - 1, 2));
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P> </P>" : tmpStr.mid (j - 1, 2));
 				j--;
 			} else {
-				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j, 1));
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P> </P>" : tmpStr.mid (j, 1));
 			}
 		}
 
@@ -413,10 +413,10 @@ QByteArray Operations::add (const QByteArray& first, const QByteArray& second, Q
 		tmpStr = binToString (s2);
 		for (int i = value.size () - 1, j = tmpStr.size () - 1; i >= 0; i--, j--) {
 			if (j >=1 && tmpStr [j] == '1' && tmpStr [j - 1] == '-') {
-				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j - 1, 2));
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P> </P>" : tmpStr.mid (j - 1, 2));
 				j--;
 			} else {
-				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j, 1));
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P> </P>" : tmpStr.mid (j, 1));
 			}
 		}
 
@@ -426,10 +426,10 @@ QByteArray Operations::add (const QByteArray& first, const QByteArray& second, Q
 		tmpStr = binToString (p2);
 		for (int i = value.size () - 1, j = tmpStr.size () - 1; i >= 0; i--, j--) {
 			if (j >=1 && tmpStr [j] == '1' && tmpStr [j - 1] == '-') {
-				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j - 1, 2));
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P> </P>" : tmpStr.mid (j - 1, 2));
 				j--;
 			} else {
-				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j, 1));
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P> </P>" : tmpStr.mid (j, 1));
 			}
 		}
 
@@ -439,10 +439,10 @@ QByteArray Operations::add (const QByteArray& first, const QByteArray& second, Q
 		tmpStr = binToString (c0);
 		for (int i = value.size () - 1, j = tmpStr.size () - 1; i >= 0; i--, j--) {
 			if (j >=1 && tmpStr [j] == '1' && tmpStr [j - 1] == '-') {
-				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j - 1, 2));
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P> </P>" : tmpStr.mid (j - 1, 2));
 				j--;
 			} else {
-				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j, 1));
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P> </P>" : tmpStr.mid (j, 1));
 			}
 		}
 
@@ -454,10 +454,10 @@ QByteArray Operations::add (const QByteArray& first, const QByteArray& second, Q
 		tmpStr = binToString (value);
 		for (int i = value.size () - 1, j = tmpStr.size () - 1; i >= 0; i--, j--) {
 			if (j >=1 && tmpStr [j] == '1' && tmpStr [j - 1] == '-') {
-				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j - 1, 2));
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P> </P>" : tmpStr.mid (j - 1, 2));
 				j--;
 			} else {
-				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P></P>" : tmpStr.mid (j, 1));
+				l [l.size () - 1].replace (QString ("-=%1=-").arg (i), j < 0 ? "<P> </P>" : tmpStr.mid (j, 1));
 			}
 		}
 
