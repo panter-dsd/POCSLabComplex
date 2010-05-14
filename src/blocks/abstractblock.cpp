@@ -167,6 +167,6 @@ void AbstractBlock::showReport ()
 {
 	updateToolTip ();
 
-	ReportDialog d (toolTip () + m_html, this);
+	ReportDialog d (toolTip () + m_report, this);
 	d.exec ();
 }

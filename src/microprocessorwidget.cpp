@@ -38,6 +38,7 @@
 #include "alb3block.h"
 #include "mb1block.h"
 #include "mb2block.h"
+#include "reportdialog.h"
 
 const int penWidth = 7;
 
@@ -55,6 +56,10 @@ MicroprocessorWidget::MicroprocessorWidget (QWidget *parent)
 	actionSetModule->setChecked (m_isModule);
 	connect (actionSetModule, SIGNAL (toggled (bool)), this, SLOT (setModule (bool)));
 	addAction (actionSetModule);
+
+	actionShowReport = new QAction (this);
+	connect (actionShowReport, SIGNAL (triggered ()), this, SLOT (showReport ()));
+	addAction (actionShowReport);
 
 	setContextMenuPolicy (Qt::ActionsContextMenu);
 
@@ -870,6 +875,7 @@ void MicroprocessorWidget::retranslateStrings ()
 {
 	actionChooseScheme->setText (tr ("Choose scheme"));
 	actionSetModule->setText (tr ("Set module"));
+	actionShowReport->setText (tr ("Show report"));
 
 	m_name = tr ("MP 4.601V ZHZ - 0034 Scheme %1").arg (m_scheme >= 0 ? QString::number (m_scheme) : tr ("is not valid"));
 	emit nameChanged (m_name);
@@ -1090,6 +1096,8 @@ void MicroprocessorWidget::setModule (bool isModule)
 
 bool MicroprocessorWidget::calculate ()
 {
+	m_report.clear ();
+
 	switch (m_scheme) {
 	case 0:
 		return calculate_0 ();
@@ -1178,6 +1186,12 @@ bool MicroprocessorWidget::calculate_0 ()
 
 	outputValues [1] = alb3Result;
 	emit valueChanged (1, outputValues [1]);
+
+	m_report += alb1->report ();
+	m_report += alb2->report ();
+	m_report += alb3->report ();
+	m_report += mb1->report ();
+	m_report += mb2->report ();
 }
 
 bool MicroprocessorWidget::calculate_1 ()
@@ -1244,6 +1258,12 @@ bool MicroprocessorWidget::calculate_1 ()
 
 	outputValues [1] = alb3Result;
 	emit valueChanged (1, outputValues [1]);
+
+	m_report += alb1->report ();
+	m_report += alb2->report ();
+	m_report += alb3->report ();
+	m_report += mb1->report ();
+	m_report += mb2->report ();
 }
 
 bool MicroprocessorWidget::calculate_2 ()
@@ -1310,6 +1330,12 @@ bool MicroprocessorWidget::calculate_2 ()
 
 	outputValues [1] = alb3Result;
 	emit valueChanged (1, outputValues [1]);
+
+	m_report += alb1->report ();
+	m_report += alb2->report ();
+	m_report += alb3->report ();
+	m_report += mb1->report ();
+	m_report += mb2->report ();
 }
 
 bool MicroprocessorWidget::calculate_4 ()
@@ -1378,6 +1404,12 @@ bool MicroprocessorWidget::calculate_4 ()
 
 	outputValues [2] = alb3Result;
 	emit valueChanged (2, outputValues [2]);
+
+	m_report += alb1->report ();
+	m_report += alb2->report ();
+	m_report += alb3->report ();
+	m_report += mb1->report ();
+	m_report += mb2->report ();
 }
 
 bool MicroprocessorWidget::calculate_5 ()
@@ -1446,6 +1478,12 @@ bool MicroprocessorWidget::calculate_5 ()
 
 	outputValues [1] = alb3Result;
 	emit valueChanged (1, outputValues [1]);
+
+	m_report += alb1->report ();
+	m_report += alb2->report ();
+	m_report += alb3->report ();
+	m_report += mb1->report ();
+	m_report += mb2->report ();
 }
 
 bool MicroprocessorWidget::calculate_6 ()
@@ -1514,4 +1552,16 @@ bool MicroprocessorWidget::calculate_6 ()
 
 	outputValues [2] = alb3Result;
 	emit valueChanged (2, outputValues [2]);
+
+	m_report += alb1->report ();
+	m_report += alb2->report ();
+	m_report += alb3->report ();
+	m_report += mb1->report ();
+	m_report += mb2->report ();
+}
+
+void MicroprocessorWidget::showReport ()
+{
+	ReportDialog d (m_report, this);
+	d.exec ();
 }

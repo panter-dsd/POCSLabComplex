@@ -28,6 +28,7 @@
 
 #include "alb3block.h"
 #include "operationdialog.h"
+#include "operations.h"
 
 Alb3Block::Alb3Block(const QString& caption, QWidget *parent)
 	: AbstractBlock (caption, parent)
@@ -71,5 +72,34 @@ bool Alb3Block::calculate ()
 		return false;
 	}
 
+	m_report.clear ();
+
+	switch (m_operation) {
+	case 0:
+		m_calculatedValue = Operations::add (m_firstValue, m_secondValue, &m_report);
+		break;
+	case 1:
+		m_calculatedValue = Operations::add (m_firstValue, Operations::invert(m_secondValue), &m_report);
+		break;
+	case 2:
+		m_calculatedValue = Operations::add (m_firstValue, QByteArray (), &m_report);
+		break;
+	case 3:
+		break;
+	case 4:
+		m_calculatedValue = Operations::scaleIn (Operations::add (m_firstValue, m_secondValue, &m_report), 1);
+		break;
+	case 5:
+		m_calculatedValue = Operations::scaleIn (Operations::add (m_firstValue, Operations::invert(m_secondValue), &m_report), 1);
+		break;
+	case 6:
+		m_calculatedValue = Operations::scaleIn (Operations::add (m_firstValue, QByteArray (), &m_report), 1);
+		break;
+	case 7:
+		m_calculatedValue = m_firstValue;
+		break;
+	}
+
 	updateToolTip ();
+	return true;
 }

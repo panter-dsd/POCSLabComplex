@@ -70,6 +70,7 @@ private:
 
 	QAction *actionChooseScheme;
 	QAction *actionSetModule;
+	QAction *actionShowReport;
 
 	QRect m_workRect;
 	QRect m_rect;
@@ -82,6 +83,7 @@ private:
 	QByteArray inputValues [CountInputs];
 	QByteArray outputValues [CountOutputs];
 	bool m_isModule;
+	QString m_report;
 
 	QString m_name;
 
@@ -146,6 +148,7 @@ private Q_SLOTS:
 	void updateAdjustingWorld ();
 	void setValue (int index, const QByteArray& value);
 	void setModule (bool isModule);
+	void showReport ();
 
 Q_SIGNALS:
 	void nameChanged (const QString& name);

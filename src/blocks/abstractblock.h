@@ -44,7 +44,7 @@ protected:
 	char m_operation;
 	QMap<char, QString> operations;
 	QMap<char, QString> moduleOperations;
-	QString m_html;
+	QString m_report;
 
 	QAction *actionChooseOperation;
 	QAction *actionShowReport;
@@ -87,6 +87,9 @@ public:
 
 	QByteArray calculatedValue () const
 	{ return m_calculatedValue;}
+
+	QString report () const
+	{ return toolTip () + m_report;}
 
 protected:
 	void paintEvent (QPaintEvent *ev);

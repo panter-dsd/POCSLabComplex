@@ -28,6 +28,7 @@
 
 #include "mb2block.h"
 #include "operationdialog.h"
+#include "operations.h"
 
 Mb2Block::Mb2Block (const QString& caption, QWidget *parent)
 	: AbstractBlock (caption, parent)
@@ -59,5 +60,23 @@ bool Mb2Block::calculate ()
 		return false;
 	}
 
+	m_report.clear ();
+
+	switch (m_operation) {
+	case 0:
+		m_calculatedValue = Operations::mul (m_firstValue, m_secondValue, &m_report);
+		break;
+	case 1:
+		m_calculatedValue = Operations::scaleIn (Operations::add (m_firstValue, m_secondValue, &m_report), 1);
+		break;
+	case 2:
+		m_calculatedValue = m_firstValue;
+		break;
+	case 3:
+		m_calculatedValue = Operations::add (m_firstValue, Operations::invert(m_secondValue), &m_report);
+		break;
+	}
+
 	updateToolTip ();
+	return true;
 }
