@@ -44,8 +44,10 @@ protected:
 	char m_operation;
 	QMap<char, QString> operations;
 	QMap<char, QString> moduleOperations;
+	QString m_html;
 
 	QAction *actionChooseOperation;
+	QAction *actionShowReport;
 
 public:
 	AbstractBlock (const QString& caption = 0, QWidget *parent = 0);
@@ -91,6 +93,9 @@ protected:
 	bool event (QEvent *ev);
 	virtual void updateToolTip ();
 	virtual void retranslateStrings ();
+
+protected Q_SLOTS:
+	void showReport ();
 
 public Q_SLOTS:
 	void setFirstValue (const QByteArray& value);

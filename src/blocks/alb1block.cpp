@@ -74,24 +74,24 @@ bool Alb1Block::calculate ()
 
 	switch (m_operation) {
 	case 0:
-		m_calculatedValue = Operations::add (m_firstValue, m_secondValue);
+		m_calculatedValue = Operations::add (m_firstValue, m_secondValue, &m_html);
 		break;
 	case 1:
-		m_calculatedValue = Operations::add (m_firstValue, Operations::invert(m_secondValue));
+		m_calculatedValue = Operations::add (m_firstValue, Operations::invert(m_secondValue), &m_html);
 		break;
 	case 2:
-		m_calculatedValue = Operations::add (m_firstValue, QByteArray ());
+		m_calculatedValue = Operations::add (m_firstValue, QByteArray (), &m_html);
 		break;
 	case 3:
 		break;
 	case 4:
-		m_calculatedValue = Operations::scaleIn (Operations::add (m_firstValue, m_secondValue), 1);
+		m_calculatedValue = Operations::scaleIn (Operations::add (m_firstValue, m_secondValue, &m_html), 1);
 		break;
 	case 5:
-		m_calculatedValue = Operations::scaleIn (Operations::add (m_firstValue, Operations::invert(m_secondValue)), 1);
+		m_calculatedValue = Operations::scaleIn (Operations::add (m_firstValue, Operations::invert(m_secondValue), &m_html), 1);
 		break;
 	case 6:
-		m_calculatedValue = Operations::scaleIn (Operations::add (m_firstValue, QByteArray ()), 1);
+		m_calculatedValue = Operations::scaleIn (Operations::add (m_firstValue, QByteArray (), &m_html), 1);
 		break;
 	case 7:
 		m_calculatedValue = m_firstValue;

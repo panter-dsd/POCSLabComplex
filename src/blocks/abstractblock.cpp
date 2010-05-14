@@ -30,6 +30,7 @@
 
 #include "abstractblock.h"
 #include "operations.h"
+#include "reportdialog.h"
 
 AbstractBlock::AbstractBlock (const QString& caption, QWidget *parent)
 	: QWidget (parent), m_caption (caption), m_isModule (false), m_operation (-1)
@@ -37,6 +38,10 @@ AbstractBlock::AbstractBlock (const QString& caption, QWidget *parent)
 	actionChooseOperation = new QAction (this);
 	connect (actionChooseOperation, SIGNAL (triggered ()), this, SLOT (chooseOperation ()));
 	addAction (actionChooseOperation);
+
+	actionShowReport = new QAction (this);
+	connect (actionShowReport, SIGNAL (triggered ()), this, SLOT (showReport ()));
+	addAction (actionShowReport);
 
 	setContextMenuPolicy (Qt::ActionsContextMenu);
 	updateToolTip ();
@@ -46,6 +51,7 @@ AbstractBlock::AbstractBlock (const QString& caption, QWidget *parent)
 void AbstractBlock::retranslateStrings ()
 {
 	actionChooseOperation->setText (tr ("Choose operation"));
+	actionShowReport->setText (tr ("Show report"));
 }
 
 void AbstractBlock::paintEvent (QPaintEvent */*ev*/)
@@ -142,7 +148,6 @@ void AbstractBlock::updateToolTip ()
 	m_toolTip += Operations::binToString (m_calculatedValue);
 	m_toolTip += "</p>";
 
-
 	setToolTip (m_toolTip);
 }
 
@@ -156,4 +161,12 @@ bool AbstractBlock::event (QEvent *ev)
 	}
 
 	return QWidget::event (ev);
+}
+
+void AbstractBlock::showReport ()
+{
+	updateToolTip ();
+
+	ReportDialog d (toolTip () + m_html, this);
+	d.exec ();
 }
