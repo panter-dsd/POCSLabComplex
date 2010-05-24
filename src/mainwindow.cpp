@@ -53,7 +53,6 @@ MainWindow::MainWindow (QWidget* parent, Qt::WFlags f)
 
 	centralWidget = new QWidget (this);
 	area->setWidget (centralWidget);
-	//setCentralWidget (centralWidget);
 
 	//Set font for centralWidget
 	QFont m_font (centralWidget->font ());
@@ -116,7 +115,6 @@ MainWindow::MainWindow (QWidget* parent, Qt::WFlags f)
 	helpMenu->addAction(actionAboutQt);
 
 	mainMenu->addMenu(helpMenu);
-
 
 	toolBar = new QToolBar (this);
 	toolBar->setObjectName ("TOOL_BAR");
@@ -189,7 +187,6 @@ void MainWindow::start ()
 	foreach (MicrocircuitWidget* w, l) {
 		w->start ();
 	}
-
 }
 
 void MainWindow::saveState (const QString& fileName)
@@ -219,9 +216,10 @@ void MainWindow::restoreState (const QString& fileName)
 	QVBoxLayout *layout = qobject_cast<QVBoxLayout*> (centralWidget->layout ());
 	Q_ASSERT (layout != 0);
 
+	MicrocircuitWidget *w;
 	for (int i = 0; i < size; i++) {
 		settings.setArrayIndex (i);
-		MicrocircuitWidget *w = new MicrocircuitWidget (this);
+		w = new MicrocircuitWidget (this);
 		layout->insertWidget ((findChildren<MicrocircuitWidget*> ()).size () - 1, w);
 
 		QByteArray state = settings.value ("State").toByteArray ();
