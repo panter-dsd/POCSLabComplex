@@ -51,6 +51,7 @@ set (dialogs_SRC
 	src/dialogs/inputdialog.cpp
 	src/dialogs/switchboarddialog.cpp
 	src/dialogs/reportdialog.cpp
+	src/dialogs/aboutdialog.cpp
 )
 
 set (dialogs_HEADERS
@@ -58,6 +59,7 @@ set (dialogs_HEADERS
 	src/dialogs/inputdialog.h
 	src/dialogs/switchboarddialog.h
 	src/dialogs/reportdialog.h
+	src/dialogs/aboutdialog.h
 )
 
 ################################################################
@@ -101,7 +103,7 @@ set (HEADERS
 
 qt4_wrap_cpp( MOC_SOURCES ${HEADERS} )
 
-#set (RESOURCES resource.qrc)
+set (RESOURCES resource.qrc)
 
 qt4_add_resources (QRC_SOURCES ${RESOURCES})
 

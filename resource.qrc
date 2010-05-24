@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>share/images/about.png</file>
+        <file>share/images/aboutQt.png</file>
+        <file>share/images/exit.png</file>
+        <file>share/images/print.png</file>
+        <file>share/images/add.png</file>
+        <file>LICENSE.GPL3</file>
+    </qresource>
+</RCC>

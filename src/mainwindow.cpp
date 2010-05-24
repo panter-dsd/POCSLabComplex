@@ -35,9 +35,11 @@
 #include <QtGui/QStyle>
 #include <QtGui/QMessageBox>
 #include <QtGui/QFileDialog>
+#include <QtGui/QToolBar>
 
 #include "mainwindow.h"
 #include "microcircuitwidget.h"
+#include "aboutdialog.h"
 
 MainWindow::MainWindow (QWidget* parent, Qt::WFlags f)
 		: QMainWindow (parent, f)
@@ -64,6 +66,7 @@ MainWindow::MainWindow (QWidget* parent, Qt::WFlags f)
 	centralWidget->setLayout (mainLayout);
 
 	actionAddMicrocircuit = new QAction (this);
+	actionAddMicrocircuit->setIcon (QIcon(":/share/images/add.png"));
 	connect (actionAddMicrocircuit, SIGNAL (triggered ()), this, SLOT (addMicrocircuit ()));
 
 	actionStart = new QAction (this);
@@ -82,8 +85,16 @@ MainWindow::MainWindow (QWidget* parent, Qt::WFlags f)
 
 	actionExit = new QAction (this);
 	actionExit->setShortcut (Qt::ALT + Qt::Key_X);
-	actionExit->setIcon (style ()->standardIcon (QStyle::SP_DialogCloseButton));
+	actionExit->setIcon (QIcon(":/share/images/exit.png"));
 	connect (actionExit, SIGNAL (triggered ()), this, SLOT (close ()));
+
+	actionAbout = new QAction(this);
+	actionAbout->setIcon(QIcon(":/share/images/about.png"));
+	connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
+
+	actionAboutQt = new QAction(this);
+	actionAboutQt->setIcon(QIcon(":/share/images/aboutQt.png"));
+	connect(actionAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 
 	QMenuBar *mainMenu = new QMenuBar (this);
 	setMenuBar (mainMenu);
@@ -91,6 +102,7 @@ MainWindow::MainWindow (QWidget* parent, Qt::WFlags f)
 	fileMenu = new QMenu (this);
 	fileMenu->addAction (actionOpen);
 	fileMenu->addAction (actionSave);
+	fileMenu->addSeparator ();
 	fileMenu->addAction (actionExit);
 	mainMenu->addMenu (fileMenu);
 
@@ -98,6 +110,27 @@ MainWindow::MainWindow (QWidget* parent, Qt::WFlags f)
 	operationsMenu->addAction (actionAddMicrocircuit);
 	operationsMenu->addAction (actionStart);
 	mainMenu->addMenu (operationsMenu);
+
+	helpMenu = new QMenu(this);
+	helpMenu->addAction(actionAbout);
+	helpMenu->addAction(actionAboutQt);
+
+	mainMenu->addMenu(helpMenu);
+
+
+	toolBar = new QToolBar (this);
+	toolBar->setObjectName ("TOOL_BAR");
+	toolBar->addAction (actionAddMicrocircuit);
+	toolBar->addAction (actionStart);
+	toolBar->addSeparator ();
+	toolBar->addAction (actionOpen);
+	toolBar->addAction (actionSave);
+	toolBar->addSeparator ();
+	toolBar->addAction (actionAbout);
+	toolBar->addAction (actionAboutQt);
+	toolBar->addSeparator ();
+	toolBar->addAction (actionExit);
+	addToolBar (toolBar);
 
 	retranslateStrings ();
 }
@@ -111,12 +144,17 @@ void MainWindow::retranslateStrings ()
 {
 	fileMenu->setTitle (tr ("File"));
 	operationsMenu->setTitle (tr ("Operations"));
+	helpMenu->setTitle(tr("&Help"));
+
+	toolBar->setWindowTitle (tr ("Main toolbar"));
 
 	actionAddMicrocircuit->setText (tr ("Add microcircuit"));
 	actionStart->setText (tr ("Start"));
 	actionOpen->setText (tr ("Open"));
 	actionSave->setText (tr ("Save"));
 	actionExit->setText (tr ("Exit"));
+	actionAbout->setText(tr("About..."));
+	actionAboutQt->setText(tr("About Qt"));
 }
 
 bool MainWindow::event (QEvent *ev)
@@ -212,4 +250,25 @@ void MainWindow::save ()
 	if (!fileName.isEmpty ()) {
 		saveState (fileName);
 	}
+}
+
+void MainWindow::about()
+{
+	AboutDialog d (this);
+
+	d.setAuthor(tr("PanteR"));
+	d.setMail("panter.dsd@gmail.com");
+	d.setPhone("89094119675");
+	d.setLicense("GNU GPL v3");
+
+	{
+		QFile file(":/LICENSE.GPL3");
+		if (file.open(QFile::ReadOnly)) {
+			d.setLicenseText(QString(file.readAll()));
+			file.close();
+		}
+	}
+
+	d.addThanks("Bespalov D.A.", "", tr ("Theory"));
+	d.exec();
 }

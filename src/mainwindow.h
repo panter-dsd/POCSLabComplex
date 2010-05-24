@@ -29,6 +29,7 @@ class MicrocircuitWidget;
 class QAction;
 class QMenu;
 class QWidget;
+class QToolBar;
 
 #include <QtGui/QMainWindow>
 
@@ -41,12 +42,18 @@ private:
 
 	QMenu *fileMenu;
 	QMenu *operationsMenu;
-
+	QMenu *helpMenu;
+ 
 	QAction *actionAddMicrocircuit;
 	QAction *actionStart;
 	QAction *actionOpen;
 	QAction *actionSave;
 	QAction *actionExit;
+
+	QAction *actionAbout;
+	QAction *actionAboutQt;
+
+	QToolBar *toolBar;
 
 public:
 	MainWindow (QWidget* parent = 0, Qt::WFlags f = 0);
@@ -65,6 +72,7 @@ private Q_SLOTS:
 	void start ();
 	void open ();
 	void save ();
+	void about();
 };
 
 #endif // MAINWINDOW_H
