@@ -522,10 +522,10 @@ QByteArray Operations::mul (const QByteArray& first, const QByteArray& second, Q
 
 QByteArray Operations::invert (const QByteArray& value)
 {
-	QByteArray result;
+	QByteArray result (value);
 
-	for (int i = 0, size = value.size (); i < size; i++) {
-		result.append (value [i] * (char) -1);
+	for (int i = 0, size = result.size (); i < size; i++) {
+		result [i] = result [i] * (char) -1;
 	}
 	
 	return result;
