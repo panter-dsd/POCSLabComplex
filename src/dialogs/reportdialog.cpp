@@ -11,6 +11,7 @@
 #include <QtGui/QPrinter>
 #include <QtGui/QFileDialog>
 #include <QtGui/QMessageBox>
+#include <QtGui/QStyle>
 
 #include "reportdialog.h"
 
@@ -36,10 +37,12 @@ ReportDialog::ReportDialog (const QString& report, QWidget *parent)
 
 	actionPrint = new QAction (this);
 	actionPrint->setShortcut (QKeySequence::Print);
+	actionPrint->setIcon (QIcon(":/share/images/print.png"));
 	connect (actionPrint, SIGNAL (triggered ()), this, SLOT (print ()));
 	toolBar->addAction (actionPrint);
 
 	actionExportToHtml = new QAction (this);
+	actionExportToHtml->setIcon (style ()->standardIcon (QStyle::SP_DialogSaveButton));
 	connect (actionExportToHtml, SIGNAL (triggered ()), this, SLOT (exportToHtml ()));
 	toolBar->addAction (actionExportToHtml);
 
