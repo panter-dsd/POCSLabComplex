@@ -563,3 +563,18 @@ QByteArray Operations::scaleOut (const QByteArray& value, int scaleFactor)
 	
 	return result;
 }
+
+int Operations::compare (const QByteArray& first, const QByteArray& second)
+{
+	for (int i = 0, firstSize = first.size (), secondSize = second.size (); i < firstSize && i < secondSize; ++i) {
+		if (first [i] != second [i]) {
+			return first [i] < second [i] ? -1 : 1;
+		}
+	}
+
+	if (first.size () != second.size ()) {
+		return first.size () < second.size () ? -1 : 1;
+	}
+
+	return 0;
+}

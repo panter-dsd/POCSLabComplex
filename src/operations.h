@@ -63,6 +63,7 @@ public:
 	static QByteArray invert (const QByteArray& value);
 	static QByteArray scaleIn (const QByteArray& value, int scaleFactor);
 	static QByteArray scaleOut (const QByteArray& value, int scaleFactor);
+	static int compare (const QByteArray& first, const QByteArray& second);
 };
 
 #endif //OPERATIONS_H
