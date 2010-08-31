@@ -85,6 +85,7 @@ bool Alb1Block::calculate ()
 		m_calculatedValue = Operations::add (m_firstValue, QByteArray (), &m_report);
 		break;
 	case 3:
+		m_calculatedValue = Operations::compare (m_firstValue, m_secondValue) < 0 ? m_secondValue : m_firstValue;
 		break;
 	case 4:
 		m_calculatedValue = Operations::scaleIn (Operations::add (m_firstValue, m_secondValue, &m_report), 1);
