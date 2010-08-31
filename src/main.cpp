@@ -30,7 +30,7 @@
 
 #include <QtGui/QApplication>
 
-#define ApplicationVersion "0.0.0.0"
+#define ApplicationVersion "0.0.1.0"
 
 #include "mainwindow.h"
 
@@ -43,7 +43,7 @@ int main (int argc, char ** argv)
 	app.setOrganizationName ("PanteR");
 	app.setApplicationName (QApplication::tr ("POCSLabComplex"));
 	app.setApplicationVersion (ApplicationVersion);
-//	app.setWindowIcon (QIcon (":share/images/main.ico"));
+	app.setWindowIcon (QIcon (":share/images/main.png"));
 
 	QSettings::setDefaultFormat (QSettings::IniFormat);
 
