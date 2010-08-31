@@ -46,6 +46,10 @@ int main (int argc, char ** argv)
 	app.setWindowIcon (QIcon (":share/images/main.png"));
 
 	QSettings::setDefaultFormat (QSettings::IniFormat);
+	
+	QTranslator translator;
+	translator.load(app.applicationDirPath() + "/../share/translations/pocslabcomplex_" + QLocale::system().name() + ".qm");
+	app.installTranslator(&translator);
 
 	app.connect (&app, SIGNAL (lastWindowClosed ()), &app, SLOT (quit ()));
 

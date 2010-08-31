@@ -3,8 +3,8 @@ set (PROJECT_FILE_NAME POCSLabComplex)
 
 cmake_minimum_required( VERSION 2.6 )
 
-#SET (CMAKE_BUILD_TYPE Release)
-SET (CMAKE_BUILD_TYPE Debug)
+SET (CMAKE_BUILD_TYPE Release)
+#SET (CMAKE_BUILD_TYPE Debug)
 
 INCLUDE(FindQt4)
 find_package( Qt4 REQUIRED )
@@ -118,8 +118,8 @@ else(MINGW)
 endif(MINGW)
 
 
-#add_executable( ${PROJECT_FILE_NAME} WIN32 ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES} ${pocslabcomplex_RC})
-add_executable( ${PROJECT_FILE_NAME} ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES} ${pocslabcomplex_RC})
+add_executable( ${PROJECT_FILE_NAME} WIN32 ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES} ${pocslabcomplex_RC})
+#add_executable( ${PROJECT_FILE_NAME} ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES} ${pocslabcomplex_RC})
 
 target_link_libraries( ${PROJECT_FILE_NAME} ${QT_LIBRARIES} )
 
