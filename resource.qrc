@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
+        <file>share/images/main.png</file>
         <file>share/images/about.png</file>
         <file>share/images/aboutQt.png</file>
         <file>share/images/exit.png</file>

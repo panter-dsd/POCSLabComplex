@@ -107,8 +107,19 @@ set (RESOURCES resource.qrc)
 
 qt4_add_resources (QRC_SOURCES ${RESOURCES})
 
-#add_executable( ${PROJECT_FILE_NAME} WIN32 ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES})
-add_executable( ${PROJECT_FILE_NAME} ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES})
+if(MINGW)
+  ADD_CUSTOM_COMMAND(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/pocslabcomplex_rc.o
+  COMMAND windres.exe -I${CMAKE_CURRENT_SOURCE_DIR}
+  -i${CMAKE_CURRENT_SOURCE_DIR}/pocslabcomplex.rc
+   -o ${CMAKE_CURRENT_BINARY_DIR}/pocslabcomplex_rc.o)
+	SET(pocslabcomplex_RC ${pocslabcomplex_RC} ${CMAKE_CURRENT_BINARY_DIR}/pocslabcomplex_rc.o)
+else(MINGW)
+	SET(pocslabcomplex_RC ${pocslabcomplex_RC} pocslabcomplex.rc)
+endif(MINGW)
+
+
+#add_executable( ${PROJECT_FILE_NAME} WIN32 ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES} ${pocslabcomplex_RC})
+add_executable( ${PROJECT_FILE_NAME} ${SOURCES} ${MOC_SOURCES} ${QRC_SOURCES} ${pocslabcomplex_RC})
 
 target_link_libraries( ${PROJECT_FILE_NAME} ${QT_LIBRARIES} )
 
