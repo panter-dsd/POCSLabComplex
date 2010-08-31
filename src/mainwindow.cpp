@@ -131,12 +131,43 @@ MainWindow::MainWindow (QWidget* parent, Qt::WFlags f)
 	addToolBar (toolBar);
 
 	retranslateStrings ();
+	loadSettings();
 }
 
 MainWindow::~MainWindow ()
 {
-
+	saveSettings();
 }
+
+void MainWindow::loadSettings ()
+{
+	QSettings settings;
+                    
+	settings.beginGroup("MainWindow");
+	move(settings.value("pos", QPoint(0, 0)).toPoint());
+	resize(settings.value("size", QSize(640, 480)).toSize());
+	
+	bool isMaximized = settings.value("IsMaximized", false).toBool();
+	if (isMaximized)
+		setWindowState(Qt::WindowMaximized);
+	settings.endGroup();
+}
+
+void MainWindow::saveSettings ()
+{
+	QSettings settings;
+                                                                                                                                  
+	settings.beginGroup("MainWindow");
+	if (windowState() != Qt::WindowMaximized) {
+		settings.setValue("pos", pos());
+		settings.setValue("size", size());
+		settings.setValue("IsMaximized", false);
+	} else {
+		settings.setValue("IsMaximized", true);
+	}
+	
+	settings.endGroup();  
+} 
 
 void MainWindow::retranslateStrings ()
 {

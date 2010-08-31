@@ -63,6 +63,8 @@ private:
 	void retranslateStrings ();
 	void saveState (const QString& fileName);
 	void restoreState (const QString& fileName);
+	void loadSettings();
+	void saveSettings(); 
 
 protected:
 	bool event (QEvent *ev);
